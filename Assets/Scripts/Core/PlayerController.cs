@@ -64,6 +64,26 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         Debug.Log("You Lost");
-    }
+        
+        //Set Game State
+        GameManager.Instance.state = GameManager.GameState.GAMEOVER;
 
+        //Stop spawning
+        var spawner = FindObjectOfType<EnemySpawner>();
+        spawner.StopAllCoroutines();
+
+        //clear existing enemies
+        var allEnemies = FindObjectsOfType<EnemyController>();
+        foreach (var ec in allEnemies)
+        {
+            GameManager.Instance.RemoveEnemy(ec.gameObject);
+            Destroy(ec.gameObject);
+        }
+
+        //Show restart menu
+        spawner.level_selector.gameObject.SetActive(true);
+        var menuButton = spawner.level_selector
+                              .GetComponentInChildren<MenuSelectorController>();
+        menuButton.SetLevel("Restart");
+    }
 }
