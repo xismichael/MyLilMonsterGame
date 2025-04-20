@@ -9,6 +9,6 @@ public class Spawn
     public string delay = "2";
     public string damage = "base";
     public string speed = "base";
-    public List<int> sequence = [1];
+    public List<int> sequence = new List<int> { 1 };
     public string location;
 }
