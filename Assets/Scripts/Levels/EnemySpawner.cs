@@ -89,12 +89,16 @@ public class EnemySpawner : MonoBehaviour
         int spriteNumber = EnemyDatabase.Instance.GetEnemyData(spawn.enemy).sprite;
         float delay = float.Parse(spawn.delay);
 
+        foreach (int i in spawn.sequence)
+        {
+            Debug.Log(spawn.enemy + " " + i);
+        }
         int spawned = 0;
         int sequenceIndex = 0;
 
         while (spawned < count)
         {
-            int spawnThisBatch = Mathf.Min(spawn.sequence[(sequenceIndex % spawn.sequence.Count()) + 1], count - spawned);
+            int spawnThisBatch = Mathf.Min(spawn.sequence[(sequenceIndex % spawn.sequence.Count())], count - spawned);
             for (int i = 0; i < spawnThisBatch; i++)
             {
                 SpawnEnemy(spriteNumber, hp, speed, damage);

@@ -30,7 +30,21 @@ public class LevelDatabase : MonoBehaviour
     {
         TextAsset jsonFile = Resources.Load<TextAsset>("levels");
         levels = JsonConvert.DeserializeObject<List<Level>>(jsonFile.text);
+
+        foreach (var level in levels)
+        {
+            foreach (var spawn in level.spawns)
+            {
+                if (spawn.sequence == null || spawn.sequence.Count == 0) spawn.sequence = new List<int> { 1 };
+                if (string.IsNullOrEmpty(spawn.delay)) spawn.delay = "2";
+                if (string.IsNullOrEmpty(spawn.hp)) spawn.hp = "base";
+                if (string.IsNullOrEmpty(spawn.damage)) spawn.damage = "base";
+                if (string.IsNullOrEmpty(spawn.speed)) spawn.speed = "base";
+                if (string.IsNullOrEmpty(spawn.location)) spawn.speed = "random";
+            }
+        }
     }
+
 
     public Level GetLevel(string name)
     {
