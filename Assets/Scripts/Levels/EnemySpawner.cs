@@ -63,12 +63,17 @@ public class EnemySpawner : MonoBehaviour
         GameManager.Instance.state = GameManager.GameState.INWAVE;
 
         Level level = LevelDatabase.Instance.GetLevel(levelname);
+        List<Coroutine> activeSpawns = new List<Coroutine>();
 
         foreach (Spawn spawn in level.spawns)
         {
+            Coroutine ActiveSpawn = StartCoroutine(SpawnEnemies(spawn));
+            activeSpawns.Add(ActiveSpawn);
+        }
 
-
-            StartCoroutine(SpawnEnemies(spawn));
+        foreach (Coroutine ActiveSpawn in activeSpawns)
+        {
+            yield return ActiveSpawn;
         }
 
         yield return new WaitWhile(() => GameManager.Instance.enemy_count > 0);
@@ -89,8 +94,7 @@ public class EnemySpawner : MonoBehaviour
 
         while (spawned < count)
         {
-            int spawnThisBatch = Mathf.Min(spawn.sequence[sequenceIndex % spawn.sequence.Count], count - spawned);
-
+            int spawnThisBatch = Mathf.Min(spawn.sequence[(sequenceIndex % spawn.sequence.Count()) + 1], count - spawned);
             for (int i = 0; i < spawnThisBatch; i++)
             {
                 SpawnEnemy(spriteNumber, hp, speed, damage);
