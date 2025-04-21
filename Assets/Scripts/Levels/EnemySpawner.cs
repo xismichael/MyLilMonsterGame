@@ -77,9 +77,6 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnEnemies(Spawn spawn)
     {
-
-        Debug.Log(spawn.enemy);
-        Debug.Log(EnemyDatabase.Instance.GetEnemyData(spawn.enemy).hp);
         int count = RPNEvaluator.Evaluate(spawn.count, 0, CurrentWaveNumber);
         int hp = RPNEvaluator.Evaluate(spawn.hp, EnemyDatabase.Instance.GetEnemyData(spawn.enemy).hp, CurrentWaveNumber);
         int speed = RPNEvaluator.Evaluate(spawn.speed, EnemyDatabase.Instance.GetEnemyData(spawn.enemy).speed, CurrentWaveNumber);
