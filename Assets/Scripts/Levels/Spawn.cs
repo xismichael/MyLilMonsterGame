@@ -10,5 +10,5 @@ public class Spawn
     public string damage = "base";
     public string speed = "base";
     public List<int> sequence = new List<int> { 1 };
-    public string location;
+    public string location = "random";
 }
