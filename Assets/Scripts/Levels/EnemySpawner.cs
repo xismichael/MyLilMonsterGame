@@ -94,10 +94,19 @@ public class EnemySpawner : MonoBehaviour
         int spriteNumber = EnemyDatabase.Instance.GetEnemyData(spawn.enemy).sprite;
         float delay = float.Parse(spawn.delay);
 
-        foreach (int i in spawn.sequence)
+        SpawnPoint[] customSpawnPoints;
+        string[] locationParts = spawn.location.Split(' ');
+        string locationPart = locationParts[locationParts.Length - 1];
+
+        if (locationPart != "random")
         {
-            Debug.Log(spawn.enemy + " " + i);
+            customSpawnPoints = SpawnPoints.Where(s => s.name.ToLower().StartsWith(locationPart.ToLower())).ToArray();
         }
+        else
+        {
+            customSpawnPoints = SpawnPoints;
+        }
+
         int spawned = 0;
         int sequenceIndex = 0;
 
@@ -106,7 +115,7 @@ public class EnemySpawner : MonoBehaviour
             int spawnThisBatch = Mathf.Min(spawn.sequence[(sequenceIndex % spawn.sequence.Count())], count - spawned);
             for (int i = 0; i < spawnThisBatch; i++)
             {
-                SpawnEnemy(spriteNumber, hp, speed, damage);
+                SpawnEnemy(customSpawnPoints, spriteNumber, hp, speed, damage);
                 spawned++;
             }
 
@@ -115,10 +124,9 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    void SpawnEnemy(int spriteNumber, int hp, int speed, int damage)
+    void SpawnEnemy(SpawnPoint[] customSpawnPoints, int spriteNumber, int hp, int speed, int damage)
     {
-        SpawnPoint spawn_point = SpawnPoints[Random.Range(0, SpawnPoints.Length)];
-        Debug.Log(spawn_point.name);
+        SpawnPoint spawn_point = customSpawnPoints[Random.Range(0, customSpawnPoints.Length)];
         Vector2 offset = Random.insideUnitCircle * 1.8f;
         Vector3 initial_position = spawn_point.transform.position + new Vector3(offset.x, offset.y, 0);
 
