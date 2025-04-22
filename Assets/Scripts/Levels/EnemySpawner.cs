@@ -18,6 +18,11 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
+        restartScreen();
+    }
+
+    public void restartScreen()
+    {
         float yStart = 130;
         float ySpacing = -50;
         int index = 0;
@@ -113,6 +118,7 @@ public class EnemySpawner : MonoBehaviour
     void SpawnEnemy(int spriteNumber, int hp, int speed, int damage)
     {
         SpawnPoint spawn_point = SpawnPoints[Random.Range(0, SpawnPoints.Length)];
+        Debug.Log(spawn_point.name);
         Vector2 offset = Random.insideUnitCircle * 1.8f;
         Vector3 initial_position = spawn_point.transform.position + new Vector3(offset.x, offset.y, 0);
 

@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     {
         spellcaster = new SpellCaster(125, 8, Hittable.Team.PLAYER);
         StartCoroutine(spellcaster.ManaRegeneration());
-        
+
         hp = new Hittable(100, Hittable.Team.PLAYER, gameObject);
         hp.OnDeath += Die;
         hp.team = Hittable.Team.PLAYER;
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void OnAttack(InputValue value)
@@ -58,13 +58,12 @@ public class PlayerController : MonoBehaviour
     void OnMove(InputValue value)
     {
         if (GameManager.Instance.state == GameManager.GameState.PREGAME || GameManager.Instance.state == GameManager.GameState.GAMEOVER) return;
-        unit.movement = value.Get<Vector2>()*speed;
+        unit.movement = value.Get<Vector2>() * speed;
     }
 
     void Die()
     {
-        Debug.Log("You Lost");
-        
+
         //Set Game State
         GameManager.Instance.state = GameManager.GameState.GAMEOVER;
 
@@ -82,8 +81,6 @@ public class PlayerController : MonoBehaviour
 
         //Show restart menu
         spawner.level_selector.gameObject.SetActive(true);
-        var menuButton = spawner.level_selector
-                              .GetComponentInChildren<MenuSelectorController>();
-        menuButton.SetLevel("Restart");
+        spawner.restartScreen();
     }
 }
