@@ -15,10 +15,10 @@ public class PlayerController : MonoBehaviour
     public SpellUI spellui;
 
     public int speed;
-
     public Unit unit;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public GameObject deathMessageUI; //assign the death message in inspector
+
     void Start()
     {
         unit = GetComponent<Unit>();
@@ -30,48 +30,55 @@ public class PlayerController : MonoBehaviour
         spellcaster = new SpellCaster(125, 8, Hittable.Team.PLAYER);
         StartCoroutine(spellcaster.ManaRegeneration());
 
+        // Hide death message when restarting
+        if (deathMessageUI != null)
+            deathMessageUI.SetActive(false);
+
         hp = new Hittable(100, Hittable.Team.PLAYER, gameObject);
         hp.OnDeath += Die;
         hp.team = Hittable.Team.PLAYER;
 
-        // tell UI elements what to show
         healthui.SetHealth(hp);
         manaui.SetSpellCaster(spellcaster);
         spellui.SetSpell(spellcaster.spell);
     }
 
-    // Update is called once per frame
     void Update()
     {
-
+        // Movement handled by OnMove
     }
 
     void OnAttack(InputValue value)
     {
-        if (GameManager.Instance.state == GameManager.GameState.PREGAME || GameManager.Instance.state == GameManager.GameState.GAMEOVER) return;
+        if (GameManager.Instance.state == GameManager.GameState.PREGAME ||
+            GameManager.Instance.state == GameManager.GameState.GAMEOVER) return;
+
         Vector2 mouseScreen = Mouse.current.position.value;
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen);
         mouseWorld.z = 0;
+
         StartCoroutine(spellcaster.Cast(transform.position, mouseWorld));
     }
 
     void OnMove(InputValue value)
     {
-        if (GameManager.Instance.state == GameManager.GameState.PREGAME || GameManager.Instance.state == GameManager.GameState.GAMEOVER) return;
+        if (GameManager.Instance.state == GameManager.GameState.PREGAME ||
+            GameManager.Instance.state == GameManager.GameState.GAMEOVER) return;
+
         unit.movement = value.Get<Vector2>() * speed;
     }
 
     void Die()
     {
-
-        //Set Game State
         GameManager.Instance.state = GameManager.GameState.GAMEOVER;
 
-        //Stop spawning
         var spawner = FindObjectOfType<EnemySpawner>();
+
+        if (spawner.waveStatsText != null)
+            spawner.waveStatsText.text = "";
+
         spawner.StopAllCoroutines();
 
-        //clear existing enemies
         var allEnemies = FindObjectsOfType<EnemyController>();
         foreach (var ec in allEnemies)
         {
@@ -79,7 +86,10 @@ public class PlayerController : MonoBehaviour
             Destroy(ec.gameObject);
         }
 
-        //Show restart menu
+        //show YOU DIED message
+        if (deathMessageUI != null)
+            deathMessageUI.SetActive(true);
+
         spawner.level_selector.gameObject.SetActive(true);
         spawner.restartScreen();
     }

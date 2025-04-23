@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-
     public Transform target;
     public int speed;
     public int damage = 5;
@@ -11,7 +10,8 @@ public class EnemyController : MonoBehaviour
     public bool dead;
 
     public float last_attack;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    // Start is called once before the first execution of update after the monoBehaviour is created
     void Start()
     {
         target = GameManager.Instance.player.transform;
@@ -42,12 +42,15 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-
     void Die()
     {
         if (!dead)
         {
             dead = true;
+
+            //counts enemy kill this wave
+            GameManager.Instance.currentWaveEnemiesKilled++;
+
             GameManager.Instance.RemoveEnemy(gameObject);
             Destroy(gameObject);
         }

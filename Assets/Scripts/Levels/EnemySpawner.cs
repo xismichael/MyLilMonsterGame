@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Collections;
 using System.Linq;
+using TMPro;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -12,8 +13,10 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemy;
     public SpawnPoint[] SpawnPoints;
 
-    private static int CurrentWaveNumber = 1;
+    public TMP_Text waveStatsText;              // displays wave stats
+    public TMP_Text nextWaveButtonText;       
 
+    private static int CurrentWaveNumber = 1;
     private string currentLevelName;
 
     void Start()
@@ -44,18 +47,41 @@ public class EnemySpawner : MonoBehaviour
         level_selector.gameObject.SetActive(false);
         GameManager.Instance.player.GetComponent<PlayerController>().StartLevel();
         currentLevelName = levelname;
+        CurrentWaveNumber = 1;
         StartCoroutine(SpawnWave(levelname));
     }
 
     public void NextWave()
     {
-        // You’ll probably want to track and increment wave number here.
+        Level level = LevelDatabase.Instance.GetLevel(currentLevelName);
+
+        if (level.waves > 0 && CurrentWaveNumber >= level.waves)
+        {
+            //Clear stats text at end of level
+            if (waveStatsText != null)
+                waveStatsText.text = "";
+
+            if (nextWaveButtonText != null)
+                nextWaveButtonText.text = "Next Wave";
+
+            level_selector.gameObject.SetActive(true);
+            GameManager.Instance.state = GameManager.GameState.GAMEOVER;
+            return;
+        }
+
         CurrentWaveNumber++;
+
+        if (waveStatsText != null)
+            waveStatsText.text = "";
+
         StartCoroutine(SpawnWave(currentLevelName));
     }
 
     IEnumerator SpawnWave(string levelname)
     {
+        GameManager.Instance.currentWaveEnemiesKilled = 0;
+        GameManager.Instance.currentWaveDamageTaken = 0;
+
         GameManager.Instance.state = GameManager.GameState.COUNTDOWN;
         GameManager.Instance.countdown = 3;
 
@@ -72,16 +98,31 @@ public class EnemySpawner : MonoBehaviour
 
         foreach (Spawn spawn in level.spawns)
         {
-            Coroutine ActiveSpawn = StartCoroutine(SpawnEnemies(spawn));
-            activeSpawns.Add(ActiveSpawn);
+            Coroutine activeSpawn = StartCoroutine(SpawnEnemies(spawn));
+            activeSpawns.Add(activeSpawn);
         }
 
-        foreach (Coroutine ActiveSpawn in activeSpawns)
+        foreach (Coroutine activeSpawn in activeSpawns)
         {
-            yield return ActiveSpawn;
+            yield return activeSpawn;
         }
 
         yield return new WaitWhile(() => GameManager.Instance.enemy_count > 0);
+
+        //Show stats at wave end
+        if (waveStatsText != null)
+        {
+            waveStatsText.text = $"Wave: {CurrentWaveNumber}\n" +
+                                 $"Kills: {GameManager.Instance.currentWaveEnemiesKilled}\n" +
+                                 $"Damage Taken: {GameManager.Instance.currentWaveDamageTaken}";
+        }
+
+        //Update button label if final wave
+        if (CurrentWaveNumber >= level.waves && nextWaveButtonText != null)
+        {
+            nextWaveButtonText.text = "VICTORY";
+        }
+
         GameManager.Instance.state = GameManager.GameState.WAVEEND;
     }
 
@@ -112,7 +153,7 @@ public class EnemySpawner : MonoBehaviour
 
         while (spawned < count)
         {
-            int spawnThisBatch = Mathf.Min(spawn.sequence[(sequenceIndex % spawn.sequence.Count())], count - spawned);
+            int spawnThisBatch = Mathf.Min(spawn.sequence[(sequenceIndex % spawn.sequence.Count)], count - spawned);
             for (int i = 0; i < spawnThisBatch; i++)
             {
                 SpawnEnemy(customSpawnPoints, spriteNumber, hp, speed, damage);
@@ -122,8 +163,6 @@ public class EnemySpawner : MonoBehaviour
             sequenceIndex++;
             yield return new WaitForSeconds(delay);
         }
-
-        //Debug.Log("wave: " + CurrentWaveNumber + " enemy type: " + spawn.enemy + " amount spawned " + spawned);
     }
 
     void SpawnEnemy(SpawnPoint[] customSpawnPoints, int spriteNumber, int hp, int speed, int damage)

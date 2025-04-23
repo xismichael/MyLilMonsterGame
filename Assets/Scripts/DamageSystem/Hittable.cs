@@ -3,7 +3,6 @@ using System;
 
 public class Hittable
 {
-
     public enum Team { PLAYER, MONSTERS }
     public Team team;
 
@@ -15,6 +14,11 @@ public class Hittable
     public void Damage(Damage damage)
     {
         EventBus.Instance.DoDamage(owner.transform.position, damage, this);
+
+        //tracks player damage taken this wave
+        if (team == Team.PLAYER)
+            GameManager.Instance.currentWaveDamageTaken += damage.amount;
+
         hp -= damage.amount;
         if (hp <= 0)
         {
@@ -40,3 +44,4 @@ public class Hittable
         this.hp = Mathf.RoundToInt(perc * max_hp);
     }
 }
+
