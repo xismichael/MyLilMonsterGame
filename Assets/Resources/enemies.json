@@ -22,8 +22,8 @@
     },
     {
         "name": "shrek",
-        "sprite": 42,
-        "hp": 300,
+        "sprite": 10,
+        "hp": 50,
         "speed": 10,
         "damage": 1
     }

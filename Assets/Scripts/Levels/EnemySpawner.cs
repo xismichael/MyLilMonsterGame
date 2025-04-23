@@ -122,6 +122,8 @@ public class EnemySpawner : MonoBehaviour
             sequenceIndex++;
             yield return new WaitForSeconds(delay);
         }
+
+        //Debug.Log("wave: " + CurrentWaveNumber + " enemy type: " + spawn.enemy + " amount spawned " + spawned);
     }
 
     void SpawnEnemy(SpawnPoint[] customSpawnPoints, int spriteNumber, int hp, int speed, int damage)
