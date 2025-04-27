@@ -32,7 +32,7 @@
                 "location": "random bone"
             },
             {
-                "name": "shrek",
+                "enemy": "shrek",
                 "count": "wave 5 /",
                 "hp": "base wave *",
                 "location": "random red"
@@ -113,7 +113,7 @@
                 "location": "random bone"
             },
             {
-                "name": "shrek",
+                "enemy": "shrek",
                 "count": "wave 2 /",
                 "hp": "base wave 2 + *",
                 "location": "random"
