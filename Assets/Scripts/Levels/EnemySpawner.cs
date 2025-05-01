@@ -14,7 +14,7 @@ public class EnemySpawner : MonoBehaviour
     public SpawnPoint[] SpawnPoints;
 
     public TMP_Text waveStatsText;              // displays wave stats
-    public TMP_Text nextWaveButtonText;       
+    public TMP_Text nextWaveButtonText;
 
     private static int CurrentWaveNumber = 1;
     private string currentLevelName;
@@ -27,7 +27,7 @@ public class EnemySpawner : MonoBehaviour
     public void restartScreen()
     {
         float yStart = 130;
-        float ySpacing = -50;
+        float ySpacing = -100;
         int index = 0;
 
         List<Level> allLevels = LevelDatabase.Instance.GetAllLevels();
@@ -128,10 +128,28 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnEnemies(Spawn spawn)
     {
-        int count = RPNEvaluator.Evaluate(spawn.count, 0, CurrentWaveNumber);
-        int hp = RPNEvaluator.Evaluate(spawn.hp, EnemyDatabase.Instance.GetEnemyData(spawn.enemy).hp, CurrentWaveNumber);
-        int speed = RPNEvaluator.Evaluate(spawn.speed, EnemyDatabase.Instance.GetEnemyData(spawn.enemy).speed, CurrentWaveNumber);
-        int damage = RPNEvaluator.Evaluate(spawn.damage, EnemyDatabase.Instance.GetEnemyData(spawn.enemy).damage, CurrentWaveNumber);
+
+        int count = RPNEvaluator.Evaluate(spawn.count,
+        new Dictionary<string, int>{
+            { "wave", CurrentWaveNumber },
+            { "base", 0 }
+            }
+        );
+        int hp = RPNEvaluator.Evaluate(spawn.hp, new Dictionary<string, int>{
+            { "wave", CurrentWaveNumber },
+            { "base", EnemyDatabase.Instance.GetEnemyData(spawn.enemy).hp }
+            }
+        );
+        int speed = RPNEvaluator.Evaluate(spawn.speed, new Dictionary<string, int>{
+            { "wave", CurrentWaveNumber },
+            { "base", EnemyDatabase.Instance.GetEnemyData(spawn.enemy).speed }
+            }
+        );
+        int damage = RPNEvaluator.Evaluate(spawn.damage, new Dictionary<string, int>{
+            { "wave", CurrentWaveNumber },
+            { "base", EnemyDatabase.Instance.GetEnemyData(spawn.enemy).damage }
+            }
+        );
         int spriteNumber = EnemyDatabase.Instance.GetEnemyData(spawn.enemy).sprite;
         float delay = float.Parse(spawn.delay);
 
