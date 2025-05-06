@@ -20,12 +20,12 @@ public class DoublerSpell : ModifierSpell
 
         float delay = RPNEvaluator.Evaluate(delayExpr, GetRPNVariables());
 
-        CoroutineManager.Instance.Run(innerSpell.Cast(where, target, team));
+        yield return innerSpell.Cast(where, target, team);
 
         yield return new WaitForSeconds(delay);
 
         Vector3 updatedPos = GameManager.Instance.player.transform.position;
-        CoroutineManager.Instance.Run(innerSpell.Cast(updatedPos, target, team));
+        yield return innerSpell.Cast(updatedPos, target, team);
     }
 }
 
