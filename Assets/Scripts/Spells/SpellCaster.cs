@@ -29,7 +29,7 @@ public class SpellCaster
         this.power = 100;
         this.team = team;
         spell = SpellBuilder.Instance.Build("arcane_bolt", this);
-        spell = SpellBuilder.Instance.ApplyModifiersToSpell(spell, new List<string> { "doubler", "doubler", "doubler", "doubler", "doubler", "doubler" });
+        spell = SpellBuilder.Instance.ApplyModifiersToSpell(spell, new List<string> { "splitter", "speed_amp" });
         Debug.Log(spell.GetDamage());
     }
 
