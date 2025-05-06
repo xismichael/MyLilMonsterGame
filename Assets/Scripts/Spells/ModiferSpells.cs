@@ -20,12 +20,12 @@ public class DoublerSpell : ModifierSpell
 
         float delay = RPNEvaluator.Evaluate(delayExpr, GetRPNVariables());
 
-        yield return innerSpell.Cast(where, target, team);
+        CoroutineManager.Instance.Run(innerSpell.Cast(where, target, team));
 
         yield return new WaitForSeconds(delay);
 
         Vector3 updatedPos = GameManager.Instance.player.transform.position;
-        yield return innerSpell.Cast(updatedPos, target, team);
+        CoroutineManager.Instance.Run(innerSpell.Cast(updatedPos, target, team));
     }
 }
 
@@ -49,10 +49,10 @@ public class SplitterSpell : ModifierSpell
 
         // Rotate +angle
         Vector3 dirPlus = Quaternion.Euler(0, 0, angle) * forward;
-        yield return innerSpell.Cast(where, where + dirPlus, team);
-
+        CoroutineManager.Instance.Run(innerSpell.Cast(where, where + dirPlus, team));
         // Rotate -angle
         Vector3 dirMinus = Quaternion.Euler(0, 0, -angle) * forward;
-        yield return innerSpell.Cast(where, where + dirMinus, team);
+        CoroutineManager.Instance.Run(innerSpell.Cast(where, where + dirMinus, team));
+        yield return new WaitForEndOfFrame();
     }
 }
