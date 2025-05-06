@@ -3,26 +3,23 @@ using System.Collections.Generic;
 
 public static class RPNEvaluator
 {
-    public static int Evaluate(string expression, Dictionary<string, int> variables)
+    public static float Evaluate(string expression, Dictionary<string, float> variables)
     {
         string[] tokens = expression.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        Stack<int> stack = new Stack<int>();
+        Stack<float> stack = new Stack<float>();
 
         foreach (var token in tokens)
         {
-            if (int.TryParse(token, out int val))
+            if (float.TryParse(token, out float val))
             {
-                // Token is a number
                 stack.Push(val);
             }
             else if (variables.ContainsKey(token))
             {
-                // Token is a variable name (look up its value)
                 stack.Push(variables[token]);
             }
             else
             {
-                // Token is an operator
                 switch (token)
                 {
                     case "+":
@@ -31,8 +28,8 @@ public static class RPNEvaluator
 
                     case "-":
                         {
-                            int b = stack.Pop();
-                            int a = stack.Pop();
+                            float b = stack.Pop();
+                            float a = stack.Pop();
                             stack.Push(a - b);
                             break;
                         }
@@ -43,16 +40,16 @@ public static class RPNEvaluator
 
                     case "/":
                         {
-                            int b = stack.Pop();
-                            int a = stack.Pop();
-                            stack.Push(b == 0 ? 0 : a / b);
+                            float b = stack.Pop();
+                            float a = stack.Pop();
+                            stack.Push(b == 0f ? 0f : a / b);
                             break;
                         }
 
                     case "%":
                         {
-                            int b = stack.Pop();
-                            int a = stack.Pop();
+                            float b = stack.Pop();
+                            float a = stack.Pop();
                             stack.Push(a % b);
                             break;
                         }
@@ -64,7 +61,9 @@ public static class RPNEvaluator
         }
 
         if (stack.Count != 1)
-            throw new Exception("Invalid RPN expression: stack did not end with exactly one result");
+        {
+            throw new Exception(expression);
+        }
 
         return stack.Pop();
     }

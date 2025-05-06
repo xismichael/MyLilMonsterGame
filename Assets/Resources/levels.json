@@ -28,7 +28,7 @@
             {
                 "enemy": "warlock",
                 "count": "wave 5 / 1 wave 5 % - *",
-                "hp": "100 25 wave *",
+                "hp": "100 25 wave * +",
                 "location": "random bone"
             },
             {

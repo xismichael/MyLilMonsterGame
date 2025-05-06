@@ -2,11 +2,12 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class SpellCaster 
+public class SpellCaster
 {
     public int mana;
     public int max_mana;
     public int mana_reg;
+    public int power;
     public Hittable.Team team;
     public Spell spell;
 
@@ -25,12 +26,16 @@ public class SpellCaster
         this.mana = mana;
         this.max_mana = mana;
         this.mana_reg = mana_reg;
+        this.power = 100;
         this.team = team;
-        spell = new SpellBuilder().Build(this);
+        spell = SpellBuilder.Instance.Build("arcane_bolt", this);
+        spell = SpellBuilder.Instance.ApplyModifiersToSpell(spell, new List<string> { "splitter", "speed_amp" });
+        Debug.Log(spell.GetDamage());
     }
 
     public IEnumerator Cast(Vector3 where, Vector3 target)
-    {        
+    {
+
         if (mana >= spell.GetManaCost() && spell.IsReady())
         {
             mana -= spell.GetManaCost();

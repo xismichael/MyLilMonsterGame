@@ -1,21 +1,116 @@
 using UnityEngine;
-using System.IO;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
-
-public class SpellBuilder 
+public class SpellBuilder : MonoBehaviour
 {
+    public static SpellBuilder Instance { get; private set; }
 
-    public Spell Build(SpellCaster owner)
+    private Dictionary<string, JObject> spellDefinitions;
+
+    void Awake()
     {
-        return new Spell(owner);
+        if (Instance == null)
+        {
+            Instance = this;
+            LoadSpells();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-   
-    public SpellBuilder()
-    {        
+    private void LoadSpells()
+    {
+        spellDefinitions = new Dictionary<string, JObject>();
+
+        TextAsset jsonFile = Resources.Load<TextAsset>("spells");
+        if (jsonFile == null)
+        {
+            Debug.LogError("spells.json not found in Resources!");
+            return;
+        }
+
+        JObject root = JObject.Parse(jsonFile.text);
+
+        foreach (var spellPair in root)
+        {
+            string spellName = spellPair.Key;
+            JObject spellData = (JObject)spellPair.Value;
+
+            spellDefinitions[spellName] = spellData;
+        }
+    }
+
+    public Spell Build(string spellKey, SpellCaster owner)
+    {
+        if (!spellDefinitions.ContainsKey(spellKey))
+        {
+            Debug.LogError($"Spell '{spellKey}' not found in SpellBuilder.");
+            return null;
+        }
+
+        JObject definition = spellDefinitions[spellKey];
+
+        Spell spell;
+
+        switch (spellKey)
+        {
+            case "arcane_blast":
+                spell = new ArcaneBlast(owner);
+                break;
+
+            case "arcane_spray":
+                spell = new ArcaneSpray(owner);
+                break;
+
+            default:
+                spell = new Spell(owner);
+                break;
+        }
+
+        spell.SetAttributes(definition);
+        return spell;
+    }
+
+    public Spell ApplyModifiersToSpell(Spell baseSpell, List<string> modifierKeys)
+    {
+        Spell modifiedSpell = baseSpell;
+
+        foreach (var modKey in modifierKeys)
+        {
+            if (!spellDefinitions.ContainsKey(modKey))
+            {
+                Debug.LogWarning($"Modifier '{modKey}' not found in SpellBuilder.");
+                continue;
+            }
+
+            JObject modDef = spellDefinitions[modKey];
+
+            switch (modKey)
+            {
+                case "doubler":
+                    var doubler = new DoublerSpell(modifiedSpell);
+                    doubler.SetAttributes(modDef);
+                    modifiedSpell = doubler;
+                    break;
+
+                case "splitter":
+                    var splitter = new SplitterSpell(modifiedSpell);
+                    splitter.SetAttributes(modDef);
+                    modifiedSpell = splitter;
+                    break;
+
+                default:
+                    var genericModifier = new ModifierSpell(modifiedSpell);
+                    genericModifier.SetAttributes(modDef);
+                    modifiedSpell = genericModifier;
+                    break;
+            }
+        }
+
+        return modifiedSpell;
     }
 
 }
