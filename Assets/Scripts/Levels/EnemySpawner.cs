@@ -121,8 +121,7 @@ public class EnemySpawner : MonoBehaviour
                                  $"Damage Taken: {GameManager.Instance.currentWaveDamageTaken}";
         }
 
-        //Update button label if final wave
-        if (CurrentWaveNumber >= level.waves && nextWaveButtonText != null)
+        if (level.waves > 0 && CurrentWaveNumber >= level.waves && nextWaveButtonText != null)
         {
             nextWaveButtonText.text = "VICTORY";
         }
