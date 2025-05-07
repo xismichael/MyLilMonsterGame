@@ -29,7 +29,7 @@ public class SpellCaster
         this.power = 100;
         this.team = team;
         spell = SpellBuilder.Instance.Build("arcane_bolt", this);
-        spell = SpellBuilder.Instance.ApplyModifiersToSpell(spell, new List<string> { "doubler", "doubler", "doubler", "doubler" });
+        spell = SpellBuilder.Instance.ApplyModifiersToSpell(spell, new List<string> { "splitter" });
         Debug.Log(spell.GetDamage());
     }
 
@@ -39,7 +39,7 @@ public class SpellCaster
         if (mana >= spell.GetManaCost() && spell.IsReady())
         {
             mana -= spell.GetManaCost();
-            spell.lastCast = Time.time;
+            spell.SetLastcast(Time.time);
             yield return spell.Cast(where, target, team);
         }
         yield break;

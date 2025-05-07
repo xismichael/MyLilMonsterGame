@@ -61,8 +61,6 @@ public class Spell
         {
             ProjectileData.LifetimeExpr = attributes["projectile"]["lifetime"].ToString();
         }
-
-        lastCast = -1 - GetCooldown();
     }
 
     public Dictionary<string, float> GetRPNVariables()
@@ -167,6 +165,15 @@ public class Spell
     public virtual void SetProjectile(string expr)
     {
         ProjectileData.Trajectory = expr;
+    }
+
+    public virtual void SetLastcast(float time)
+    {
+        lastCast = time;
+    }
+    public virtual float GetLastcast()
+    {
+        return lastCast;
     }
 
     public virtual Action<Hittable, Vector3> GetOnHitHandler()

@@ -153,6 +153,15 @@ public class ModifierSpell : Spell
         return innerSpell.GetProjectileLifetime();
     }
 
+    public override void SetLastcast(float time)
+    {
+        innerSpell.SetLastcast(time);
+    }
+    public override float GetLastcast()
+    {
+        return innerSpell.GetLastcast();
+    }
+
     public override int GetIcon()
     {
         return innerSpell.GetIcon();

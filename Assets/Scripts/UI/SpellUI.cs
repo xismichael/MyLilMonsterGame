@@ -37,7 +37,7 @@ public class SpellUI : MonoBehaviour
             last_text_update = Time.time;
         }
 
-        float since_last = Time.time - spell.lastCast;
+        float since_last = Time.time - spell.GetLastcast();
         float perc;
         if (since_last > spell.GetCooldown())
         {
@@ -47,6 +47,7 @@ public class SpellUI : MonoBehaviour
         {
             perc = 1 - since_last / spell.GetCooldown();
         }
+        Debug.Log(perc);
         cooldown.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 48 * perc);
     }
 }
