@@ -35,6 +35,8 @@ public class Spell
 
     public ProjectileData ProjectileData;
 
+    public List<Action<Hittable, Vector3>> OnHitHandlers = new List<Action<Hittable, Vector3>>();
+
     public Spell(SpellCaster owner)
     {
         this.owner = owner;
@@ -180,6 +182,7 @@ public class Spell
     {
         return this.OnHit;
     }
+    public virtual void AddOnHitHandler(Action<Hittable, Vector3> onHitHandler) => OnHitHandlers.Add(onHitHandler);
 
     public virtual IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
@@ -221,6 +224,10 @@ public class Spell
         if (other.team != team)
         {
             other.Damage(new Damage(Mathf.RoundToInt(this.GetDamage()), Damage.Type.ARCANE));
+            foreach (var handler in OnHitHandlers)
+            {
+                handler.Invoke(other, impact);
+            }
         }
     }
 }

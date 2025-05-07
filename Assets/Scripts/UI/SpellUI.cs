@@ -47,7 +47,6 @@ public class SpellUI : MonoBehaviour
         {
             perc = 1 - since_last / spell.GetCooldown();
         }
-        Debug.Log(perc);
         cooldown.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 48 * perc);
     }
 }

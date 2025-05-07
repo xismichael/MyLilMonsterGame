@@ -102,6 +102,12 @@ public class SpellBuilder : MonoBehaviour
                     modifiedSpell = splitter;
                     break;
 
+                case "burning":
+                    var burning = new BurningModifierSpell(modifiedSpell);
+                    burning.SetAttributes(modDef);
+                    modifiedSpell = burning;
+                    break;
+
                 default:
                     var genericModifier = new ModifierSpell(modifiedSpell);
                     genericModifier.SetAttributes(modDef);

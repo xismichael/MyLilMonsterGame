@@ -110,5 +110,11 @@
         "damage_multiplier": "0.75",
         "mana_adder": "10",
         "projectile_trajectory": "homing"
+    },
+    "burning": {
+        "name": "burning",
+        "description": "Applies burning damage over time after hitting a target.",
+        "ticks": "5",
+        "damage_per_tick": "2 power 3 / +"
     }
 }

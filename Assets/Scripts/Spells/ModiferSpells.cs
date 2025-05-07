@@ -53,3 +53,42 @@ public class SplitterSpell : ModifierSpell
         yield return new WaitForEndOfFrame();
     }
 }
+
+public class BurningModifierSpell : ModifierSpell
+{
+    private string tickCountExpr;
+    private string damagePerTickExpr;
+
+    public BurningModifierSpell(Spell innerSpell) : base(innerSpell) { }
+
+    public override void SetAttributes(JObject attributes)
+    {
+        base.SetAttributes(attributes);
+        tickCountExpr = attributes["ticks"].ToString();
+        damagePerTickExpr = attributes["damage_per_tick"].ToString();
+
+        // Add the burn effect to the inner spell's OnHit handlers
+        innerSpell.AddOnHitHandler(ApplyBurnEffect);
+    }
+
+    private void ApplyBurnEffect(Hittable target, Vector3 impact)
+    {
+        int ticks = Mathf.RoundToInt(RPNEvaluator.Evaluate(tickCountExpr, GetRPNVariables()));
+        float damagePerTick = RPNEvaluator.Evaluate(damagePerTickExpr, GetRPNVariables());
+
+        CoroutineManager.Instance.Run(BurnCoroutine(target, ticks, damagePerTick));
+    }
+
+    private IEnumerator BurnCoroutine(Hittable target, int ticks, float damagePerTick)
+    {
+        for (int i = 0; i < ticks; i++)
+        {
+            if (target != null)
+            {
+                target.Damage(new Damage(Mathf.RoundToInt(damagePerTick), Damage.Type.FIRE));
+            }
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+}
+

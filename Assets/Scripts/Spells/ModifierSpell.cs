@@ -121,6 +121,11 @@ public class ModifierSpell : Spell
         innerSpell.SetProjectile(expr);
     }
 
+    public override void AddOnHitHandler(Action<Hittable, Vector3> onHitHandler)
+    {
+        innerSpell.AddOnHitHandler(onHitHandler);
+    }
+
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
         // Use the inner spell's casting behavior
