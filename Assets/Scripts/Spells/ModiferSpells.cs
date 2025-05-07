@@ -16,8 +16,6 @@ public class DoublerSpell : ModifierSpell
 
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
-        lastCast = Time.time;
-
         float delay = RPNEvaluator.Evaluate(delayExpr, GetRPNVariables());
 
         yield return innerSpell.Cast(where, target, team);
@@ -43,7 +41,6 @@ public class SplitterSpell : ModifierSpell
 
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
-        lastCast = Time.time;
         float angle = RPNEvaluator.Evaluate(angleExpr, GetRPNVariables());
         Vector3 forward = (target - where).normalized;
 
