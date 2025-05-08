@@ -69,9 +69,10 @@ public class SpellBuilder : MonoBehaviour
                 break;
 
             case "turret_spell":
-
-            default:
                 spell = new TurretSpell(owner, TurretPrefab);
+                break;
+            default:
+                spell = new Spell(owner);
                 break;
         }
 
