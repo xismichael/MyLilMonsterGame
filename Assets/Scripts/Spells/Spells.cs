@@ -119,3 +119,44 @@ public class ArcaneSpray : Spell
         yield return new WaitForEndOfFrame();
     }
 }
+
+public class TurretSpell : Spell
+{
+    private GameObject turretPrefab;
+    private string lifetimeExpr;
+    private string attackIntervalExpr;
+
+    public TurretSpell(SpellCaster owner, GameObject turretPrefab) : base(owner)
+    {
+        this.turretPrefab = turretPrefab;
+    }
+
+    public override void SetAttributes(JObject attributes)
+    {
+        base.SetAttributes(attributes);
+        lifetimeExpr = attributes["turret_lifetime"].ToString();
+        attackIntervalExpr = attributes["attack_interval"].ToString();
+    }
+
+    public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
+    {
+        this.team = team;
+
+        float lifetime = RPNEvaluator.Evaluate(lifetimeExpr, GetRPNVariables());
+        float attackInterval = RPNEvaluator.Evaluate(attackIntervalExpr, GetRPNVariables());
+
+        Vector3 spawnPosition = new Vector3(target.x, target.y, -1f);
+        GameObject turret = UnityEngine.Object.Instantiate(turretPrefab, spawnPosition, Quaternion.identity);
+        TurretBehavior turretBehavior = turret.GetComponent<TurretBehavior>();
+
+        turretBehavior.Initialize(this, team, attackInterval, lifetime);
+
+        yield return new WaitForEndOfFrame();
+    }
+
+    public IEnumerator CastBase(Vector3 where, Vector3 target, Hittable.Team team)
+    {
+        Debug.Log("here");
+        yield return base.Cast(where, target, team);
+    }
+}

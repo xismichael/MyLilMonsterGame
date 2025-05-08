@@ -28,8 +28,8 @@ public class SpellCaster
         this.mana_reg = mana_reg;
         this.power = 100;
         this.team = team;
-        spell = SpellBuilder.Instance.Build("arcane_spray", this);
-        spell = SpellBuilder.Instance.ApplyModifiersToSpell(spell, new List<string> { "burning", "damage_amp",});
+        spell = SpellBuilder.Instance.Build("turret_spell", this);
+        spell = SpellBuilder.Instance.ApplyModifiersToSpell(spell, new List<string> { "burning", "damage_amp", "doubler" });
         Debug.Log(spell.GetDamage());
     }
 

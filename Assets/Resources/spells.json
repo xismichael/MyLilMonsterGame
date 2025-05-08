@@ -74,6 +74,24 @@
             "lifetime": "0.1 power 100 / +"
         }
     },
+    "turret_spell": {
+        "name": "Turret Spell",
+        "description": "Deploys a turret that shoots at people",
+        "icon": 1,
+        "damage": {
+            "amount": "20 power 2 / +",
+            "type": "arcane"
+        },
+        "mana_cost": "40",
+        "cooldown": "12",
+        "projectile": {
+            "trajectory": "straight",
+            "speed": "10",
+            "sprite": 0
+        },
+        "turret_lifetime": "12",
+        "attack_interval": "2"
+    },
     "damage_amp": {
         "name": "damage-amplified",
         "description": "Increased damage and increased mana cost.",

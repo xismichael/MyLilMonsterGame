@@ -8,6 +8,8 @@ public class SpellBuilder : MonoBehaviour
 
     private Dictionary<string, JObject> spellDefinitions;
 
+    public GameObject TurretPrefab;
+
     void Awake()
     {
         if (Instance == null)
@@ -65,8 +67,10 @@ public class SpellBuilder : MonoBehaviour
                 spell = new ArcaneSpray(owner);
                 break;
 
+            case "turret_spell":
+
             default:
-                spell = new Spell(owner);
+                spell = new TurretSpell(owner, TurretPrefab);
                 break;
         }
 
