@@ -28,10 +28,25 @@ public class SpellCaster
         this.mana_reg = mana_reg;
         this.power = 100;
         this.team = team;
-        spell = SpellBuilder.Instance.Build("turret_spell", this);
-        spell = SpellBuilder.Instance.ApplyModifiersToSpell(spell, new List<string> { "burning", "damage_amp", "doubler" });
-        Debug.Log(spell.GetDamage());
+        spell = SpellBuilder.Instance.CreateRandomSpell(this);
+        //spell = SpellBuilder.Instance.Build("turret_spell", this);
+        //spell = SpellBuilder.Instance.ApplyModifiersToSpell(spell, new List<string> { "burning", "damage_amp", "doubler" });
+        List<KeyValuePair<string, string>> def = spell.GetDefinitionList();
+        if (def != null && def.Count > 0)
+        {
+            foreach (KeyValuePair<string, string> pair in def)
+            {
+                string key = pair.Key ?? "(null key)";
+                string value = pair.Value ?? "(null value)";
+                Debug.Log($"Spell: {key} | Definition: {value}");
+            }
+        }
+        else
+        {
+            Debug.Log("No spell definitions found.");
+        }
     }
+
 
     public IEnumerator Cast(Vector3 where, Vector3 target)
     {

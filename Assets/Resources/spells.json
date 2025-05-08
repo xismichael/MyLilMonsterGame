@@ -1,6 +1,7 @@
 {
     "arcane_bolt": {
         "name": "Arcane Bolt",
+        "type": "spell",
         "description": "A straight-flying bolt.",
         "icon": 0,
         "damage": {
@@ -17,6 +18,7 @@
     },
     "magic_missile": {
         "name": "Magic Missile",
+        "type": "spell",
         "description": "A homing bolt.",
         "icon": 2,
         "damage": {
@@ -33,6 +35,7 @@
     },
     "arcane_blast": {
         "name": "Arcane Blast",
+        "type": "spell",
         "description": "A bolt that explodes into smaller bolts on impact.",
         "icon": 2,
         "N": "8 power 5 / +",
@@ -57,6 +60,7 @@
     },
     "arcane_spray": {
         "name": "Arcane Spray",
+        "type": "spell",
         "description": "A large number of short-range bolts in a cone.",
         "icon": 1,
         "N": "7 power 25 / +",
@@ -76,7 +80,8 @@
     },
     "turret_spell": {
         "name": "Turret Spell",
-        "description": "Deploys a turret that shoots at people",
+        "type": "spell",
+        "description": "Deploys a turret that shoots at things",
         "icon": 1,
         "damage": {
             "amount": "20 power 2 / +",
@@ -94,17 +99,20 @@
     },
     "damage_amp": {
         "name": "damage-amplified",
+        "type": "modifier",
         "description": "Increased damage and increased mana cost.",
         "damage_multiplier": "1.5",
         "mana_multiplier": "1.5"
     },
     "speed_amp": {
         "name": "speed-amplified",
+        "type": "modifier",
         "description": "Faster projectile speed",
         "speed_multiplier": "1.75"
     },
     "doubler": {
         "name": "doubled",
+        "type": "modifier",
         "description": "Spell is cast a second time after a small delay; increased mana cost and cooldown.",
         "delay": "0.5",
         "mana_multiplier": "1.5",
@@ -112,18 +120,21 @@
     },
     "splitter": {
         "name": "split",
+        "type": "modifier",
         "description": "Spell is cast twice in slightly different directions; increased mana cost.",
         "angle": "10",
         "mana_multiplier": "1.5"
     },
     "chaos": {
         "name": "chaotic",
+        "type": "modifier",
         "description": "Significantly increased damage, but projectile is spiraling.",
         "damage_multiplier": "1.5 wave 5 / +",
         "projectile_trajectory": "spiraling"
     },
     "homing": {
         "name": "homing",
+        "type": "modifier",
         "description": "Homing projectile, with decreased damage and increased mana cost.",
         "damage_multiplier": "0.75",
         "mana_adder": "10",
@@ -131,6 +142,7 @@
     },
     "burning": {
         "name": "burning",
+        "type": "modifier",
         "description": "Applies burning damage over time after hitting a target.",
         "ticks": "5",
         "damage_per_tick": "2 power 3 / +"

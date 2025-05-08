@@ -13,11 +13,10 @@ public class Spell
     public string Name;
     public string Description;
     public int Icon;
-
     public string DamageExpr;
     public string ManaCostExpr;
     public string CooldownExpr;
-
+    public List<KeyValuePair<string, string>> DefinitionList = new List<KeyValuePair<string, string>>();
     protected List<string> damageMultiplierExprs = new List<string>();
     protected List<string> damageAdderExprs = new List<string>();
 
@@ -59,10 +58,25 @@ public class Spell
             Sprite = attributes["projectile"]["sprite"].ToObject<int>()
         };
 
+        RegisterDefinition(Name, attributes["description"].ToString());
+
         if (attributes["projectile"]["lifetime"] != null)
         {
             ProjectileData.LifetimeExpr = attributes["projectile"]["lifetime"].ToString();
         }
+    }
+
+    public virtual void RegisterDefinition(string spellName, string definition)
+    {
+        int index = DefinitionList.FindIndex(pair => pair.Key == spellName);
+        if (index < 0)
+        {
+            DefinitionList.Add(new KeyValuePair<string, string>(spellName, definition));
+        }
+    }
+    public virtual List<KeyValuePair<string, string>> GetDefinitionList()
+    {
+        return DefinitionList;
     }
 
     public Dictionary<string, float> GetRPNVariables()

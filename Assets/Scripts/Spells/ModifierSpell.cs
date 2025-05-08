@@ -69,7 +69,18 @@ public class ModifierSpell : Spell
         if (attributes["projectile_trajectory"] != null)
             SetProjectile(attributes["projectile_trajectory"].ToString());
 
+        RegisterDefinition(attributes["name"].ToString(), attributes["description"].ToString());
 
+
+    }
+
+    public override void RegisterDefinition(string spellName, string definition)
+    {
+        innerSpell.RegisterDefinition(spellName, definition);
+    }
+    public override List<KeyValuePair<string, string>> GetDefinitionList()
+    {
+        return innerSpell.GetDefinitionList();
     }
     public override void AddDamageMultiplier(string expr)
     {

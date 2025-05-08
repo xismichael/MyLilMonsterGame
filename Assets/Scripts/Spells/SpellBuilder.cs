@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
+using System.Linq;
 
 public class SpellBuilder : MonoBehaviour
 {
@@ -121,6 +122,34 @@ public class SpellBuilder : MonoBehaviour
         }
 
         return modifiedSpell;
+    }
+
+    public Spell CreateRandomSpell(SpellCaster owner)
+    {
+        var collectedModifiers = new List<string>();
+        return PickRandom(owner, collectedModifiers);
+    }
+
+    private Spell PickRandom(SpellCaster owner, List<string> mods)
+    {
+        var keys = spellDefinitions.Keys.ToList();
+        string pick = keys[Random.Range(0, keys.Count)];
+        var def = spellDefinitions[pick];
+
+        string type = def["type"].ToString();
+
+        if (type == "modifier")
+        {
+            mods.Add(pick);
+            return PickRandom(owner, mods);
+        }
+        else
+        {
+            Spell baseSpell = Build(pick, owner);
+            if (mods.Count > 0)
+                baseSpell = ApplyModifiersToSpell(baseSpell, mods);
+            return baseSpell;
+        }
     }
 
 }
