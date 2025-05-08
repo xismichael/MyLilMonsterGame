@@ -74,8 +74,6 @@ public class PlayerController : MonoBehaviour
 
         var spawner = FindObjectOfType<EnemySpawner>();
 
-        if (spawner.waveStatsText != null)
-            spawner.waveStatsText.text = "";
 
         spawner.StopAllCoroutines();
 
@@ -88,8 +86,8 @@ public class PlayerController : MonoBehaviour
 
         //show YOU DIED message
         if (deathMessageUI != null)
-            deathMessageUI.SetActive(true);
-
+            RewardScreenManager.Instance.ShowDeathMessage();
+            
         spawner.level_selector.gameObject.SetActive(true);
         spawner.restartScreen();
     }

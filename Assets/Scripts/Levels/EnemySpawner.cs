@@ -12,15 +12,16 @@ public class EnemySpawner : MonoBehaviour
     public GameObject button;
     public GameObject enemy;
     public SpawnPoint[] SpawnPoints;
-
-    public TMP_Text waveStatsText;              // displays wave stats
     public TMP_Text nextWaveButtonText;
 
     public static int CurrentWaveNumber = 1;
     private string currentLevelName;
 
+    public static EnemySpawner Instance { get; private set; } 
+
     void Start()
     {
+        Instance = this; 
         makeRestartScreen();
     }
 
@@ -28,6 +29,7 @@ public class EnemySpawner : MonoBehaviour
     {
         level_selector.gameObject.SetActive(true);
     }
+
     public void makeRestartScreen()
     {
         float yStart = 130;
@@ -49,43 +51,25 @@ public class EnemySpawner : MonoBehaviour
     public void StartLevel(string levelname)
     {
         level_selector.gameObject.SetActive(false);
+
+        GameManager.Instance.currentWaveEnemiesKilled = 0;
+        GameManager.Instance.currentWaveDamageTaken = 0;
+
         GameManager.Instance.player.GetComponent<PlayerController>().StartLevel();
         currentLevelName = levelname;
         CurrentWaveNumber = 1;
         StartCoroutine(SpawnWave(levelname));
     }
 
-    public void NextWave()
+    
+    public void SpawnNextWave()
     {
-        Level level = LevelDatabase.Instance.GetLevel(currentLevelName);
-
-        if (level.waves > 0 && CurrentWaveNumber >= level.waves)
-        {
-            //Clear stats text at end of level
-            if (waveStatsText != null)
-                waveStatsText.text = "";
-
-            if (nextWaveButtonText != null)
-                nextWaveButtonText.text = "Next Wave";
-
-            level_selector.gameObject.SetActive(true);
-            GameManager.Instance.state = GameManager.GameState.GAMEOVER;
-            return;
-        }
-
-        CurrentWaveNumber++;
-
-        if (waveStatsText != null)
-            waveStatsText.text = "";
-
         StartCoroutine(SpawnWave(currentLevelName));
+        CurrentWaveNumber++;
     }
 
     IEnumerator SpawnWave(string levelname)
     {
-        GameManager.Instance.currentWaveEnemiesKilled = 0;
-        GameManager.Instance.currentWaveDamageTaken = 0;
-
         GameManager.Instance.state = GameManager.GameState.COUNTDOWN;
         GameManager.Instance.countdown = 3;
 
@@ -113,15 +97,7 @@ public class EnemySpawner : MonoBehaviour
 
         yield return new WaitWhile(() => GameManager.Instance.enemy_count > 0);
 
-        //Show stats at wave end
-        if (waveStatsText != null)
-        {
-            waveStatsText.text = $"Wave: {CurrentWaveNumber}\n" +
-                                 $"Kills: {GameManager.Instance.currentWaveEnemiesKilled}\n" +
-                                 $"Damage Taken: {GameManager.Instance.currentWaveDamageTaken}";
-        }
-
-        if (level.waves > 0 && CurrentWaveNumber >= level.waves && nextWaveButtonText != null)
+        if (CurrentWaveNumber >= level.waves && nextWaveButtonText != null)
         {
             nextWaveButtonText.text = "VICTORY";
         }
@@ -131,7 +107,6 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnEnemies(Spawn spawn)
     {
-
         int count = Mathf.RoundToInt(RPNEvaluator.Evaluate(spawn.count,
         new Dictionary<string, float>{
             { "wave", CurrentWaveNumber },
