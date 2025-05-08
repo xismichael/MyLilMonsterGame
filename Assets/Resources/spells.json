@@ -20,7 +20,7 @@
         "name": "Magic Missile",
         "type": "spell",
         "description": "A homing bolt.",
-        "icon": 2,
+        "icon": 1,
         "damage": {
             "amount": "10 power 3 / +",
             "type": "arcane"
@@ -62,7 +62,7 @@
         "name": "Arcane Spray",
         "type": "spell",
         "description": "A large number of short-range bolts in a cone.",
-        "icon": 1,
+        "icon": 3,
         "N": "7 power 25 / +",
         "spray": "0.3",
         "damage": {
@@ -82,7 +82,7 @@
         "name": "Turret Spell",
         "type": "spell",
         "description": "Deploys a turret that shoots at things",
-        "icon": 1,
+        "icon": 4,
         "damage": {
             "amount": "20 power 2 / +",
             "type": "arcane"
