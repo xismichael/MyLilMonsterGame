@@ -8,7 +8,7 @@
             "type": "arcane"
         },
         "mana_cost": "10",
-        "cooldown": "2",
+        "cooldown": "1",
         "projectile": {
             "trajectory": "straight",
             "speed": "8 power 5 / +",
@@ -24,7 +24,7 @@
             "type": "arcane"
         },
         "mana_cost": "20",
-        "cooldown": "3",
+        "cooldown": "2",
         "projectile": {
             "trajectory": "homing",
             "speed": "10",
