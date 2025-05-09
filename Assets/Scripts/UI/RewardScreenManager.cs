@@ -1,82 +1,98 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class RewardScreenManager : MonoBehaviour
 {
     public GameObject rewardUI;
     public TMP_Text waveStatsText;
-    public TMP_Text deathMessage; 
+    public TMP_Text HeaderText;
 
-    public static RewardScreenManager Instance { get; private set; } 
+    public Button nextStageButton;
+    public TMP_Text nextStageButtonText;
 
-    private bool shownStats = false; // tracks if stats show when wave ends
+    private bool ScreenActivate;
+
+    public static RewardScreenManager Instance { get; private set; }
+
 
     void Awake()
     {
         if (Instance != null && Instance != this) Destroy(gameObject);
-        Instance = this; 
-    }
-
-    public void ShowDeathMessage()
-    {
-        if (deathMessage != null)
-            deathMessage.gameObject.SetActive(true); 
+        Instance = this;
+        ScreenActivate = false;
     }
 
     void Update()
     {
         if (GameManager.Instance.state == GameManager.GameState.WAVEEND)
         {
-            rewardUI.SetActive(true);
+            WaveEndScreen();
+        }
 
-            if (!shownStats)
-            {
-                if (waveStatsText != null)
-                {
-                    // display stats at end of wave
-                    waveStatsText.text = $"Wave: {EnemySpawner.CurrentWaveNumber}\n" +
-                                         $"Kills: {GameManager.Instance.currentWaveEnemiesKilled}\n" +
-                                         $"Damage Taken: {GameManager.Instance.currentWaveDamageTaken}";
-                }
-
-                // show death message if game over
-                if (GameManager.Instance.state == GameManager.GameState.GAMEOVER && deathMessage != null)
-                {
-                    deathMessage.gameObject.SetActive(true);
-                }
-
-                shownStats = true;
-            }
+        else if (GameManager.Instance.state == GameManager.GameState.GAMEOVER)
+        {
+            GameOverScreen();
         }
         else
         {
+            nextStageButton.onClick.RemoveAllListeners();
+            ScreenActivate = false;
             rewardUI.SetActive(false);
-            shownStats = false;
-
-            if (waveStatsText != null)
-                waveStatsText.text = "";
-            if (deathMessage != null && GameManager.Instance.state != GameManager.GameState.GAMEOVER)
-                deathMessage.gameObject.SetActive(false);
         }
     }
 
-    // next wave call method
-    public void NextWaveButtonPressed()
+    public void WaveEndScreen()
     {
-        GameManager.Instance.currentWaveEnemiesKilled = 0;
-        GameManager.Instance.currentWaveDamageTaken = 0;
-
-        if (EnemySpawner.Instance != null)
+        if (!ScreenActivate)
         {
-            EnemySpawner.Instance.SpawnNextWave(); // cleanly continues the game
+            rewardUI.SetActive(true);
+            HeaderText.text = "WAVE FINISHED";
+            waveStatsText.text = $"Wave {EnemySpawner.CurrentWaveNumber}\n" +
+                                    $"Kills: {EnemySpawner.Instance.currentWaveEnemiesKilled}\n" +
+                                    $"Damage Taken: {EnemySpawner.Instance.currentWaveDamageTaken}";
+            nextStageButton.onClick.AddListener(WaveEndButtonAction);
+            nextStageButtonText.text = "NEXT WAVE";
+            ScreenActivate = true;
         }
 
-        rewardUI.SetActive(false); // hide reward screen after clicking 
 
-        if (waveStatsText != null)
-            waveStatsText.text = "";
-
-        if (deathMessage != null)
-            deathMessage.gameObject.SetActive(false); // ensure death message is hidden when continuing
     }
+    public void WaveEndButtonAction()
+    {
+        EnemySpawner.Instance.SpawnNextWave();
+    }
+    public void GameOverScreen()
+    {
+        if (!ScreenActivate)
+        {
+
+            if (GameManager.Instance.PlayerDeath)
+            {
+                HeaderText.text = "YOU DIED";
+            }
+            else
+            {
+                HeaderText.text = "VICTORY";
+            }
+
+            rewardUI.SetActive(true);
+            waveStatsText.text = $"Wave {EnemySpawner.CurrentWaveNumber}\n" +
+                                $"Total Kills: {EnemySpawner.Instance.TotalEnemiesKilled}\n" +
+                                $"Total Damage Taken: {EnemySpawner.Instance.TotalDamageTaken}";
+            nextStageButton.onClick.AddListener(GameOverButtonAction);
+            nextStageButtonText.text = "RESTART";
+            ScreenActivate = true;
+        }
+
+    }
+
+    public void GameOverButtonAction()
+    {
+        Debug.Log("here");
+        rewardUI.SetActive(false);
+        EnemySpawner.Instance.restartScreen();
+    }
+
+
 }

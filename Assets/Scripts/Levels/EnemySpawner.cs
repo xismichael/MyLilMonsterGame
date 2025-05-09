@@ -14,14 +14,19 @@ public class EnemySpawner : MonoBehaviour
     public SpawnPoint[] SpawnPoints;
     public TMP_Text nextWaveButtonText;
 
+    public int currentWaveEnemiesKilled;
+    public int TotalEnemiesKilled;
+    public int currentWaveDamageTaken;
+    public int TotalDamageTaken;
+
     public static int CurrentWaveNumber = 1;
     private string currentLevelName;
 
-    public static EnemySpawner Instance { get; private set; } 
+    public static EnemySpawner Instance { get; private set; }
 
     void Start()
     {
-        Instance = this; 
+        Instance = this;
         makeRestartScreen();
     }
 
@@ -52,8 +57,8 @@ public class EnemySpawner : MonoBehaviour
     {
         level_selector.gameObject.SetActive(false);
 
-        GameManager.Instance.currentWaveEnemiesKilled = 0;
-        GameManager.Instance.currentWaveDamageTaken = 0;
+        TotalEnemiesKilled = 0;
+        TotalDamageTaken = 0;
 
         GameManager.Instance.player.GetComponent<PlayerController>().StartLevel();
         currentLevelName = levelname;
@@ -61,9 +66,11 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(SpawnWave(levelname));
     }
 
-    
+
     public void SpawnNextWave()
     {
+        currentWaveEnemiesKilled = 0;
+        currentWaveDamageTaken = 0;
         StartCoroutine(SpawnWave(currentLevelName));
         CurrentWaveNumber++;
     }
@@ -97,12 +104,8 @@ public class EnemySpawner : MonoBehaviour
 
         yield return new WaitWhile(() => GameManager.Instance.enemy_count > 0);
 
-        if (CurrentWaveNumber >= level.waves && nextWaveButtonText != null)
-        {
-            nextWaveButtonText.text = "VICTORY";
-        }
-
-        GameManager.Instance.state = GameManager.GameState.WAVEEND;
+        if (CurrentWaveNumber >= level.waves) { GameManager.Instance.state = GameManager.GameState.GAMEOVER; }
+        else { GameManager.Instance.state = GameManager.GameState.WAVEEND; }
     }
 
     IEnumerator SpawnEnemies(Spawn spawn)

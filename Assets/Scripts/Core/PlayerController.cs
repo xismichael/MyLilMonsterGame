@@ -17,8 +17,6 @@ public class PlayerController : MonoBehaviour
     public int speed;
     public Unit unit;
 
-    public GameObject deathMessageUI; //assign the death message in inspector
-
     void Start()
     {
         unit = GetComponent<Unit>();
@@ -29,10 +27,6 @@ public class PlayerController : MonoBehaviour
     {
         spellcaster = new SpellCaster(125, 8, Hittable.Team.PLAYER);
         StartCoroutine(spellcaster.ManaRegeneration());
-
-        // Hide death message when restarting
-        if (deathMessageUI != null)
-            deathMessageUI.SetActive(false);
 
         hp = new Hittable(100, Hittable.Team.PLAYER, gameObject);
         hp.OnDeath += Die;
@@ -51,6 +45,7 @@ public class PlayerController : MonoBehaviour
     void OnAttack(InputValue value)
     {
         if (GameManager.Instance.state == GameManager.GameState.PREGAME ||
+            GameManager.Instance.state == GameManager.GameState.WAVEEND ||
             GameManager.Instance.state == GameManager.GameState.GAMEOVER) return;
 
         Vector2 mouseScreen = Mouse.current.position.value;
@@ -63,6 +58,7 @@ public class PlayerController : MonoBehaviour
     void OnMove(InputValue value)
     {
         if (GameManager.Instance.state == GameManager.GameState.PREGAME ||
+            GameManager.Instance.state == GameManager.GameState.WAVEEND ||
             GameManager.Instance.state == GameManager.GameState.GAMEOVER) return;
 
         unit.movement = value.Get<Vector2>() * speed;
@@ -77,11 +73,8 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         GameManager.Instance.state = GameManager.GameState.GAMEOVER;
-
-        var spawner = FindObjectOfType<EnemySpawner>();
-
-
-        spawner.StopAllCoroutines();
+        GameManager.Instance.PlayerDeath = true;
+        EnemySpawner.Instance.StopAllCoroutines();
 
         var allEnemies = FindObjectsOfType<EnemyController>();
         foreach (var ec in allEnemies)
@@ -90,11 +83,5 @@ public class PlayerController : MonoBehaviour
             Destroy(ec.gameObject);
         }
 
-        //show YOU DIED message
-        if (deathMessageUI != null)
-            RewardScreenManager.Instance.ShowDeathMessage();
-
-        spawner.level_selector.gameObject.SetActive(true);
-        spawner.restartScreen();
     }
 }

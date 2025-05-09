@@ -17,7 +17,10 @@ public class Hittable
 
         //tracks player damage taken this wave
         if (team == Team.PLAYER)
-            GameManager.Instance.currentWaveDamageTaken += damage.amount;
+        {
+            EnemySpawner.Instance.currentWaveDamageTaken += damage.amount;
+            EnemySpawner.Instance.TotalDamageTaken += damage.amount;
+        }
 
         hp -= damage.amount;
         if (hp <= 0)

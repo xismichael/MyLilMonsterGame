@@ -49,7 +49,8 @@ public class EnemyController : MonoBehaviour
             dead = true;
 
             //counts enemy kill this wave
-            GameManager.Instance.currentWaveEnemiesKilled++;
+            EnemySpawner.Instance.currentWaveEnemiesKilled++;
+            EnemySpawner.Instance.TotalEnemiesKilled++;
 
             GameManager.Instance.RemoveEnemy(gameObject);
             Destroy(gameObject);

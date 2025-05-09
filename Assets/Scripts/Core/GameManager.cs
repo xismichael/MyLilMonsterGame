@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class GameManager 
+public class GameManager
 {
     public enum GameState
     {
@@ -16,10 +16,6 @@ public class GameManager
     public GameState state;
 
     public int countdown;
-
-    //new wave-specific stats
-    public int currentWaveEnemiesKilled = 0; // resets each wave
-    public int currentWaveDamageTaken = 0;   // resets each wave
 
     private static GameManager theInstance;
     public static GameManager Instance
@@ -39,6 +35,8 @@ public class GameManager
     public EnemySpriteManager enemySpriteManager;
     public PlayerSpriteManager playerSpriteManager;
     public RelicIconManager relicIconManager;
+
+    public bool PlayerDeath = false;
 
     private List<GameObject> enemies;
     public int enemy_count { get { return enemies.Count; } }
