@@ -17,10 +17,15 @@ public class PlayerController : MonoBehaviour
     public int speed;
     public Unit unit;
 
+    public string role;
+
+    private RoleClass currentRole;
+
     void Start()
     {
         unit = GetComponent<Unit>();
         GameManager.Instance.player = gameObject;
+        role = "mage";
     }
 
     public void StartLevel()
@@ -35,11 +40,31 @@ public class PlayerController : MonoBehaviour
         healthui.SetHealth(hp);
         manaui.SetSpellCaster(spellcaster);
         spellUIContainer.LoadUI(spellcaster.spells);
+        currentRole = RoleClassDatabase.Instance.GetRoleClass(role);
+        setStats(currentRole);
+        GameManager.Instance.OnWaveEnd += () => setStats(currentRole);
     }
 
     void Update()
     {
         // Movement handled by OnMove
+    }
+
+    void setStats(RoleClass role)
+    {
+        spellcaster.mana = Mathf.RoundToInt(RPNEvaluator.Evaluate(role.mana, GetRPNVariables()));
+        spellcaster.mana_reg = Mathf.RoundToInt(RPNEvaluator.Evaluate(role.mana_regeneration, GetRPNVariables()));
+        spellcaster.power = Mathf.RoundToInt(RPNEvaluator.Evaluate(role.spellpower, GetRPNVariables()));
+        hp.SetMaxHP(Mathf.RoundToInt(RPNEvaluator.Evaluate(role.health, GetRPNVariables())));
+        speed = Mathf.RoundToInt(RPNEvaluator.Evaluate(role.speed, GetRPNVariables()));
+    }
+
+    public Dictionary<string, float> GetRPNVariables()
+    {
+        return new Dictionary<string, float>
+        {
+            { "wave", EnemySpawner.CurrentWaveNumber }
+        };
     }
 
     void OnAttack(InputValue value)
