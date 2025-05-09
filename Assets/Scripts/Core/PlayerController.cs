@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     public ManaBar manaui;
 
     public SpellCaster spellcaster;
-    public SpellUI spellui;
+    public SpellUIContainer spellUIContainer;
 
     public int speed;
     public Unit unit;
@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
 
         healthui.SetHealth(hp);
         manaui.SetSpellCaster(spellcaster);
-        spellui.SetSpell(spellcaster.spell);
+        spellUIContainer.LoadUI(spellcaster.spells);
     }
 
     void Update()
@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
         //show YOU DIED message
         if (deathMessageUI != null)
             RewardScreenManager.Instance.ShowDeathMessage();
-            
+
         spawner.level_selector.gameObject.SetActive(true);
         spawner.restartScreen();
     }

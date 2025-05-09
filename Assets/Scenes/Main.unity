@@ -5351,7 +5351,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthui: {fileID: 765025204}
   manaui: {fileID: 71109453}
-  spellui: {fileID: 2085212185}
+  spellUIContainer: {fileID: 1982188287}
   speed: 5
   unit: {fileID: 0}
   deathMessageUI: {fileID: 889334735}
@@ -56606,6 +56606,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: GFXManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3127186393118423181, guid: b531ed09aa5f5a847918ddac98e4bf16, type: 3}
+      propertyPath: sprites.Array.size
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 3127186393118423181, guid: b531ed09aa5f5a847918ddac98e4bf16, type: 3}
+      propertyPath: 'sprites.Array.data[6]'
+      value: 
+      objectReference: {fileID: 6750894140006794391, guid: e621137f9197f0842a52168123ca0298, type: 3}
+    - target: {fileID: 3127186393118423181, guid: b531ed09aa5f5a847918ddac98e4bf16, type: 3}
+      propertyPath: 'sprites.Array.data[18]'
+      value: 
+      objectReference: {fileID: 335670889, guid: e621137f9197f0842a52168123ca0298, type: 3}
     - target: {fileID: 5489274343212671176, guid: b531ed09aa5f5a847918ddac98e4bf16, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.2238593
