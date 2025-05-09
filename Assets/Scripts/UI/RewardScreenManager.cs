@@ -60,8 +60,9 @@ public class RewardScreenManager : MonoBehaviour
             spellRewardManager.spellAccepted = false;
             spellRewardManager.SetSpellDescription(randomSpell);
             spellRewardManager.SetSpellUI(randomSpell);
-
-
+            GameManager.Instance.player.GetComponent<PlayerController>().spellUIContainer.OpenAllDropButton();
+            GameManager.Instance.player.GetComponent<PlayerController>().spellUIContainer.RewardscreenShift();
+            spellRewardManager.SetActive();
 
 
             nextStageButton.onClick.AddListener(WaveEndButtonAction);
@@ -73,6 +74,7 @@ public class RewardScreenManager : MonoBehaviour
     }
     public void WaveEndButtonAction()
     {
+        GameManager.Instance.player.GetComponent<PlayerController>().spellUIContainer.GameplayShift();
         EnemySpawner.Instance.SpawnNextWave();
     }
     public void GameOverScreen()
@@ -89,6 +91,7 @@ public class RewardScreenManager : MonoBehaviour
                 texts[1].text = "VICTORY";
             }
 
+            spellRewardManager.SetDeactive();
             rewardUI.SetActive(true);
             texts[0].text = $"Wave {EnemySpawner.CurrentWaveNumber}\n" +
                                 $"Total Kills: {EnemySpawner.Instance.TotalEnemiesKilled}\n" +
@@ -102,6 +105,7 @@ public class RewardScreenManager : MonoBehaviour
 
     public void GameOverButtonAction()
     {
+
         rewardUI.SetActive(false);
         EnemySpawner.Instance.restartScreen();
     }

@@ -28,13 +28,13 @@ public class SpellRewardManager : MonoBehaviour
 
     public void SetSpellUI(Spell randomSpell)
     {
-        randomSpellUI.SetSpell(randomSpell);
+        randomSpellUI.SetSpell(randomSpell, -1);
         this.spell = randomSpell;
     }
 
     public void SetSpellDescription(Spell randomSpell)
     {
-        string definitionText = "";
+        string definitionText = randomSpell.GetFullName() + "\n";
         List<KeyValuePair<string, string>> definition = randomSpell.GetDefinitionList();
         foreach (KeyValuePair<string, string> pair in definition)
         {
@@ -51,5 +51,15 @@ public class SpellRewardManager : MonoBehaviour
             spellCaster.AddSpell(spell);
             spellAccepted = true;
         }
+    }
+
+    public void SetActive()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void SetDeactive()
+    {
+        gameObject.SetActive(false);
     }
 }

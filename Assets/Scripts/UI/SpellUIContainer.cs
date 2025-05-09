@@ -29,7 +29,7 @@ public class SpellUIContainer : MonoBehaviour
     {
         for (int i = 0; i < spells.Count; i++)
         {
-            spellUIs[i].GetComponent<SpellUI>().SetSpell(spells[i]);
+            spellUIs[i].GetComponent<SpellUI>().SetSpell(spells[i], i);
             ActivateUI(i);
         }
     }
@@ -49,6 +49,36 @@ public class SpellUIContainer : MonoBehaviour
         for (int i = 0; i < spellUIs.Length; i++)
         {
             DeactiveUI(i);
+        }
+    }
+
+    public void RewardscreenShift()
+    {
+        gameObject.transform.position = new Vector3(750, 400, 0);
+        foreach (GameObject spellUI in spellUIs)
+        {
+            spellUI.GetComponent<SpellUI>().clicked = false;
+        }
+    }
+
+    public void GameplayShift()
+    {
+        gameObject.transform.position = new Vector3(32, 32, 0);
+    }
+
+    public void OpenAllDropButton()
+    {
+        for (int i = 0; i < spellUIs.Length; i++)
+        {
+            spellUIs[i].GetComponent<SpellUI>().dropbutton.SetActive(true);
+        }
+    }
+
+    public void closeAllDropButton()
+    {
+        for (int i = 0; i < spellUIs.Length; i++)
+        {
+            spellUIs[i].GetComponent<SpellUI>().dropbutton.SetActive(true);
         }
     }
 }

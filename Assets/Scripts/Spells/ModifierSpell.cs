@@ -70,13 +70,23 @@ public class ModifierSpell : Spell
             SetProjectile(attributes["projectile_trajectory"].ToString());
 
         RegisterDefinition(attributes["name"].ToString(), attributes["description"].ToString());
-
+        AddFullName(attributes["name"].ToString());
 
     }
 
     public override string GetBaseName()
     {
         return innerSpell.GetBaseName();
+    }
+
+    public override string GetFullName()
+    {
+        return innerSpell.GetFullName();
+    }
+
+    public override void AddFullName(string modName)
+    {
+        innerSpell.AddFullName(modName);
     }
 
     public override void RegisterDefinition(string spellName, string definition)

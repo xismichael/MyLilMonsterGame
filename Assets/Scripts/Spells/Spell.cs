@@ -11,6 +11,7 @@ public class Spell
     public Hittable.Team team;
 
     public string Name;
+    public string FullName;
     public string Description;
     public int Icon;
     public string DamageExpr;
@@ -44,6 +45,7 @@ public class Spell
     public virtual void SetAttributes(JObject attributes)
     {
         Name = attributes["name"].ToString();
+        FullName = attributes["name"].ToString();
         Description = attributes["description"].ToString();
         Icon = attributes["icon"].ToObject<int>();
 
@@ -91,6 +93,16 @@ public class Spell
     public virtual string GetBaseName()
     {
         return Name;
+    }
+
+    public virtual string GetFullName()
+    {
+        return FullName;
+    }
+
+    public virtual void AddFullName(string modName)
+    {
+        FullName = modName + " " + FullName;
     }
 
 

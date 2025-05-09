@@ -35,8 +35,6 @@ public class SpellCaster
         this.maxSpellCount = 4;
 
         AddSpell(CreateStartSpell());
-        AddSpell(SpellBuilder.Instance.CreateRandomSpell(this));
-        AddSpell(SpellBuilder.Instance.CreateRandomSpell(this));
 
         //spell = SpellBuilder.Instance.CreateRandomSpell(this);
         //spell = SpellBuilder.Instance.Build("turret_spell", this);
@@ -69,9 +67,16 @@ public class SpellCaster
         GameManager.Instance.player.GetComponent<PlayerController>().spellUIContainer.LoadUI(spells);
     }
 
+    public void DropSpell(int index)
+    {
+        spells.RemoveAt(index);
+        GameManager.Instance.player.GetComponent<PlayerController>().spellUIContainer.DeactiveAllUI();
+        GameManager.Instance.player.GetComponent<PlayerController>().spellUIContainer.LoadUI(spells);
+    }
+
     public Spell CreateStartSpell()
     {
-        return SpellBuilder.Instance.Build("turret_spell", this);
+        return SpellBuilder.Instance.Build("arcane_bolt", this);
     }
 
     public int GetCurrentSpellAmount()
