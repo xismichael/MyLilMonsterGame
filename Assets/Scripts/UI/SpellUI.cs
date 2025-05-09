@@ -18,6 +18,8 @@ public class SpellUI : MonoBehaviour
     void Start()
     {
         last_text_update = 0;
+        highlight.SetActive(false);
+        dropbutton.SetActive(false);
     }
 
     public void SetSpell(Spell spell)

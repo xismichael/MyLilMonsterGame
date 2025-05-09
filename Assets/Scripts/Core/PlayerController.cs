@@ -68,6 +68,12 @@ public class PlayerController : MonoBehaviour
         unit.movement = value.Get<Vector2>() * speed;
     }
 
+    void OnChangeSpell(InputValue value)
+    {
+        spellUIContainer.spellUIs[spellcaster.spellCastIndex].GetComponent<SpellUI>().highlight.SetActive(false);
+        spellcaster.spellCastIndex = (spellcaster.spellCastIndex + 1) % spellcaster.GetCurrentSpellAmount();
+    }
+
     void Die()
     {
         GameManager.Instance.state = GameManager.GameState.GAMEOVER;

@@ -8,7 +8,7 @@ public class SpellCaster
     public int max_mana;
     public int mana_reg;
     public int power;
-    public static int spellCastIndex;
+    public int spellCastIndex;
     public Hittable.Team team;
     public List<Spell> spells;
     public int maxSpellCount;
@@ -31,10 +31,12 @@ public class SpellCaster
         this.power = 100;
         this.team = team;
         this.spells = new List<Spell>();
-        spellCastIndex = 0;
+        this.spellCastIndex = 0;
         this.maxSpellCount = 4;
 
         AddSpell(CreateStartSpell());
+        AddSpell(SpellBuilder.Instance.CreateRandomSpell(this));
+        AddSpell(SpellBuilder.Instance.CreateRandomSpell(this));
 
         //spell = SpellBuilder.Instance.CreateRandomSpell(this);
         //spell = SpellBuilder.Instance.Build("turret_spell", this);
@@ -68,6 +70,11 @@ public class SpellCaster
     public Spell CreateStartSpell()
     {
         return SpellBuilder.Instance.Build("turret_spell", this);
+    }
+
+    public int GetCurrentSpellAmount()
+    {
+        return spells.Count;
     }
 
 
