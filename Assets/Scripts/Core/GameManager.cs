@@ -2,6 +2,10 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.InputSystem;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System.IO;
 
 public class GameManager
 {
@@ -57,6 +61,14 @@ public class GameManager
         if (enemies.Count == 1) return enemies[0];
         return enemies.Aggregate((a, b) =>
             (a.transform.position - point).sqrMagnitude < (b.transform.position - point).sqrMagnitude ? a : b);
+    }
+
+    public void KillAllEnemy()
+    {
+        foreach (GameObject enemy in enemies)
+        {
+            RemoveEnemy(enemy);
+        }
     }
 
     private GameManager()

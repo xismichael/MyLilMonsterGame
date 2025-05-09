@@ -1,15 +1,16 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
 
 public class RewardScreenManager : MonoBehaviour
 {
     public GameObject rewardUI;
-    public TMP_Text waveStatsText;
-    public TMP_Text HeaderText;
+
+    public TMP_Text[] texts;
 
     public Button nextStageButton;
-    public TMP_Text nextStageButtonText;
 
     private bool ScreenActivate;
 
@@ -47,12 +48,24 @@ public class RewardScreenManager : MonoBehaviour
         if (!ScreenActivate)
         {
             rewardUI.SetActive(true);
-            HeaderText.text = "WAVE FINISHED";
-            waveStatsText.text = $"Wave {EnemySpawner.CurrentWaveNumber}\n" +
+            texts[1].text = "WAVE FINISHED";
+            texts[0].text = $"Wave {EnemySpawner.CurrentWaveNumber}\n" +
                                     $"Kills: {EnemySpawner.Instance.currentWaveEnemiesKilled}\n" +
                                     $"Damage Taken: {EnemySpawner.Instance.currentWaveDamageTaken}";
+
+
+            Spell randomSpell = SpellBuilder.Instance.CreateRandomSpell(GameManager.Instance.player.GetComponent<PlayerController>().spellcaster);
+            string definitionText = "";
+            List<KeyValuePair<string, string>> definition = randomSpell.GetDefinitionList();
+            foreach (KeyValuePair<string, string> pair in definition)
+            {
+                definitionText += $"{pair.Key}: {pair.Value}\n";
+            }
+
+
+
             nextStageButton.onClick.AddListener(WaveEndButtonAction);
-            nextStageButtonText.text = "NEXT WAVE";
+            texts[2].text = "NEXT WAVE";
             ScreenActivate = true;
         }
 
@@ -69,19 +82,19 @@ public class RewardScreenManager : MonoBehaviour
 
             if (GameManager.Instance.PlayerDeath)
             {
-                HeaderText.text = "YOU DIED";
+                texts[1].text = "YOU DIED";
             }
             else
             {
-                HeaderText.text = "VICTORY";
+                texts[1].text = "VICTORY";
             }
 
             rewardUI.SetActive(true);
-            waveStatsText.text = $"Wave {EnemySpawner.CurrentWaveNumber}\n" +
+            texts[0].text = $"Wave {EnemySpawner.CurrentWaveNumber}\n" +
                                 $"Total Kills: {EnemySpawner.Instance.TotalEnemiesKilled}\n" +
                                 $"Total Damage Taken: {EnemySpawner.Instance.TotalDamageTaken}";
             nextStageButton.onClick.AddListener(GameOverButtonAction);
-            nextStageButtonText.text = "RESTART";
+            texts[2].text = "RESTART";
             ScreenActivate = true;
         }
 
@@ -89,7 +102,6 @@ public class RewardScreenManager : MonoBehaviour
 
     public void GameOverButtonAction()
     {
-        Debug.Log("here");
         rewardUI.SetActive(false);
         EnemySpawner.Instance.restartScreen();
     }
