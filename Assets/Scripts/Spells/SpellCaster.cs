@@ -31,7 +31,7 @@ public class SpellCaster
         this.power = 100;
         this.team = team;
         this.spells = new List<Spell>();
-        this.spellCastIndex = 0;
+        spellCastIndex = 0;
         this.maxSpellCount = 4;
 
         AddSpell(CreateStartSpell());
