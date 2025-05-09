@@ -90,7 +90,7 @@ public class Spell
 
     public virtual string GetBaseName()
     {
-        return name;
+        return Name;
     }
 
 
