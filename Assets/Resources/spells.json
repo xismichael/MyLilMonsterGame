@@ -146,5 +146,11 @@
         "description": "Applies burning damage over time after hitting a target.",
         "ticks": "5",
         "damage_per_tick": "2 power 3 / +"
+    },
+    "mana_amp": {
+    "name": "mana-amplified",
+    "type": "modifier",
+    "description": "Reduces mana cost.",
+    "mana_multiplier": "0.75"
     }
 }
