@@ -65,6 +65,8 @@ public class SpellCaster
         {
             this.spells.Add(spell);
         }
+
+        GameManager.Instance.player.GetComponent<PlayerController>().spellUIContainer.LoadUI(spells);
     }
 
     public Spell CreateStartSpell()

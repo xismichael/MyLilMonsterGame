@@ -13,10 +13,11 @@ public class SpellRewardManager : MonoBehaviour
     public TMP_Text randomSpellDescription;
 
     private SpellCaster spellCaster;
+    private Spell spell;
     public bool spellAccepted;
     void Start()
     {
-        spellCaster = GameManager.Instance.player.GetComponent<PlayerController>().spellcaster;
+
     }
 
     // Update is called once per frame
@@ -28,17 +29,25 @@ public class SpellRewardManager : MonoBehaviour
     public void SetSpellUI(Spell randomSpell)
     {
         randomSpellUI.SetSpell(randomSpell);
+        this.spell = randomSpell;
     }
 
-    public void SetSpellDescription(string spellDescription)
+    public void SetSpellDescription(Spell randomSpell)
     {
-        randomSpellDescription.text = spellDescription;
+        string definitionText = "";
+        List<KeyValuePair<string, string>> definition = randomSpell.GetDefinitionList();
+        foreach (KeyValuePair<string, string> pair in definition)
+        {
+            definitionText += $"{pair.Key}: {pair.Value}\n";
+        }
+        randomSpellDescription.text = definitionText;
     }
 
-    public void AcceptSpell(Spell spell)
+    public void AcceptSpell()
     {
         if (!spellAccepted)
         {
+            spellCaster = GameManager.Instance.player.GetComponent<PlayerController>().spellcaster;
             spellCaster.AddSpell(spell);
             spellAccepted = true;
         }

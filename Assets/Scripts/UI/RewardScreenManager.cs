@@ -14,6 +14,8 @@ public class RewardScreenManager : MonoBehaviour
 
     private bool ScreenActivate;
 
+    public SpellRewardManager spellRewardManager;
+
     public static RewardScreenManager Instance { get; private set; }
 
 
@@ -55,12 +57,10 @@ public class RewardScreenManager : MonoBehaviour
 
 
             Spell randomSpell = SpellBuilder.Instance.CreateRandomSpell(GameManager.Instance.player.GetComponent<PlayerController>().spellcaster);
-            string definitionText = "";
-            List<KeyValuePair<string, string>> definition = randomSpell.GetDefinitionList();
-            foreach (KeyValuePair<string, string> pair in definition)
-            {
-                definitionText += $"{pair.Key}: {pair.Value}\n";
-            }
+            spellRewardManager.spellAccepted = false;
+            spellRewardManager.SetSpellDescription(randomSpell);
+            spellRewardManager.SetSpellUI(randomSpell);
+
 
 
 
