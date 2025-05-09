@@ -88,6 +88,11 @@ public class Spell
         };
     }
 
+    public virtual string GetBaseName()
+    {
+        return name;
+    }
+
 
     public virtual float GetDamage()
     {

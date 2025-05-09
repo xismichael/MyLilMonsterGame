@@ -74,6 +74,11 @@ public class ModifierSpell : Spell
 
     }
 
+    public override string GetBaseName()
+    {
+        return innerSpell.GetBaseName();
+    }
+
     public override void RegisterDefinition(string spellName, string definition)
     {
         innerSpell.RegisterDefinition(spellName, definition);
