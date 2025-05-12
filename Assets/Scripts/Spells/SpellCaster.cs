@@ -77,7 +77,7 @@ public class SpellCaster
     public Spell CreateStartSpell()
     {
         Spell spell = SpellBuilder.Instance.Build("arcane_bolt", this);
-        spell = SpellBuilder.Instance.ApplyModifiersToSpell(spell, new List<string> { "mana_amp", "doubler", "burning" });
+        //spell = SpellBuilder.Instance.ApplyModifiersToSpell(spell, new List<string> { "mana_amp", "doubler", "burning" });
         return spell;
     }
 

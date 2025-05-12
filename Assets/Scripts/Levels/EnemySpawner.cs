@@ -60,9 +60,9 @@ public class EnemySpawner : MonoBehaviour
         TotalEnemiesKilled = 0;
         TotalDamageTaken = 0;
 
-        GameManager.Instance.player.GetComponent<PlayerController>().StartLevel();
         currentLevelName = levelname;
         CurrentWaveNumber = 1;
+        GameManager.Instance.player.GetComponent<PlayerController>().StartLevel();
         StartCoroutine(SpawnWave(levelname));
     }
 

@@ -17,6 +17,7 @@ public class SpellUIContainer : MonoBehaviour
 
     public void LoadUI(List<Spell> spells)
     {
+        DeactiveAllUI();
         for (int i = 0; i < spells.Count; i++)
         {
             spellUIs[i].GetComponent<SpellUI>().SetSpell(spells[i], i);
