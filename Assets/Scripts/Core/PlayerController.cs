@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.IO;
 using System.Collections.Generic;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class PlayerController : MonoBehaviour
 
     private RoleClass currentRole;
 
-    public int lastMoveTime;
+    public float lastMoveTime;
     public event Action<float> OnStandStill;
 
     void Start()

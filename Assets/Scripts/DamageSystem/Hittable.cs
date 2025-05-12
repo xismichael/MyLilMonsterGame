@@ -10,9 +10,9 @@ public class Hittable
     public int max_hp;
 
     public event Action OnDeath;
-    public event Action<int> OnPlayerHit;
-    public static event Action<int> OnAllEnemyHit;
-    public event Action<int> OnEnemyHit;
+    public event Action<Damage> OnPlayerHit;
+    public static event Action<Damage> OnAllEnemyHit;
+    public event Action<Damage> OnEnemyHit;
 
 
 
