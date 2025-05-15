@@ -22,12 +22,7 @@ public class RoleClassDatabase : MonoBehaviour
         if (theInstance == null)
         {
             theInstance = this;
-            DontDestroyOnLoad(gameObject);
             LoadRoleClasses();
-        }
-        else
-        {
-            Destroy(gameObject); // Avoid duplicates
         }
     }
 

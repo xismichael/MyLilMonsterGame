@@ -97,6 +97,7 @@ public class PlayerController : MonoBehaviour
 
     void OnChangeSpell(InputValue value)
     {
+
         spellUIContainer.spellUIs[spellcaster.spellCastIndex].GetComponent<SpellUI>().highlight.SetActive(false);
         spellcaster.spellCastIndex = (spellcaster.spellCastIndex + 1) % spellcaster.GetCurrentSpellAmount();
     }

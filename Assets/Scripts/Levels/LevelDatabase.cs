@@ -17,12 +17,7 @@ public class LevelDatabase : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
             LoadLevels();
-        }
-        else
-        {
-            Destroy(gameObject);
         }
     }
 

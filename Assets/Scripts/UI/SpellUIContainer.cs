@@ -11,8 +11,16 @@ public class SpellUIContainer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SpellUI temp = spellUIs[player.spellcaster.spellCastIndex].GetComponent<SpellUI>();
-        if (temp != null) temp.highlight.SetActive(true);
+        if (GameManager.Instance.state == GameManager.GameState.INWAVE || GameManager.Instance.state == GameManager.GameState.COUNTDOWN)
+        {
+            SpellUI temp = spellUIs[player.spellcaster.spellCastIndex].GetComponent<SpellUI>();
+            if (temp != null) temp.highlight.SetActive(true);
+        }
+    }
+
+    public void DeactivateHighlight(SpellUI spellUI)
+    {
+        spellUI.highlight.SetActive(false);
     }
 
     public void LoadUI(List<Spell> spells)

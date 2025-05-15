@@ -88,12 +88,12 @@
                 },
                 {
                     "name": "ChangeSpell",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "50ff6c51-c263-4294-8d7e-038ac6378e12",
-                    "expectedControlType": "",
+                    "expectedControlType": "Integer",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [

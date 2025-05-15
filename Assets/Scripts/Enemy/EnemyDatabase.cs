@@ -22,13 +22,9 @@ public class EnemyDatabase : MonoBehaviour
         if (theInstance == null)
         {
             theInstance = this;
-            DontDestroyOnLoad(gameObject);
             LoadEnemies();
         }
-        else
-        {
-            Destroy(gameObject); // Avoid duplicates
-        }
+
     }
 
     //populate the dictionary
