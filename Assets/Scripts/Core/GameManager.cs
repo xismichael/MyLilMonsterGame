@@ -42,12 +42,6 @@ public class GameManager
 
     public bool PlayerDeath = false;
 
-    public event Action OnWaveEnd;
-
-    public void WaveEnd()
-    {
-        OnWaveEnd?.Invoke();
-    }
 
     private List<GameObject> enemies;
     public int enemy_count { get { return enemies.Count; } }

@@ -23,7 +23,9 @@ public class PlayerController : MonoBehaviour
     private RoleClass currentRole;
 
     public float lastMoveTime;
+
     public event Action<float> OnStandStill;
+    public event Action<Vector2> OnMoveEvent;
 
     void Start()
     {
@@ -46,7 +48,7 @@ public class PlayerController : MonoBehaviour
         spellUIContainer.LoadUI(spellcaster.spells);
         currentRole = RoleClassDatabase.Instance.GetRoleClass(role);
         setStats(currentRole);
-        GameManager.Instance.OnWaveEnd += () => setStats(currentRole);
+        EventBus.Instance.OnWaveEnd += () => setStats(currentRole);
     }
 
     void Update()
@@ -93,6 +95,7 @@ public class PlayerController : MonoBehaviour
 
         lastMoveTime = Time.time;
         unit.movement = value.Get<Vector2>() * speed;
+        OnMoveEvent?.Invoke(value.Get<Vector2>());
     }
 
     void OnChangeSpell(InputValue value)

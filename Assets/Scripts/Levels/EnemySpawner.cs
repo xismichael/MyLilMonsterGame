@@ -72,7 +72,7 @@ public class EnemySpawner : MonoBehaviour
         currentWaveEnemiesKilled = 0;
         currentWaveDamageTaken = 0;
         CurrentWaveNumber++;
-        GameManager.Instance.WaveEnd();
+        EventBus.Instance.WaveEnded();
         StartCoroutine(SpawnWave(currentLevelName));
     }
 

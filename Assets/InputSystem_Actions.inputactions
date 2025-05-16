@@ -88,9 +88,9 @@
                 },
                 {
                     "name": "ChangeSpell",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "50ff6c51-c263-4294-8d7e-038ac6378e12",
-                    "expectedControlType": "Integer",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true

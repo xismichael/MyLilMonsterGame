@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class SpellCaster
 {
@@ -12,6 +13,8 @@ public class SpellCaster
     public Hittable.Team team;
     public List<Spell> spells;
     public int maxSpellCount;
+
+    public event Action<Spell> OnSpellCast;
 
     public IEnumerator ManaRegeneration()
     {
@@ -94,6 +97,7 @@ public class SpellCaster
         {
             mana -= spells[spellCastIndex].GetManaCost();
             spells[spellCastIndex].SetLastcast(Time.time);
+            OnSpellCast?.Invoke(spells[spellCastIndex]);
             yield return spells[spellCastIndex].Cast(where, target, team);
         }
         yield break;

@@ -10,9 +10,9 @@ public class Hittable
     public int max_hp;
 
     public event Action OnDeath;
-    public event Action<Damage> OnPlayerHit;
-    public static event Action<Damage> OnAllEnemyHit;
-    public event Action<Damage> OnEnemyHit;
+
+    public event Action<Damage> OnHit;
+
 
 
 
@@ -27,19 +27,22 @@ public class Hittable
         {
             EnemySpawner.Instance.currentWaveDamageTaken += damage.amount;
             EnemySpawner.Instance.TotalDamageTaken += damage.amount;
-            OnPlayerHit?.Invoke(damage);
         }
 
         if (team == Team.MONSTERS)
         {
-            OnEnemyHit?.Invoke(damage);
-            OnAllEnemyHit?.Invoke(damage);
+            EventBus.Instance.AllEnemyAreHit(damage);
         }
 
         hp -= damage.amount;
+        OnHit?.Invoke(damage);
         if (hp <= 0)
         {
             hp = 0;
+            if (team == Team.MONSTERS)
+            {
+                EventBus.Instance.WhenAllEnemyDie();
+            }
             OnDeath();
         }
     }
