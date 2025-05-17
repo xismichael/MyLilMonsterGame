@@ -237,7 +237,6 @@ public class Spell
 
         else
         {
-
             GameManager.Instance.projectileManager.CreateProjectile(
                 ProjectileData.Sprite,
                 ProjectileData.Trajectory,

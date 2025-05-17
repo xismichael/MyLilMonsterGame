@@ -12,16 +12,27 @@ public class RelicManager : MonoBehaviour
         LoadRelicsFromJson();
     }
 
-    private void LoadRelicsFromJson()
+    public void LoadRelicsFromJson()
     {
+        allRelics = new Dictionary<string, Relic>();
+
         TextAsset jsonFile = Resources.Load<TextAsset>("relics");
+        if (jsonFile == null)
+        {
+            Debug.LogError("relics.json not found in Resources!");
+            return;
+        }
+
         JArray relicArray = JArray.Parse(jsonFile.text);
 
-        foreach (var relicObj in relicArray)
+        foreach (var relicToken in relicArray)
         {
+            JObject relicObj = (JObject)relicToken;
+            string name = relicObj["name"].ToString();
+
             Relic relic = new Relic
             {
-                Name = relicObj["name"].ToString(),
+                Name = name,
                 SpriteIndex = (int)relicObj["sprite"],
                 Trigger = new Trigger
                 {
@@ -36,7 +47,7 @@ public class RelicManager : MonoBehaviour
                 }
             };
 
-            allRelics[relic.Name] = relic;
+            allRelics[name] = relic;
         }
     }
 
@@ -51,8 +62,76 @@ public class RelicManager : MonoBehaviour
         ownedRelics.Add(allRelics[relicName]);
     }
 
+    public void RemoveRelic(string relicName)
+    {
+        ownedRelics.RemoveAll(r => r.Name == relicName);
+    }
+
+    public void RemoveAllRelics(PlayerController player)
+    {
+        foreach (var relic in ownedRelics)
+        {
+            relic.Effect?.Revert(player);   // revert any active effects
+            relic.ResetTrigger();           // reset so it can be reused later
+        }
+
+        ownedRelics.Clear();
+    }
+
+
     public List<Relic> GetOwnedRelics()
     {
         return ownedRelics;
+    }
+
+    public void Register(PlayerController player)
+    {
+        player.OnStandStill += (duration) =>
+        {
+            Trigger("stand-still", player, new() { { "duration", duration } });
+        };
+        player.OnMoveEvent += (moveDir) =>
+        {
+            Trigger("move", player, new() { { "direction", moveDir } });
+        };
+        player.hp.OnHit += (dmg) =>
+        {
+            Trigger("take-damage", player, new() { { "damage", dmg } });
+        };
+        EventBus.Instance.OnAllEnemyDeath += () =>
+        {
+            Trigger("on-kill", player);
+        };
+    }
+
+    public void UnRegister(PlayerController player)
+    {
+        player.OnStandStill -= (duration) =>
+        {
+            Trigger("stand-still", player, new() { { "duration", duration } });
+        };
+        player.OnMoveEvent -= (moveDir) =>
+        {
+            Trigger("move", player, new() { { "direction", moveDir } });
+        };
+        player.hp.OnHit -= (dmg) =>
+        {
+            Trigger("take-damage", player, new() { { "damage", dmg } });
+        };
+        EventBus.Instance.OnAllEnemyDeath -= () =>
+        {
+            Trigger("on-kill", player);
+        };
+    }
+
+    public void Trigger(string triggerType, PlayerController player, Dictionary<string, object> parameters = null)
+    {
+        foreach (var relic in GetOwnedRelics())
+        {
+            if (relic.Trigger.Type == triggerType)
+            {
+                relic.TryActivate(player, parameters);
+            }
+        }
     }
 }

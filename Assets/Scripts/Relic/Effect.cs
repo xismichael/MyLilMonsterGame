@@ -6,6 +6,7 @@ public class Effect
     public string AmountExpr;     // RPN expression string
     public string Until;          // e.g., "move", "cast-spell"
     private int evaluatedAmount;
+    private int revertAmount = 0;
 
     private Relic parentRelic;
 
@@ -21,6 +22,7 @@ public class Effect
                 break;
             case "gain-spellpower":
                 player.spellcaster.power += evaluatedAmount;
+                revertAmount += evaluatedAmount;
                 break;
         }
 
@@ -61,7 +63,8 @@ public class Effect
         switch (Type)
         {
             case "gain-spellpower":
-                player.spellcaster.power -= evaluatedAmount;
+                player.spellcaster.power -= revertAmount;
+                revertAmount = 0;
                 break;
         }
     }

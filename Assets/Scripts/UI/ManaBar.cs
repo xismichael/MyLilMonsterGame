@@ -6,6 +6,8 @@ public class ManaBar : MonoBehaviour
 
     public SpellCaster sc;
     float old_perc;
+
+    public float mana;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -23,6 +25,7 @@ public class ManaBar : MonoBehaviour
             slider.transform.localPosition = new Vector3(-(1 - perc) / 2, 0, 0);
             old_perc = perc;
         }
+        mana = sc.mana;
     }
 
     public void SetSpellCaster(SpellCaster sc)

@@ -14,8 +14,9 @@ public class Relic
     {
         if (!hasTriggered && Trigger.ShouldActivate(parameters))
         {
-            hasTriggered = true;
+            hasTriggered = false;
             Effect.Apply(player, this);
+            Debug.Log(Name + " is triggered");
         }
     }
 

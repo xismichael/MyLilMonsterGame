@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     public SpellCaster spellcaster;
     public SpellUIContainer spellUIContainer;
+    public RelicManager relicManager;
 
     public int speed;
     public Unit unit;
@@ -49,6 +50,12 @@ public class PlayerController : MonoBehaviour
         currentRole = RoleClassDatabase.Instance.GetRoleClass(role);
         setStats(currentRole);
         EventBus.Instance.OnWaveEnd += () => setStats(currentRole);
+        relicManager.Register(this);
+        //relicManager.RemoveAllRelics(gameObject);
+
+        //testing
+        //spellcaster.power = 100;
+        relicManager.AddRelic("Cursed Scroll");
     }
 
     void Update()
