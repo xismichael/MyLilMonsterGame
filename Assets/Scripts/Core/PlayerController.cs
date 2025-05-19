@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
         //testing
         //spellcaster.power = 100;
         relicManager.AddRelic("Cursed Scroll");
+        relicManager.AddRelic("Jade Elephant");
     }
 
     void Update()

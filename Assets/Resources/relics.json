@@ -18,7 +18,8 @@
         "trigger": {
             "description": "When you don't move for 3 seconds",
             "type": "stand-still",
-            "amount": "3"
+            "amount": "3",
+            "mode": "once"
         },
         "effect": {
             "description": "you gain 10 spellpower (+5/wave)",

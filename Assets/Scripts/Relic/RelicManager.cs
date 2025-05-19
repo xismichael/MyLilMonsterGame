@@ -37,7 +37,9 @@ public class RelicManager : MonoBehaviour
                 Trigger = new Trigger
                 {
                     Type = relicObj["trigger"]["type"].ToString(),
-                    Amount = relicObj["trigger"]["amount"] != null ? float.Parse(relicObj["trigger"]["amount"].ToString()) : 0f
+                    Amount = relicObj["trigger"]["amount"] != null ? float.Parse(relicObj["trigger"]["amount"].ToString()) : 0f,
+                    Mode = relicObj["trigger"]["mode"]?.ToString().ToLower() ?? "repeat",
+                    Interval = relicObj["trigger"]["interval"] != null ? float.Parse(relicObj["trigger"]["interval"].ToString()) : 0f
                 },
                 Effect = new Effect
                 {
@@ -45,7 +47,8 @@ public class RelicManager : MonoBehaviour
                     AmountExpr = relicObj["effect"]["amount"]?.ToString(),
                     Until = relicObj["effect"]["until"]?.ToString()
                 }
-            };
+            }
+        ;
 
             allRelics[name] = relic;
         }

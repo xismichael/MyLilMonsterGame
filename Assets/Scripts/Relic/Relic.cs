@@ -12,6 +12,13 @@ public class Relic
 
     public void TryActivate(PlayerController player, Dictionary<string, object> parameters)
     {
+        if (GameManager.Instance.state == GameManager.GameState.PREGAME ||
+            GameManager.Instance.state == GameManager.GameState.WAVEEND ||
+            GameManager.Instance.state == GameManager.GameState.GAMEOVER)
+        {
+            Effect.NextWaveReset(player);
+            return;
+        }
         if (!hasTriggered && Trigger.ShouldActivate(parameters))
         {
             hasTriggered = false;
