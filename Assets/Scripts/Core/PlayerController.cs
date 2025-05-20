@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
 
         //testing
         //spellcaster.power = 100;
-        relicManager.AddRelic("Cracked Sigil");
+        relicManager.AddRelic("Predator's Grace");
         //relicManager.AddRelic("Jade Elephant");
     }
 
@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
         // Movement handled by OnMove
         OnStandStill?.Invoke(Time.time - lastMoveTime);
         if (hp != null) OnHealthChange?.Invoke(hp);
+        //Debug.Log(speed);
     }
 
     void setStats(RoleClass role)

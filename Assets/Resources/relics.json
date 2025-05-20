@@ -59,17 +59,67 @@
         "name": "Cracked Sigil",
         "sprite": 0,
         "trigger": {
+            "description": "When under 50% health",
             "type": "health-percentage",
             "percentage": 0.5,
             "condition": "below",
             "mode": "once"
         },
         "effect": {
+            "description": "gain 10 + 5/wave spell power.",
             "type": "gain-spellpower",
             "amount": "10 wave 5 * +",
             "until": "health-percentage",
             "condition": "above",
             "percentage": 0.5
+        }
+    },
+    {
+        "name": "Momentum Seal",
+        "sprite": 0,
+        "trigger": {
+            "description": "When at full health",
+            "type": "health-percentage",
+            "condition": "equal",
+            "percentage": 1,
+            "mode": "once"
+        },
+        "effect": {
+            "description": "gain bonus movement speed.",
+            "type": "gain-speed",
+            "amount": "2 wave 4 / +",
+            "until": "health-percentage",
+            "condition": "below",
+            "percentage": 1
+        }
+    },
+    {
+        "name": "Stillwater Medallion",
+        "sprite": 0,
+        "trigger": {
+            "description": "When you don't move for 2 seconds",
+            "type": "stand-still",
+            "amount": "2",
+            "mode": "once"
+        },
+        "effect": {
+            "description": "increases mana regen exponentially.",
+            "type": "gain-mana-regen",
+            "amount": "30",
+            "until": "move"
+        }
+    },
+    {
+        "name": "Predator's Grace",
+        "sprite": 0,
+        "trigger": {
+            "description": "When you kill an enemy",
+            "type": "on-kill"
+        },
+        "effect": {
+            "description": "Regenerate health.",
+            "type": "regenerate-hp",
+            "amount": "3"
         }
     }
 ]

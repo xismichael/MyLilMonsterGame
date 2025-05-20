@@ -60,7 +60,7 @@ public class Trigger
         {
             "below" => percent < Percentage,
             "above" => percent > Percentage,
-            "equal" => percent == Percentage,
+            "equal" => Mathf.Approximately(percent, Percentage),
             _ => false
         };
 
