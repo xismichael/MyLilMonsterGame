@@ -4,11 +4,18 @@ public class Effect
 {
     public string Type;           // e.g., "gain-mana", "gain-spellpower"
     public string AmountExpr;     // RPN expression string
-    public string Until;          // e.g., "move", "cast-spell"
+    public string Until;          // e.g., "move", "cast-spell", "health-percentage"
+    public string Condition;      // used with health-percentage: "above", "below", "equal"
+    public float Percentage;      // used with health-percentage
+
     private int evaluatedAmount;
     private int revertAmount = 0;
-
     private Relic parentRelic;
+
+    // Delegate references for safe unsubscription
+    private System.Action<Vector2> onMoveHandler;
+    private System.Action<Spell> onCastHandler;
+    private System.Action<Hittable> onHealthChangeHandler;
 
     public void Apply(PlayerController player, Relic source)
     {
@@ -19,12 +26,23 @@ public class Effect
         {
             case "gain-mana":
                 player.spellcaster.mana += evaluatedAmount;
+                revertAmount += evaluatedAmount;
                 break;
             case "gain-spellpower":
-                Debug.Log("spell power before: " + player.spellcaster.power + " revert amount: " + revertAmount);
                 player.spellcaster.power += evaluatedAmount;
                 revertAmount += evaluatedAmount;
-                Debug.Log("spell power after: " + player.spellcaster.power + " revert amount: " + revertAmount);
+                break;
+            case "gain-speed":
+                player.speed += evaluatedAmount;
+                revertAmount += evaluatedAmount;
+                break;
+            case "gain-mana-regen":
+                player.spellcaster.mana_reg += evaluatedAmount;
+                revertAmount += evaluatedAmount;
+                break;
+            case "regenerate-hp":
+                player.hp.Heal(evaluatedAmount);
+                revertAmount += evaluatedAmount;
                 break;
         }
 
@@ -39,56 +57,66 @@ public class Effect
         switch (Until)
         {
             case "move":
-                void OnMoveHandler(Vector2 _)
+                onMoveHandler = (_) =>
                 {
                     Revert(player);
-                    player.OnMoveEvent -= OnMoveHandler;
+                    player.OnMoveEvent -= onMoveHandler;
                     parentRelic.ResetTrigger();
-                }
-                player.OnMoveEvent += OnMoveHandler;
+                };
+                player.OnMoveEvent += onMoveHandler;
                 break;
 
             case "cast-spell":
-                void OnCastHandler(Spell _)
+                onCastHandler = (_) =>
                 {
                     Revert(player);
-                    player.spellcaster.OnSpellCast -= OnCastHandler;
+                    player.spellcaster.OnSpellCast -= onCastHandler;
                     parentRelic.ResetTrigger();
-                }
-                player.spellcaster.OnSpellCast += OnCastHandler;
+                };
+                player.spellcaster.OnSpellCast += onCastHandler;
+                break;
+
+            case "health-percentage":
+                onHealthChangeHandler = (hp) =>
+                {
+                    float current = hp.hp;
+                    float max = hp.max_hp;
+                    float currentPercentage = current / max;
+                    //Debug.Log("current hp: " + current + " max hp: " + max);
+                    //Debug.Log("current health percentage: " + currentPercentage + " condition: " + Condition + " Percentage: " + Percentage);
+                    bool conditionMet = Condition switch
+                    {
+                        "below" => currentPercentage < Percentage,
+                        "above" => currentPercentage > Percentage,
+                        "equal" => Mathf.Approximately(currentPercentage, Percentage),
+                        _ => false
+                    };
+
+                    if (conditionMet)
+                    {
+                        Revert(player);
+                        player.OnHealthChange -= onHealthChangeHandler;
+                        parentRelic.ResetTrigger();
+                    }
+                };
+                player.OnHealthChange += onHealthChangeHandler;
                 break;
         }
     }
 
-
-    //right now all the player stats restart at the end of each wave, so at the end of
-    //the relics from the previous wave should be reverted
-
     public void NextWaveReset(PlayerController player)
     {
         Revert(player);
-        switch (Until)
-        {
-            case "move":
-                void OnMoveHandler(Vector2 _)
-                {
-                    Revert(player);
-                    player.OnMoveEvent -= OnMoveHandler;
-                    parentRelic.ResetTrigger();
-                }
-                player.OnMoveEvent -= OnMoveHandler;
-                break;
 
-            case "cast-spell":
-                void OnCastHandler(Spell _)
-                {
-                    Revert(player);
-                    player.spellcaster.OnSpellCast -= OnCastHandler;
-                    parentRelic.ResetTrigger();
-                }
-                player.spellcaster.OnSpellCast -= OnCastHandler;
-                break;
-        }
+        // Unsubscribe all possible handlers
+        if (onMoveHandler != null)
+            player.OnMoveEvent -= onMoveHandler;
+
+        if (onCastHandler != null)
+            player.spellcaster.OnSpellCast -= onCastHandler;
+
+        if (onHealthChangeHandler != null)
+            player.OnHealthChange -= onHealthChangeHandler;
     }
 
     public void Revert(PlayerController player)
@@ -97,8 +125,15 @@ public class Effect
         {
             case "gain-spellpower":
                 player.spellcaster.power -= revertAmount;
-                revertAmount = 0;
+                break;
+            case "gain-speed":
+                player.speed -= revertAmount;
+                break;
+            case "gain-mana-regen":
+                player.spellcaster.mana_reg -= revertAmount;
                 break;
         }
+
+        revertAmount = 0;
     }
 }

@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
     public event Action<float> OnStandStill;
     public event Action<Vector2> OnMoveEvent;
+    public event Action<Hittable> OnHealthChange;
 
     void Start()
     {
@@ -55,14 +56,15 @@ public class PlayerController : MonoBehaviour
 
         //testing
         //spellcaster.power = 100;
-        relicManager.AddRelic("Cursed Scroll");
-        relicManager.AddRelic("Jade Elephant");
+        relicManager.AddRelic("Cracked Sigil");
+        //relicManager.AddRelic("Jade Elephant");
     }
 
     void Update()
     {
         // Movement handled by OnMove
         OnStandStill?.Invoke(Time.time - lastMoveTime);
+        if (hp != null) OnHealthChange?.Invoke(hp);
     }
 
     void setStats(RoleClass role)
@@ -91,6 +93,11 @@ public class PlayerController : MonoBehaviour
         Vector2 mouseScreen = Mouse.current.position.value;
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen);
         mouseWorld.z = 0;
+
+        //testing
+        //Debug.Log("hp before heal: " + hp.hp);
+        //hp.Heal(10);
+        //Debug.Log("hp after heal: " + hp.hp);
 
         StartCoroutine(spellcaster.Cast(transform.position, mouseWorld));
     }

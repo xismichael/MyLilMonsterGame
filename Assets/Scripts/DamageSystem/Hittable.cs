@@ -61,5 +61,10 @@ public class Hittable
         this.max_hp = max_hp;
         this.hp = Mathf.RoundToInt(perc * max_hp);
     }
+
+    public void Heal(int amount)
+    {
+        hp = Mathf.Min(max_hp, hp + amount);
+    }
 }
 

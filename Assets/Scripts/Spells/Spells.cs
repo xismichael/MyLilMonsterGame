@@ -37,7 +37,7 @@ public class ArcaneBlast : Spell
     {
         if (other.team != team)
         {
-            other.Damage(new Damage(Mathf.RoundToInt(GetDamage()), Damage.Type.ARCANE));
+            other.Damage(new Damage(Mathf.RoundToInt(damageAtTimeOfCast), Damage.Type.ARCANE));
 
             int secondaryCount = Mathf.RoundToInt(RPNEvaluator.Evaluate(BoltCountExpr, GetRPNVariables()));
             float secondarySpeed = RPNEvaluator.Evaluate(SecondaryProjectile.SpeedExpr, GetRPNVariables());
@@ -98,6 +98,7 @@ public class ArcaneSpray : Spell
 
         int shotCount = Mathf.RoundToInt(RPNEvaluator.Evaluate(ShotCountExpr, GetRPNVariables()));
         float sprayAngle = RPNEvaluator.Evaluate(SprayAngleExpr, GetRPNVariables());
+        damageAtTimeOfCast = base.GetDamage();
 
         for (int i = 0; i < shotCount; i++)
         {

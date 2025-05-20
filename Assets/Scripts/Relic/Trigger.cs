@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class Trigger
 {
-    public string Type;       // e.g., "stand-still"
-    public float Amount = 0;      // optional threshold
+    public string Type;
+    public float Amount = 0f;
+    public float Percentage = -1f;
+    public string Condition;
 
     public string Mode = "repeat";
     public float Interval = 0f;
@@ -17,51 +19,91 @@ public class Trigger
         switch (Type)
         {
             case "stand-still":
-                return StandStill(parameters);
+                return CheckStandStill(parameters);
             case "take-damage":
-                return TakeDamage(parameters);
+                return CheckTakeDamage(parameters);
             case "on-kill":
-                return true;
+                return CheckTimedOrOnce();
+            case "health-percentage":
+                return CheckHealthPercentage(parameters);
             default:
                 return false;
         }
     }
 
-    private bool StandStill(Dictionary<string, object> parameters)
+    private bool CheckStandStill(Dictionary<string, object> parameters)
     {
         if (!parameters.ContainsKey("duration")) return false;
         float duration = (float)parameters["duration"];
+        return EvaluateTrigger(duration >= Amount);
+    }
+
+    private bool CheckTakeDamage(Dictionary<string, object> parameters)
+    {
+        if (parameters.TryGetValue("damage", out object dmgObj) && dmgObj is Damage dmg)
+        {
+            return EvaluateTrigger(dmg.amount >= Amount);
+        }
+        return false;
+    }
+
+    private bool CheckHealthPercentage(Dictionary<string, object> parameters)
+    {
+        if (!parameters.ContainsKey("playerHealth") || parameters["playerHealth"] is not Hittable playerHealth)
+            return false;
+
+        float current = playerHealth.hp;
+        float max = playerHealth.max_hp;
+        float percent = current / max;
+
+        bool conditionMet = Condition switch
+        {
+            "below" => percent < Percentage,
+            "above" => percent > Percentage,
+            "equal" => percent == Percentage,
+            _ => false
+        };
+
+        return EvaluateTrigger(conditionMet);
+    }
+
+    private bool CheckTimedOrOnce()
+    {
+        return EvaluateTrigger(true); // Always true, applies mode timing
+    }
+
+    private bool EvaluateTrigger(bool conditionMet)
+    {
+        if (!conditionMet)
+        {
+            // ❗ Reset when condition becomes false
+            hasActivated = false;
+            return false;
+        }
 
         if (Mode == "once")
         {
-            if (duration >= Amount && !hasActivated)
+            if (!hasActivated)
             {
                 hasActivated = true;
                 return true;
             }
-            else if (duration < Amount)
-            {
-                hasActivated = false;
-            }
         }
         else // repeat
         {
-            if (duration >= Amount && Time.time >= lastActivationTime + Interval)
+            if (Time.time >= lastActivationTime + Interval)
             {
                 lastActivationTime = Time.time;
                 return true;
             }
         }
+
         return false;
     }
 
-    private bool TakeDamage(Dictionary<string, object> parameters)
+    public void Reset()
     {
-        if (parameters.ContainsKey("damage") && parameters["damage"] is Damage dmg)
-        {
-            return dmg.amount >= Amount;
-        }
-        return false;
+        hasActivated = false;
+        lastActivationTime = -Mathf.Infinity;
     }
-
 }

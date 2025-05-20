@@ -97,8 +97,8 @@ public class SpellCaster
         {
             mana -= spells[spellCastIndex].GetManaCost();
             spells[spellCastIndex].SetLastcast(Time.time);
-            OnSpellCast?.Invoke(spells[spellCastIndex]);
             yield return spells[spellCastIndex].Cast(where, target, team);
+            OnSpellCast?.Invoke(spells[spellCastIndex]);
         }
         yield break;
     }

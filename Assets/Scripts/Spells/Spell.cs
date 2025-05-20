@@ -33,6 +33,7 @@ public class Spell
     protected List<string> lifetimeMultiplierExprs = new List<string>();
     protected List<string> lifetimeAdderExprs = new List<string>();
 
+    public float damageAtTimeOfCast;
     public ProjectileData ProjectileData;
 
     public List<Action<Hittable, Vector3>> OnHitHandlers = new List<Action<Hittable, Vector3>>();
@@ -220,6 +221,7 @@ public class Spell
         this.team = team;
 
         float speed = GetProjectileSpeed();
+        damageAtTimeOfCast = GetDamage();
 
         if (!string.IsNullOrEmpty(ProjectileData.LifetimeExpr))
         {
@@ -253,7 +255,7 @@ public class Spell
     {
         if (other.team != team)
         {
-            other.Damage(new Damage(Mathf.RoundToInt(this.GetDamage()), Damage.Type.ARCANE));
+            other.Damage(new Damage(Mathf.RoundToInt(damageAtTimeOfCast), Damage.Type.ARCANE));
             foreach (var handler in OnHitHandlers)
             {
                 handler.Invoke(other, impact);

@@ -54,5 +54,22 @@
             "type": "gain-mana",
             "amount": "25"
         }
+    },
+    {
+        "name": "Cracked Sigil",
+        "sprite": 0,
+        "trigger": {
+            "type": "health-percentage",
+            "percentage": 0.5,
+            "condition": "below",
+            "mode": "once"
+        },
+        "effect": {
+            "type": "gain-spellpower",
+            "amount": "10 wave 5 * +",
+            "until": "health-percentage",
+            "condition": "above",
+            "percentage": 0.5
+        }
     }
 ]

@@ -12,6 +12,16 @@ public class RelicManager : MonoBehaviour
         LoadRelicsFromJson();
     }
 
+    void Update()
+    {
+        if (GameManager.Instance.state == GameManager.GameState.PREGAME ||
+            GameManager.Instance.state == GameManager.GameState.WAVEEND ||
+            GameManager.Instance.state == GameManager.GameState.GAMEOVER)
+        {
+            ResetAllTrigger();
+        }
+    }
+
     public void LoadRelicsFromJson()
     {
         allRelics = new Dictionary<string, Relic>();
@@ -30,25 +40,31 @@ public class RelicManager : MonoBehaviour
             JObject relicObj = (JObject)relicToken;
             string name = relicObj["name"].ToString();
 
+            JObject triggerObj = (JObject)relicObj["trigger"];
+            JObject effectObj = (JObject)relicObj["effect"];
+
             Relic relic = new Relic
             {
                 Name = name,
                 SpriteIndex = (int)relicObj["sprite"],
                 Trigger = new Trigger
                 {
-                    Type = relicObj["trigger"]["type"].ToString(),
-                    Amount = relicObj["trigger"]["amount"] != null ? float.Parse(relicObj["trigger"]["amount"].ToString()) : 0f,
-                    Mode = relicObj["trigger"]["mode"]?.ToString().ToLower() ?? "repeat",
-                    Interval = relicObj["trigger"]["interval"] != null ? float.Parse(relicObj["trigger"]["interval"].ToString()) : 0f
+                    Type = triggerObj["type"].ToString(),
+                    Amount = triggerObj["amount"] != null ? float.Parse(triggerObj["amount"].ToString()) : 0f,
+                    Mode = triggerObj["mode"]?.ToString().ToLower() ?? "repeat",
+                    Interval = triggerObj["interval"] != null ? float.Parse(triggerObj["interval"].ToString()) : 0f,
+                    Percentage = triggerObj["percentage"] != null ? float.Parse(triggerObj["percentage"].ToString()) : -1f,
+                    Condition = triggerObj["condition"]?.ToString().ToLower()
                 },
                 Effect = new Effect
                 {
-                    Type = relicObj["effect"]["type"].ToString(),
-                    AmountExpr = relicObj["effect"]["amount"]?.ToString(),
-                    Until = relicObj["effect"]["until"]?.ToString()
+                    Type = effectObj["type"].ToString(),
+                    AmountExpr = effectObj["amount"]?.ToString(),
+                    Until = effectObj["until"]?.ToString(),
+                    Percentage = effectObj["percentage"] != null ? float.Parse(effectObj["percentage"].ToString()) : -1f,
+                    Condition = effectObj["condition"]?.ToString().ToLower()
                 }
-            }
-        ;
+            };
 
             allRelics[name] = relic;
         }
@@ -105,6 +121,10 @@ public class RelicManager : MonoBehaviour
         {
             Trigger("on-kill", player);
         };
+        player.OnHealthChange += (hittable) =>
+        {
+            Trigger("health-percentage", player, new() { { "playerHealth", hittable } });
+        };
     }
 
     public void UnRegister(PlayerController player)
@@ -125,6 +145,10 @@ public class RelicManager : MonoBehaviour
         {
             Trigger("on-kill", player);
         };
+        player.OnHealthChange -= (hittable) =>
+        {
+            Trigger("health-percentage", player, new() { { "playerHealth", hittable } });
+        };
     }
 
     public void Trigger(string triggerType, PlayerController player, Dictionary<string, object> parameters = null)
@@ -135,6 +159,14 @@ public class RelicManager : MonoBehaviour
             {
                 relic.TryActivate(player, parameters);
             }
+        }
+    }
+
+    public void ResetAllTrigger()
+    {
+        foreach (Relic relic in ownedRelics)
+        {
+            relic.Trigger.Reset();
         }
     }
 }
