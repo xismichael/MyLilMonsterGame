@@ -40,6 +40,12 @@ public class RoleClassDatabase : MonoBehaviour
         return null;
     }
 
+    public List<string> GetAllRoleClassNames()
+    {
+        if (roleClassDict == null) return new List<string>();
+        return roleClassDict.Keys.ToList();
+    }
+
 
 
 }
