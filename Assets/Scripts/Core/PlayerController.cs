@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
 
         //testing
         //spellcaster.power = 100;
-        relicManager.AddRelic("Predator's Grace");
+        //relicManager.AddRelic("Predator's Grace");
         //relicManager.AddRelic("Jade Elephant");
     }
 
