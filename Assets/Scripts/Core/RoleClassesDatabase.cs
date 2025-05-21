@@ -23,6 +23,7 @@ public class RoleClassDatabase : MonoBehaviour
         {
             theInstance = this;
             LoadRoleClasses();
+            RoleClassManager.Instance.SetDisplaySprite();
         }
     }
 
@@ -44,6 +45,17 @@ public class RoleClassDatabase : MonoBehaviour
     {
         if (roleClassDict == null) return new List<string>();
         return roleClassDict.Keys.ToList();
+    }
+
+    public int GetRoleClassCount()
+    {
+        if (roleClassDict == null) return 0;
+        return roleClassDict.Count;
+    }
+
+    public int GetSpriteIcon(string name)
+    {
+        return GetRoleClass(name).sprite;
     }
 
 

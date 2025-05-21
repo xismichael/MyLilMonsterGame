@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Collections.Generic;
 using System;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public Unit unit;
 
     public string role;
+    public SpriteRenderer characterSpriteRenderer;
 
     private RoleClass currentRole;
 
@@ -48,9 +50,14 @@ public class PlayerController : MonoBehaviour
         healthui.SetHealth(hp);
         manaui.SetSpellCaster(spellcaster);
         spellUIContainer.LoadUI(spellcaster.spells);
+        //for roles
         currentRole = RoleClassDatabase.Instance.GetRoleClass(role);
         setStats(currentRole);
         EventBus.Instance.OnWaveEnd += () => setStats(currentRole);
+        characterSpriteRenderer.sprite = GameManager.Instance.playerSpriteManager.Get(RoleClassDatabase.Instance.GetSpriteIcon(role));
+
+
+        //for relics
         relicManager.Register(this);
         //relicManager.RemoveAllRelics(gameObject);
 

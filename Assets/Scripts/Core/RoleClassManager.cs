@@ -1,19 +1,17 @@
 using UnityEngine;
-using System.Collections.Generic;
-using Newtonsoft.Json;
-using System.Linq;
+using TMPro;
 using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
 
 public class RoleClassManager : MonoBehaviour
 {
     private static RoleClassManager theInstance;
-    public GameObject DisplaySprite;
-    public Button LeftButton;
-    public Button RightButton;
-    public Button SelectBtton;
-    public int currentRoleIndex;
-
-    public List<string> roleNames;
+    public PlayerController player;
+    public Image DisplaySprite;
+    public TMP_Text RoleNameText;
+    public int currentRoleIndex = 0;
+    public string roleName;
 
     public static RoleClassManager Instance
     {
@@ -29,12 +27,39 @@ public class RoleClassManager : MonoBehaviour
         {
             theInstance = this;
         }
-
-        roleNames = RoleClassDatabase.Instance.GetAllRoleClassNames();
-        currentRoleIndex = 0;
     }
 
+    void Update()
+    {
+        SetDisplaySprite();
+    }
 
+    public void LeftButtonPress()
+    {
+        currentRoleIndex = currentRoleIndex - 1;
+        if (currentRoleIndex < 0)
+        {
+            currentRoleIndex = RoleClassDatabase.Instance.GetRoleClassCount() - 1;
+        }
+    }
 
+    public void RightButtonPress()
+    {
+        currentRoleIndex = (currentRoleIndex + 1) % RoleClassDatabase.Instance.GetRoleClassCount();
+    }
+
+    public void SelectButtonPress()
+    {
+        player.role = roleName;
+        gameObject.SetActive(false);
+        EnemySpawner.Instance.restartScreen();
+    }
+
+    public void SetDisplaySprite()
+    {
+        GameManager.Instance.playerSpriteManager.PlaceSprite(currentRoleIndex, DisplaySprite);
+        roleName = RoleClassDatabase.Instance.GetAllRoleClassNames()[currentRoleIndex];
+        RoleNameText.text = roleName;
+    }
 
 }
