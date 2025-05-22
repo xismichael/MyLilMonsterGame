@@ -8,6 +8,8 @@ public class Effect
     public string Condition;      // used with health-percentage: "above", "below", "equal"
     public float Percentage;      // used with health-percentage
 
+    public string Description;
+
     private int evaluatedAmount;
     private int revertAmount = 0;
     private Relic parentRelic;

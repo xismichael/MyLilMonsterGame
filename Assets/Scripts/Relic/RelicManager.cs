@@ -52,6 +52,7 @@ public class RelicManager : MonoBehaviour
                     Type = triggerObj["type"].ToString(),
                     Amount = triggerObj["amount"] != null ? float.Parse(triggerObj["amount"].ToString()) : 0f,
                     Mode = triggerObj["mode"]?.ToString().ToLower() ?? "repeat",
+                    Description = triggerObj["description"].ToString(),
                     Interval = triggerObj["interval"] != null ? float.Parse(triggerObj["interval"].ToString()) : 0f,
                     Percentage = triggerObj["percentage"] != null ? float.Parse(triggerObj["percentage"].ToString()) : -1f,
                     Condition = triggerObj["condition"]?.ToString().ToLower()
@@ -61,11 +62,12 @@ public class RelicManager : MonoBehaviour
                     Type = effectObj["type"].ToString(),
                     AmountExpr = effectObj["amount"]?.ToString(),
                     Until = effectObj["until"]?.ToString(),
+                    Description = effectObj["description"].ToString(),
                     Percentage = effectObj["percentage"] != null ? float.Parse(effectObj["percentage"].ToString()) : -1f,
                     Condition = effectObj["condition"]?.ToString().ToLower()
                 }
             };
-
+            relic.SetDescription();
             allRelics[name] = relic;
         }
     }
@@ -168,5 +170,34 @@ public class RelicManager : MonoBehaviour
         {
             relic.Trigger.Reset();
         }
+    }
+
+    public List<Relic> GetUnownedRelics(int count)
+    {
+        List<Relic> unowned = new List<Relic>();
+
+        foreach (var kvp in allRelics)
+        {
+            bool isOwned = ownedRelics.Exists(r => r.Name == kvp.Key);
+            if (!isOwned)
+            {
+                unowned.Add(kvp.Value);
+            }
+        }
+
+        // If fewer than 'count' relics are available, return all of them
+        if (unowned.Count <= count)
+        {
+            return unowned;
+        }
+
+        // Otherwise shuffle and return only 'count' number
+        for (int i = 0; i < unowned.Count; i++)
+        {
+            int randIndex = Random.Range(i, unowned.Count);
+            (unowned[i], unowned[randIndex]) = (unowned[randIndex], unowned[i]);
+        }
+
+        return unowned.GetRange(0, count);
     }
 }

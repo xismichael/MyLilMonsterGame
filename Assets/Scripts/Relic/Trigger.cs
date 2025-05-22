@@ -7,6 +7,7 @@ public class Trigger
     public float Amount = 0f;
     public float Percentage = -1f;
     public string Condition;
+    public string Description;
 
     public string Mode = "repeat";
     public float Interval = 0f;

@@ -7,6 +7,7 @@ public class Relic
     public int SpriteIndex;
     public Trigger Trigger;
     public Effect Effect;
+    public string Description;
 
     private bool hasTriggered = false;
 
@@ -30,5 +31,10 @@ public class Relic
     public void ResetTrigger()
     {
         hasTriggered = false;
+    }
+
+    public void SetDescription()
+    {
+        Description = Trigger.Description + " " + Effect.Description;
     }
 }

@@ -36,7 +36,7 @@
             "type": "take-damage"
         },
         "effect": {
-            "description": "your next spell gains 100 additional spellpower.",
+            "description": "your next spell gains 100 additional spellpower",
             "type": "gain-spellpower",
             "amount": "100",
             "until": "cast-spell"
@@ -50,7 +50,7 @@
             "type": "on-kill"
         },
         "effect": {
-            "description": "you gain 25 mana.",
+            "description": "you gain 25 mana",
             "type": "gain-mana",
             "amount": "25"
         }
@@ -66,7 +66,7 @@
             "mode": "once"
         },
         "effect": {
-            "description": "gain 10 + 5/wave spell power.",
+            "description": "gain 10 + 5/wave spell power",
             "type": "gain-spellpower",
             "amount": "10 wave 5 * +",
             "until": "health-percentage",
@@ -85,7 +85,7 @@
             "mode": "once"
         },
         "effect": {
-            "description": "gain bonus movement speed.",
+            "description": "gain bonus movement speed",
             "type": "gain-speed",
             "amount": "2 wave 4 / +",
             "until": "health-percentage",
@@ -103,7 +103,7 @@
             "mode": "once"
         },
         "effect": {
-            "description": "increases mana regen exponentially.",
+            "description": "increases mana regen exponentially",
             "type": "gain-mana-regen",
             "amount": "30",
             "until": "move"
@@ -117,7 +117,7 @@
             "type": "on-kill"
         },
         "effect": {
-            "description": "Regenerate health.",
+            "description": "Regenerate health",
             "type": "regenerate-hp",
             "amount": "3"
         }
