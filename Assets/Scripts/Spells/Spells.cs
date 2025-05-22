@@ -175,6 +175,10 @@ public class ArcaneRicochet : Spell
         if (other.team != team)
         {
             other.Damage(new Damage(Mathf.RoundToInt(damageAtTimeOfCast), Damage.Type.ARCANE));
+            foreach (var handler in OnHitHandlers)
+            {
+                handler.Invoke(other, impact);
+            }
         }
 
 

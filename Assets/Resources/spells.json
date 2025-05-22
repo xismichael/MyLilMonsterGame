@@ -168,5 +168,13 @@
     "type": "modifier",
     "description": "Reduces mana cost.",
     "mana_multiplier": "0.75"
+  },
+  "mega_amp": {
+    "name": "mega-amplified",
+    "description": "Faster projectile speed, increased damage and increased mana cost",
+    "speed_multiplier": "1.75",
+    "damage_multiplier": "1.5",
+    "mana_multiplier": "1.5",
+    "cooldown_multiplier": "0.5"
   }
 }
