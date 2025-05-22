@@ -57,7 +57,7 @@
     },
     {
         "name": "Cracked Sigil",
-        "sprite": 4,
+        "sprite": 0,
         "trigger": {
             "description": "When under 50% health",
             "type": "health-percentage",
@@ -76,7 +76,7 @@
     },
     {
         "name": "Momentum Seal",
-        "sprite": 5,
+        "sprite": 0,
         "trigger": {
             "description": "When at full health",
             "type": "health-percentage",
@@ -95,7 +95,7 @@
     },
     {
         "name": "Stillwater Medallion",
-        "sprite": 6,
+        "sprite": 0,
         "trigger": {
             "description": "When you don't move for 2 seconds",
             "type": "stand-still",
@@ -111,7 +111,7 @@
     },
     {
         "name": "Predator's Grace",
-        "sprite": 7,
+        "sprite": 0,
         "trigger": {
             "description": "When you kill an enemy",
             "type": "on-kill"
