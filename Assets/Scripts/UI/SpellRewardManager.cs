@@ -45,7 +45,7 @@ public class SpellRewardManager : MonoBehaviour
 
     public void AcceptSpell()
     {
-        if (!spellAccepted)
+        if (!spellAccepted && spellCaster.GetCurrentSpellAmount() < spellCaster.maxSpellCount)
         {
             spellCaster = GameManager.Instance.player.GetComponent<PlayerController>().spellcaster;
             spellCaster.AddSpell(spell);
