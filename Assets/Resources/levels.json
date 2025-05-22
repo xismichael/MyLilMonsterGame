@@ -36,6 +36,15 @@
                 "count": "wave 5 /",
                 "hp": "base wave *",
                 "location": "random red"
+            },
+            {
+                "enemy": "leosmonster",
+                "count": "2",
+                "hp": "30 wave *",
+                "sequence": [
+                    1
+                ],
+                "location": "random green"
             }
         ]
     },
@@ -77,6 +86,15 @@
                 "count": "wave",
                 "hp": "base wave 3 + *",
                 "location": "random red"
+            },
+            {
+                "enemy": "leosmonster",
+                "count": "2",
+                "hp": "30 wave *",
+                "sequence": [
+                    1
+                ],
+                "location": "random green"
             }
         ]
     },
@@ -117,6 +135,15 @@
                 "count": "wave 2 /",
                 "hp": "base wave 2 + *",
                 "location": "random"
+            },
+            {
+                "enemy": "leosmonster",
+                "count": "2",
+                "hp": "30 wave *",
+                "sequence": [
+                    1
+                ],
+                "location": "random green"
             }
         ]
     }

@@ -26,5 +26,12 @@
         "hp": 60,
         "speed": 10,
         "damage": 1
+    },
+    {
+        "name": "leosmonster",
+        "sprite": 5,
+        "hp": 10,
+        "speed": 5,
+        "damage": 5
     }
 ]
