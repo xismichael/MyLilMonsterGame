@@ -66,7 +66,7 @@ public class RewardScreenManager : MonoBehaviour
             GameManager.Instance.player.GetComponent<PlayerController>().spellUIContainer.RewardscreenShift();
             spellRewardManager.SetActive();
 
-            if (EnemySpawner.CurrentWaveNumber % 1 == 0)
+            if (EnemySpawner.CurrentWaveNumber % 3 == 0)
             {
                 nextStageButton.onClick.AddListener(RelicRewardAction);
                 texts[2].text = "RELIC CLAIM";
