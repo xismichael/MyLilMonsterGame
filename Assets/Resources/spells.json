@@ -1,156 +1,172 @@
 {
-    "arcane_bolt": {
-        "name": "Arcane Bolt",
-        "type": "spell",
-        "description": "A straight-flying bolt.",
-        "icon": 0,
-        "damage": {
-            "amount": "25 power 5 / +",
-            "type": "arcane"
-        },
-        "mana_cost": "10",
-        "cooldown": "1",
-        "projectile": {
-            "trajectory": "straight",
-            "speed": "8 power 5 / +",
-            "sprite": 0
-        }
+  "arcane_bolt": {
+    "name": "Arcane Bolt",
+    "type": "spell",
+    "description": "A straight-flying bolt.",
+    "icon": 0,
+    "damage": {
+      "amount": "25 power 5 / +",
+      "type": "arcane"
     },
-    "magic_missile": {
-        "name": "Magic Missile",
-        "type": "spell",
-        "description": "A homing bolt.",
-        "icon": 1,
-        "damage": {
-            "amount": "10 power 3 / +",
-            "type": "arcane"
-        },
-        "mana_cost": "20",
-        "cooldown": "2",
-        "projectile": {
-            "trajectory": "homing",
-            "speed": "10",
-            "sprite": 0
-        }
-    },
-    "arcane_blast": {
-        "name": "Arcane Blast",
-        "type": "spell",
-        "description": "A bolt that explodes into smaller bolts on impact.",
-        "icon": 2,
-        "N": "8 power 5 / +",
-        "damage": {
-            "amount": "20 power 3 / +",
-            "type": "arcane"
-        },
-        "secondary_damage": "5 power 10 / +",
-        "mana_cost": "15 power 5 / +",
-        "cooldown": "1.5",
-        "projectile": {
-            "trajectory": "straight",
-            "speed": "12",
-            "sprite": 0
-        },
-        "secondary_projectile": {
-            "trajectory": "straight",
-            "speed": "20",
-            "lifetime": "0.1",
-            "sprite": 0
-        }
-    },
-    "arcane_spray": {
-        "name": "Arcane Spray",
-        "type": "spell",
-        "description": "A large number of short-range bolts in a cone.",
-        "icon": 3,
-        "N": "7 power 25 / +",
-        "spray": "0.3",
-        "damage": {
-            "amount": "3 power 5 / +",
-            "type": "arcane"
-        },
-        "mana_cost": "40",
-        "cooldown": "1.5",
-        "projectile": {
-            "trajectory": "straight",
-            "speed": "8",
-            "sprite": 0,
-            "lifetime": "0.1 power 100 / +"
-        }
-    },
-    "turret_spell": {
-        "name": "Turret Spell",
-        "type": "spell",
-        "description": "Deploys a turret that shoots at things",
-        "icon": 4,
-        "damage": {
-            "amount": "20 power 2 / +",
-            "type": "arcane"
-        },
-        "mana_cost": "40",
-        "cooldown": "12",
-        "projectile": {
-            "trajectory": "straight",
-            "speed": "10",
-            "sprite": 0
-        },
-        "turret_lifetime": "12",
-        "attack_interval": "2"
-    },
-    "damage_amp": {
-        "name": "damage-amplified",
-        "type": "modifier",
-        "description": "Increased damage and increased mana cost.",
-        "damage_multiplier": "1.5",
-        "mana_multiplier": "1.5"
-    },
-    "speed_amp": {
-        "name": "speed-amplified",
-        "type": "modifier",
-        "description": "Faster projectile speed",
-        "speed_multiplier": "1.75"
-    },
-    "doubler": {
-        "name": "doubled",
-        "type": "modifier",
-        "description": "Spell is cast a second time after a small delay; increased mana cost and cooldown.",
-        "delay": "0.5",
-        "mana_multiplier": "1.5",
-        "cooldown_multiplier": "1.5"
-    },
-    "splitter": {
-        "name": "split",
-        "type": "modifier",
-        "description": "Spell is cast twice in slightly different directions; increased mana cost.",
-        "angle": "10",
-        "mana_multiplier": "1.5"
-    },
-    "chaos": {
-        "name": "chaotic",
-        "type": "modifier",
-        "description": "Significantly increased damage, but projectile is spiraling.",
-        "damage_multiplier": "1.5 wave 5 / +",
-        "projectile_trajectory": "spiraling"
-    },
-    "homing": {
-        "name": "homing",
-        "type": "modifier",
-        "description": "Homing projectile, with decreased damage and increased mana cost.",
-        "damage_multiplier": "0.75",
-        "mana_adder": "10",
-        "projectile_trajectory": "homing"
-    },
-    "burning": {
-        "name": "burning",
-        "type": "modifier",
-        "description": "Applies burning damage over time after hitting a target.",
-        "ticks": "5",
-        "damage_per_tick": "2 power 2 / +"
-    },
-    "mana_amp": {
-        "name": "mana-amplified",
-        "type": "modifier",
-        "description": "Reduces mana cost.",
-        "mana_multiplier": "0.75"
+    "mana_cost": "10",
+    "cooldown": "1",
+    "projectile": {
+      "trajectory": "straight",
+      "speed": "8 power 5 / +",
+      "sprite": 0
     }
+  },
+  "magic_missile": {
+    "name": "Magic Missile",
+    "type": "spell",
+    "description": "A homing bolt.",
+    "icon": 1,
+    "damage": {
+      "amount": "10 power 3 / +",
+      "type": "arcane"
+    },
+    "mana_cost": "20",
+    "cooldown": "2",
+    "projectile": {
+      "trajectory": "homing",
+      "speed": "10",
+      "sprite": 0
+    }
+  },
+  "arcane_blast": {
+    "name": "Arcane Blast",
+    "type": "spell",
+    "description": "A bolt that explodes into smaller bolts on impact.",
+    "icon": 2,
+    "N": "8 power 5 / +",
+    "damage": {
+      "amount": "20 power 3 / +",
+      "type": "arcane"
+    },
+    "secondary_damage": "5 power 10 / +",
+    "mana_cost": "15 power 5 / +",
+    "cooldown": "1.5",
+    "projectile": {
+      "trajectory": "straight",
+      "speed": "12",
+      "sprite": 0
+    },
+    "secondary_projectile": {
+      "trajectory": "straight",
+      "speed": "20",
+      "lifetime": "0.1",
+      "sprite": 0
+    }
+  },
+  "arcane_spray": {
+    "name": "Arcane Spray",
+    "type": "spell",
+    "description": "A large number of short-range bolts in a cone.",
+    "icon": 3,
+    "N": "7 power 25 / +",
+    "spray": "0.3",
+    "damage": {
+      "amount": "3 power 5 / +",
+      "type": "arcane"
+    },
+    "mana_cost": "40",
+    "cooldown": "1.5",
+    "projectile": {
+      "trajectory": "straight",
+      "speed": "8",
+      "sprite": 0,
+      "lifetime": "0.1 power 100 / +"
+    }
+  },
+  "turret_spell": {
+    "name": "Turret Spell",
+    "type": "spell",
+    "description": "Deploys a turret that shoots at things",
+    "icon": 4,
+    "damage": {
+      "amount": "20 power 2 / +",
+      "type": "arcane"
+    },
+    "mana_cost": "40",
+    "cooldown": "12",
+    "projectile": {
+      "trajectory": "straight",
+      "speed": "10",
+      "sprite": 0
+    },
+    "turret_lifetime": "12",
+    "attack_interval": "2"
+  },
+  "arcane_ricochet": {
+    "name": "Arcane Ricochet",
+    "description": "A bolt that bounces off an enemy and goes in a random direction.",
+    "icon": 0,
+    "damage": {
+      "amount": "25 power 5 / +",
+      "type": "arcane"
+    },
+    "mana_cost": "10",
+    "cooldown": "2",
+    "projectile": {
+      "trajectory": "straight",
+      "speed": "8 power 5 / +",
+      "sprite": 0
+    }
+  },
+  "damage_amp": {
+    "name": "damage-amplified",
+    "type": "modifier",
+    "description": "Increased damage and increased mana cost.",
+    "damage_multiplier": "1.5",
+    "mana_multiplier": "1.5"
+  },
+  "speed_amp": {
+    "name": "speed-amplified",
+    "type": "modifier",
+    "description": "Faster projectile speed",
+    "speed_multiplier": "1.75"
+  },
+  "doubler": {
+    "name": "doubled",
+    "type": "modifier",
+    "description": "Spell is cast a second time after a small delay; increased mana cost and cooldown.",
+    "delay": "0.5",
+    "mana_multiplier": "1.5",
+    "cooldown_multiplier": "1.5"
+  },
+  "splitter": {
+    "name": "split",
+    "type": "modifier",
+    "description": "Spell is cast twice in slightly different directions; increased mana cost.",
+    "angle": "10",
+    "mana_multiplier": "1.5"
+  },
+  "chaos": {
+    "name": "chaotic",
+    "type": "modifier",
+    "description": "Significantly increased damage, but projectile is spiraling.",
+    "damage_multiplier": "1.5 wave 5 / +",
+    "projectile_trajectory": "spiraling"
+  },
+  "homing": {
+    "name": "homing",
+    "type": "modifier",
+    "description": "Homing projectile, with decreased damage and increased mana cost.",
+    "damage_multiplier": "0.75",
+    "mana_adder": "10",
+    "projectile_trajectory": "homing"
+  },
+  "burning": {
+    "name": "burning",
+    "type": "modifier",
+    "description": "Applies burning damage over time after hitting a target.",
+    "ticks": "5",
+    "damage_per_tick": "2 power 2 / +"
+  },
+  "mana_amp": {
+    "name": "mana-amplified",
+    "type": "modifier",
+    "description": "Reduces mana cost.",
+    "mana_multiplier": "0.75"
+  }
 }

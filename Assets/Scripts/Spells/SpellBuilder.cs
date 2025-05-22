@@ -71,6 +71,10 @@ public class SpellBuilder : MonoBehaviour
             case "turret_spell":
                 spell = new TurretSpell(owner, TurretPrefab);
                 break;
+
+            case "arcane_ricochet":
+                spell = new ArcaneRicochet(owner);
+                break;
             default:
                 spell = new Spell(owner);
                 break;

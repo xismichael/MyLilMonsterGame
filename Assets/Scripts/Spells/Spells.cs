@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using System;
+using UnityEngine.U2D;
 
 public class ArcaneBlast : Spell
 {
@@ -158,5 +159,28 @@ public class TurretSpell : Spell
     public IEnumerator CastBase(Vector3 where, Vector3 target, Hittable.Team team)
     {
         yield return base.Cast(where, target, team);
+    }
+}
+
+public class ArcaneRicochet : Spell
+{
+    public string BoltCountExpr;
+    public string SecondaryDamageExpr;
+    public ProjectileData SecondaryProjectile;
+
+    public ArcaneRicochet(SpellCaster owner) : base(owner) { }
+
+    public override void OnHit(Hittable other, Vector3 impact)
+    {
+        if (other.team != team)
+        {
+            other.Damage(new Damage(Mathf.RoundToInt(damageAtTimeOfCast), Damage.Type.ARCANE));
+        }
+
+
+        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere.normalized;
+        float speed = RPNEvaluator.Evaluate(ProjectileData.SpeedExpr, GetRPNVariables());
+
+        GameManager.Instance.projectileManager.CreateProjectile(ProjectileData.Sprite, "straight", impact, randomDirection, speed, OnHit);
     }
 }
