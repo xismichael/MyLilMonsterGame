@@ -5,11 +5,14 @@ using TMPro;
 public class RelicRewardUI : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public RelicRewardUIManager relicRewardUIManager;
     public TMP_Text relicNameText;
     public TMP_Text relicDescriptionText;
     public bool selected;
     public Image relicImage;
     public TMP_Text buttonText;
+
+    private string relicName;
 
     void Start()
     {
@@ -19,12 +22,13 @@ public class RelicRewardUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (selected) buttonText.text = "UNSELECT";
+        if (relicRewardUIManager.RelicSelected == relicName) buttonText.text = "UNSELECT";
         else buttonText.text = "SELECT";
     }
 
     public void SetName(string name)
     {
+        relicName = name;
         relicNameText.text = name;
     }
 
@@ -40,6 +44,6 @@ public class RelicRewardUI : MonoBehaviour
 
     public void OnButtonClick()
     {
-        selected = true;
+        relicRewardUIManager.RelicSelected = relicName;
     }
 }

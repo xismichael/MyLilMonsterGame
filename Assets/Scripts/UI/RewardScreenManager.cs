@@ -16,6 +16,8 @@ public class RewardScreenManager : MonoBehaviour
 
     public SpellRewardManager spellRewardManager;
 
+    public RelicRewardUIManager relicRewardManager;
+
     public static RewardScreenManager Instance { get; private set; }
 
 
@@ -64,13 +66,27 @@ public class RewardScreenManager : MonoBehaviour
             GameManager.Instance.player.GetComponent<PlayerController>().spellUIContainer.RewardscreenShift();
             spellRewardManager.SetActive();
 
-
-            nextStageButton.onClick.AddListener(WaveEndButtonAction);
-            texts[2].text = "NEXT WAVE";
-            ScreenActivate = true;
+            if (EnemySpawner.CurrentWaveNumber % 1 == 0)
+            {
+                nextStageButton.onClick.AddListener(RelicRewardAction);
+                texts[2].text = "RELIC CLAIM";
+                ScreenActivate = true;
+            }
+            else
+            {
+                nextStageButton.onClick.AddListener(WaveEndButtonAction);
+                texts[2].text = "NEXT WAVE";
+                ScreenActivate = true;
+            }
         }
 
 
+    }
+
+    public void RelicRewardAction()
+    {
+        GameManager.Instance.player.GetComponent<PlayerController>().spellUIContainer.GameplayShift();
+        relicRewardManager.RewardScreenAction();
     }
     public void WaveEndButtonAction()
     {
@@ -107,7 +123,7 @@ public class RewardScreenManager : MonoBehaviour
     {
 
         rewardUI.SetActive(false);
-        EnemySpawner.Instance.restartScreen();
+        RoleClassManager.Instance.gameObject.SetActive(true);
     }
 
 

@@ -7,11 +7,12 @@ public class RelicRewardUIManager : MonoBehaviour
 {
     public PlayerController player;
     public RelicRewardUI[] relicRewardUIs;
-    public int relicRewardAmount;
-    public List<Relic> unownedRelics;
+    private int relicRewardAmount = 3;
+    public List<Relic> unownedRelics = new List<Relic> { };
 
-    public int selectionIndex;
     public string RelicSelected;
+
+    public bool relicClaimed = false;
 
     void Start()
     {
@@ -30,13 +31,15 @@ public class RelicRewardUIManager : MonoBehaviour
         relicUI.SetDescription(relic.Description);
     }
 
-    public void RewardScreenCallback()
+    public void RewardScreenAction()
     {
         gameObject.SetActive(true);
         SetAllNotActive();
+        relicClaimed = false;
         unownedRelics = player.relicManager.GetUnownedRelics(relicRewardAmount);
-
-        int actualCount = Mathf.Min(unownedRelics.Count, relicRewardUIs.Length);
+        Debug.Log("relicRewardAmount: " + relicRewardAmount);
+        //Debug.Log(unownedRelics.Count);
+        int actualCount = Mathf.Min(unownedRelics.Count, relicRewardAmount);
         for (int i = 0; i < actualCount; i++)
         {
             relicRewardUIs[i].gameObject.SetActive(true);
@@ -55,6 +58,10 @@ public class RelicRewardUIManager : MonoBehaviour
     public void OnButtonClick()
     {
         gameObject.SetActive(false);
+        player.relicManager.AddRelic(RelicSelected);
+        relicClaimed = true;
+        //RewardScreenManager.Instance.texts[2].text = "NEXT WAVE";
+        EnemySpawner.Instance.SpawnNextWave();
     }
 
     public void SetAllSelectedFalseExceptOne(int exceptionIndex)

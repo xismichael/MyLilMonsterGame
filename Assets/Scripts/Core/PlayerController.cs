@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
 
         //for relics
         relicManager.Register(this);
-        //relicManager.RemoveAllRelics(gameObject);
+        relicManager.RemoveAllRelics(this);
 
         //testing
         //spellcaster.power = 100;
