@@ -17,7 +17,7 @@ public class RoleClassDatabase : MonoBehaviour
     private Dictionary<string, RoleClass> roleClassDict;
 
     //load database on runtime
-    void Awake()
+    void Start()
     {
         if (theInstance == null)
         {

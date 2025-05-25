@@ -171,10 +171,17 @@
   },
   "mega_amp": {
     "name": "mega-amplified",
+    "type:": "modifier",
     "description": "Faster projectile speed, increased damage and increased mana cost",
     "speed_multiplier": "1.75",
     "damage_multiplier": "1.5",
     "mana_multiplier": "1.5",
     "cooldown_multiplier": "0.5"
+  },
+  "piercing": {
+    "name": "piercing",
+    "type": "modifier",
+    "description": "Projectile passes through one additional enemy.",
+    "pierce_count": "2"
   }
 }

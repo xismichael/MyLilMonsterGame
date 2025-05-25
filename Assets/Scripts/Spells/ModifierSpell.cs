@@ -68,7 +68,10 @@ public class ModifierSpell : Spell
 
         if (attributes["projectile_trajectory"] != null)
             SetProjectile(attributes["projectile_trajectory"].ToString());
-
+        if (attributes["pierce_count"] != null)
+        {
+            SetPierceCount(attributes["pierce_count"].ToString());
+        }
         RegisterDefinition(attributes["name"].ToString(), attributes["description"].ToString());
         AddFullName(attributes["name"].ToString());
 
@@ -140,6 +143,11 @@ public class ModifierSpell : Spell
     public override void AddLifetimeAdder(string expr)
     {
         innerSpell.AddLifetimeAdder(expr);
+    }
+
+    public override void SetPierceCount(string expr)
+    {
+        innerSpell.SetPierceCount(expr);
     }
 
     public override void SetProjectile(string expr)

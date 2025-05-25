@@ -4,4 +4,5 @@ public class ProjectileData
     public string SpeedExpr;
     public string LifetimeExpr;
     public int Sprite;
+    public string PierceCount;
 }

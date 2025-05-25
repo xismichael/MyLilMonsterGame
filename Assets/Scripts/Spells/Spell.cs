@@ -67,6 +67,7 @@ public class Spell
         {
             ProjectileData.LifetimeExpr = attributes["projectile"]["lifetime"].ToString();
         }
+       
     }
 
     public virtual void RegisterDefinition(string spellName, string definition)
@@ -196,6 +197,10 @@ public class Spell
     public virtual void AddLifetimeMultiplier(string expr) => lifetimeMultiplierExprs.Add(expr);
     public virtual void AddLifetimeAdder(string expr) => lifetimeAdderExprs.Add(expr);
 
+    public virtual void SetPierceCount(string expr)
+    {
+        ProjectileData.PierceCount = expr;
+    }
     public virtual void SetProjectile(string expr)
     {
         ProjectileData.Trajectory = expr;
@@ -236,7 +241,20 @@ public class Spell
                 lifetime
             );
         }
-
+        else if (!string.IsNullOrEmpty(ProjectileData.PierceCount))
+        {
+            int count = 0;
+            int.TryParse(ProjectileData.PierceCount, out count);
+            GameManager.Instance.projectileManager.CreateProjectile(
+                ProjectileData.Sprite,
+                ProjectileData.Trajectory,
+                where,
+                target - where,
+                speed,
+                this.GetOnHitHandler(),
+                count
+            );
+        }
         else
         {
             GameManager.Instance.projectileManager.CreateProjectile(

@@ -80,7 +80,7 @@ public class SpellCaster
     public Spell CreateStartSpell()
     {
         Spell spell = SpellBuilder.Instance.Build("arcane_ricochet", this);
-        spell = SpellBuilder.Instance.ApplyModifiersToSpell(spell, new List<string> { "mana_amp", "doubler", "burning" });
+        spell = SpellBuilder.Instance.ApplyModifiersToSpell(spell, new List<string> {"piercing", "mana_amp", "doubler", "burning" });
         return spell;
     }
 
