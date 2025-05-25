@@ -20,6 +20,10 @@ public class Hittable
 
     public void Damage(Damage damage)
     {
+        if (owner == null)
+        {
+            return;
+        }
         EventBus.Instance.DoDamage(owner.transform.position, damage, this);
 
         //tracks player damage taken this wave

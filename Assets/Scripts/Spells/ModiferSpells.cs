@@ -73,14 +73,18 @@ public class BurningModifierSpell : ModifierSpell
 
     private void ApplyBurnEffect(Hittable target, Vector3 impact)
     {
-        int ticks = Mathf.RoundToInt(RPNEvaluator.Evaluate(tickCountExpr, GetRPNVariables()));
-        float damagePerTick = RPNEvaluator.Evaluate(damagePerTickExpr, GetRPNVariables());
+        if (target != null)
+        {
+            int ticks = Mathf.RoundToInt(RPNEvaluator.Evaluate(tickCountExpr, GetRPNVariables()));
+            float damagePerTick = RPNEvaluator.Evaluate(damagePerTickExpr, GetRPNVariables());
 
-        CoroutineManager.Instance.Run(BurnCoroutine(target, ticks, damagePerTick));
+            CoroutineManager.Instance.Run(BurnCoroutine(target, ticks, damagePerTick));
+        }
     }
 
     private IEnumerator BurnCoroutine(Hittable target, int ticks, float damagePerTick)
     {
+        yield return new WaitForSeconds(1f);
         for (int i = 0; i < ticks; i++)
         {
             if (target != null)

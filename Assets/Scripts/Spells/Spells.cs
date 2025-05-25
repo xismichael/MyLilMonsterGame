@@ -164,10 +164,6 @@ public class TurretSpell : Spell
 
 public class ArcaneRicochet : Spell
 {
-    public string BoltCountExpr;
-    public string SecondaryDamageExpr;
-    public ProjectileData SecondaryProjectile;
-
     public ArcaneRicochet(SpellCaster owner) : base(owner) { }
 
     public override void OnHit(Hittable other, Vector3 impact)
@@ -179,12 +175,11 @@ public class ArcaneRicochet : Spell
             {
                 handler.Invoke(other, impact);
             }
+
+            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere.normalized;
+            float speed = RPNEvaluator.Evaluate(ProjectileData.SpeedExpr, GetRPNVariables());
+
+            GameManager.Instance.projectileManager.CreateProjectile(ProjectileData.Sprite, "straight", impact, randomDirection, speed, OnHit);
         }
-
-
-        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere.normalized;
-        float speed = RPNEvaluator.Evaluate(ProjectileData.SpeedExpr, GetRPNVariables());
-
-        GameManager.Instance.projectileManager.CreateProjectile(ProjectileData.Sprite, "straight", impact, randomDirection, speed, OnHit);
     }
 }

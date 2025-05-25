@@ -23,7 +23,7 @@ public class RoleClassDatabase : MonoBehaviour
         {
             theInstance = this;
             LoadRoleClasses();
-            RoleClassManager.Instance.SetDisplaySprite();
+            //RoleClassManager.Instance.SetDisplaySprite();
         }
     }
 
