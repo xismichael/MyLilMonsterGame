@@ -27,7 +27,8 @@ public class RelicRewardUIManager : MonoBehaviour
     public void SetRelicUI(Relic relic, RelicRewardUI relicUI)
     {
         relicUI.SetDisplayImage(relic.SpriteIndex);
-        relicUI.SetName(relic.Name);
+        //relicUI.SetName(relic.Name);
+        relicUI.SetName("Super Sonic Healing");
         relicUI.SetDescription(relic.Description);
     }
 
@@ -40,6 +41,7 @@ public class RelicRewardUIManager : MonoBehaviour
         Debug.Log("relicRewardAmount: " + relicRewardAmount);
         //Debug.Log(unownedRelics.Count);
         int actualCount = Mathf.Min(unownedRelics.Count, relicRewardAmount);
+        Debug.Log($"The actualCount::::::: {unownedRelics.Count} ======= The relicRewardAmount:::::: {relicRewardAmount}");
         for (int i = 0; i < actualCount; i++)
         {
             relicRewardUIs[i].gameObject.SetActive(true);

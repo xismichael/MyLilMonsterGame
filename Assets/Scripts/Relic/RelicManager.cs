@@ -127,6 +127,10 @@ public class RelicManager : MonoBehaviour
         {
             Trigger("health-percentage", player, new() { { "playerHealth", hittable } });
         };
+        EventBus.Instance.OnWaveEnd += () =>
+        {
+            Trigger("finish-wave", player);
+        };
     }
 
     public void UnRegister(PlayerController player)
@@ -150,6 +154,10 @@ public class RelicManager : MonoBehaviour
         player.OnHealthChange -= (hittable) =>
         {
             Trigger("health-percentage", player, new() { { "playerHealth", hittable } });
+        };
+        EventBus.Instance.OnWaveEnd += () =>
+        {
+            Trigger("finish-wave", player);
         };
     }
 

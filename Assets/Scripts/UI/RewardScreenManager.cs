@@ -33,6 +33,14 @@ public class RewardScreenManager : MonoBehaviour
         if (GameManager.Instance.state == GameManager.GameState.WAVEEND)
         {
             WaveEndScreen();
+            PlayerController controller = GameManager.Instance.player.GetComponent<PlayerController>(); 
+            List<Relic> theRelics = controller.relicManager.GetOwnedRelics();
+            for(int i = 0; i < theRelics.Count; i++){
+                if(theRelics[i].Name == "Super Sonic Healing"){
+                    controller.hp.hp += theRelics[i].Effect.evaluatedAmount;
+                    Debug.Log($"The evaluatedAmount::::: {theRelics[i].Effect.evaluatedAmount} ;; The player HP:::::: {controller.hp.hp}.");
+                }
+            }
         }
 
         else if (GameManager.Instance.state == GameManager.GameState.GAMEOVER)
@@ -66,7 +74,8 @@ public class RewardScreenManager : MonoBehaviour
             GameManager.Instance.player.GetComponent<PlayerController>().spellUIContainer.RewardscreenShift();
             spellRewardManager.SetActive();
 
-            if (EnemySpawner.CurrentWaveNumber % 3 == 0)
+            //if (EnemySpawner.CurrentWaveNumber % 3 == 0)
+            if (EnemySpawner.CurrentWaveNumber % 1 == 0)
             {
                 nextStageButton.onClick.AddListener(RelicRewardAction);
                 texts[2].text = "RELIC CLAIM";

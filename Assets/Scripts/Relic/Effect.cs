@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Effect
 {
@@ -10,7 +12,7 @@ public class Effect
 
     public string Description;
 
-    private int evaluatedAmount;
+    public int evaluatedAmount;
     private int revertAmount = 0;
     private Relic parentRelic;
 
@@ -18,6 +20,14 @@ public class Effect
     private System.Action<Vector2> onMoveHandler;
     private System.Action<Spell> onCastHandler;
     private System.Action<Hittable> onHealthChangeHandler;
+
+    List<Vector3> teleportLocations = new List<Vector3>
+    {
+        new Vector3(18f, 18f, 0f),
+        new Vector3(40f, 18f, 0f),
+        new Vector3(60f, -7f, 0f),
+        new Vector3(-10f, 0f, 0f)
+    };
 
     public void Apply(PlayerController player, Relic source)
     {
@@ -45,6 +55,12 @@ public class Effect
             case "regenerate-hp":
                 player.hp.Heal(evaluatedAmount);
                 revertAmount += evaluatedAmount;
+                break;
+            case "teleport":
+                SetTeleportPosition(player);
+                break;
+            case "damage-speed-up":
+                SetSpeed(player, evaluatedAmount);
                 break;
         }
 
@@ -137,5 +153,37 @@ public class Effect
         }
 
         revertAmount = 0;
+    }
+
+    public void SetTeleportPosition(PlayerController player){
+        // Need to obtain the current player in case if the previous player gets destroyed once the levels is changed.
+        // Without this, you will get the error: NullReferenceException - Instance of object is null.
+        // I have added the code in line 81 on your implemented effects for gainmana and gaintemporaryspell effects. 
+        PlayerController control = player.GetComponent<PlayerController>();
+        if(control.hp.hp <= (control.hp.max_hp/2)){
+            int i = Random.Range(0, teleportLocations.Count);
+            control.transform.position = teleportLocations[i];
+            //control.transform.position = teleportLocations[0];
+            Debug.Log($"[Relic] Player has teleported.");
+        } else {
+            Debug.Log($"[Relic] Player has NOT teleported. HP ======= {control.hp.hp} ;; MAX_HP ======== {control.hp.max_hp}.");
+        }
+    }
+
+    private void SetSpeed(PlayerController player, int amount){
+        PlayerController control = player.GetComponent<PlayerController>();
+        control.StartCoroutine(ChangeSpeed(control, amount));
+        Debug.Log("The speed has doubled!!!!!!!!!!!!");        
+    }
+
+    private IEnumerator ChangeSpeed(PlayerController control, int amount){
+        int originalSpeed = control.speed;
+        
+        control.speed *= amount;
+        Debug.Log($"[Relic] Player's speed has increased {amount} for 10 seconds.");
+        yield return new WaitForSeconds(10f);
+
+        control.speed = originalSpeed;
+        Debug.Log($"[Relic] Player's speed has resetted to its original.");
     }
 }

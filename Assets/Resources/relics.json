@@ -121,5 +121,44 @@
             "type": "regenerate-hp",
             "amount": "3"
         }
+    },
+    {
+        "name": "Damage Takes All",
+        "sprite": 4,
+        "trigger": {
+            "description": "When your health is less than 50%",
+            "type": "take-damage"
+        },
+        "effect": {
+            "description": "you teleport to another place based on the amount/length given.",
+            "type": "teleport",
+            "amount": "20"
+        }
+    },
+    {
+        "name": "Electrik Thunderbolt",
+        "sprite": 5,
+        "trigger": {
+            "description": "When you take damage",
+            "type": "take-damage"
+        },
+        "effect": {
+            "description": "your travel speed becomes 2 times faster for 10 seconds.",
+            "type": "damage-speed-up",
+            "amount": "2"
+        }
+    },
+    {
+        "name": "Super Sonic Healing",
+        "sprite": 6,
+        "trigger": {
+            "description": "When you finish a wave",
+            "type": "finish-wave"
+        },
+        "effect": {
+            "description": "you gain more health points.",
+            "type": "regenerate-hp",
+            "amount": "5"
+        }
     }
 ]

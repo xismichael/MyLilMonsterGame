@@ -140,6 +140,5 @@ public class PlayerController : MonoBehaviour
             GameManager.Instance.RemoveEnemy(ec.gameObject);
             Destroy(ec.gameObject);
         }
-
     }
 }
