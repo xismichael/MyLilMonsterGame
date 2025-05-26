@@ -28,7 +28,7 @@ public class RelicRewardUIManager : MonoBehaviour
     {
         relicUI.SetDisplayImage(relic.SpriteIndex);
         //relicUI.SetName(relic.Name);
-        relicUI.SetName("Super Sonic Healing");
+        relicUI.SetName(relic.Name);
         relicUI.SetDescription(relic.Description);
     }
 
