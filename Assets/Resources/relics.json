@@ -124,7 +124,7 @@
     },
     {
         "name": "Damage Takes All",
-        "sprite": 4,
+        "sprite": 8,
         "trigger": {
             "description": "When your health is less than 50%",
             "type": "take-damage"
@@ -137,7 +137,7 @@
     },
     {
         "name": "Electrik Thunderbolt",
-        "sprite": 5,
+        "sprite": 9,
         "trigger": {
             "description": "When you take damage",
             "type": "take-damage"
@@ -150,7 +150,7 @@
     },
     {
         "name": "Super Sonic Healing",
-        "sprite": 6,
+        "sprite": 10,
         "trigger": {
             "description": "When you finish a wave",
             "type": "finish-wave"
