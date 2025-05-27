@@ -19,7 +19,6 @@ public class Relic
             Effect.Apply(player, this);
         }
         prevGameState = GameManager.Instance.state;
-        return;
 
         if (GameManager.Instance.state == GameManager.GameState.PREGAME ||
             GameManager.Instance.state == GameManager.GameState.WAVEEND ||

@@ -67,7 +67,7 @@ public class RewardScreenManager : MonoBehaviour
             spellRewardManager.SetActive();
 
             if (EnemySpawner.CurrentWaveNumber % 3 == 0)
-            //if (EnemySpawner.CurrentWaveNumber % 1 == 0)
+            // if (EnemySpawner.CurrentWaveNumber % 1 == 0) // FOR FASTER, SWIFTER TESTING!!! 
             {
                 nextStageButton.onClick.AddListener(RelicRewardAction);
                 texts[2].text = "RELIC CLAIM";
