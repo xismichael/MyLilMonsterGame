@@ -129,6 +129,7 @@ public class RelicManager : MonoBehaviour
         };
         EventBus.Instance.OnWaveEnd += () =>
         {
+            Debug.Log("OnWaveEnd has been invoked!!!!!!!!!!!!!!!!!!!!!!!!!");
             Trigger("finish-wave", player);
         };
     }
@@ -157,16 +158,19 @@ public class RelicManager : MonoBehaviour
         };
         EventBus.Instance.OnWaveEnd += () =>
         {
+            Debug.Log("OnWaveEnd has been unregistered~~~~~~~~~~~~~~~~~~~~~~~");
             Trigger("finish-wave", player);
         };
     }
 
     public void Trigger(string triggerType, PlayerController player, Dictionary<string, object> parameters = null)
     {
+        //Debug.Log($"The ownedRelics count •••••••••••••••••••• {GetOwnedRelics().Count}");
         foreach (var relic in GetOwnedRelics())
         {
             if (relic.Trigger.Type == triggerType)
             {
+                Debug.Log($"dkfjslkfjslkjdlfjsdflksjdflksjflfdl The TriggerType::::::: {triggerType}.");
                 relic.TryActivate(player, parameters);
             }
         }

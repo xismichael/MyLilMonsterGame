@@ -9,10 +9,18 @@ public class Relic
     public Effect Effect;
     public string Description;
 
+    private GameManager.GameState prevGameState = GameManager.GameState.PREGAME;
+
     private bool hasTriggered = false;
 
     public void TryActivate(PlayerController player, Dictionary<string, object> parameters)
     {
+        if(prevGameState != GameManager.GameState.WAVEEND && GameManager.Instance.state == GameManager.GameState.WAVEEND){
+            Effect.Apply(player, this);
+        }
+        prevGameState = GameManager.Instance.state;
+        return;
+
         if (GameManager.Instance.state == GameManager.GameState.PREGAME ||
             GameManager.Instance.state == GameManager.GameState.WAVEEND ||
             GameManager.Instance.state == GameManager.GameState.GAMEOVER)

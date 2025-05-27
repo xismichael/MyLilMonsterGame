@@ -27,6 +27,7 @@ public class EventBus
     }
     public void WaveEnded()
     {
+        Debug.Log("The wave has endedededededededed.");
         OnWaveEnd?.Invoke();
     }
     public void AllEnemyAreHit(Damage dmg)

@@ -53,9 +53,11 @@ public class Effect
                 revertAmount += evaluatedAmount;
                 break;
             case "regenerate-hp":
+                Debug.Log($"The evaluated amount::::::::: {evaluatedAmount} --------- The amountExpr::::::: {AmountExpr} ========== The player HP before::::::: {player.hp.hp}.");
                 player.hp.Heal(evaluatedAmount);
                 revertAmount += evaluatedAmount;
-                break;
+                Debug.Log($"The player HP after regenerated ::::::: {player.hp.hp}.");
+                break;                
             case "teleport":
                 SetTeleportPosition(player);
                 break;
@@ -169,6 +171,13 @@ public class Effect
             Debug.Log($"[Relic] Player has NOT teleported. HP ======= {control.hp.hp} ;; MAX_HP ======== {control.hp.max_hp}.");
         }
     }
+
+    /*
+    public void AddHP(PlayerController player, Relic source){
+        player.hp.hp += source.Effect.evaluatedAmount;
+        Debug.Log($"The evaluatedAmount::::: {source.Effect.evaluatedAmount} ;; The player HP:::::: {player.hp.hp}.");
+    }
+    */
 
     private void SetSpeed(PlayerController player, int amount){
         PlayerController control = player.GetComponent<PlayerController>();

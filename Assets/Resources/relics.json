@@ -158,7 +158,7 @@
         "effect": {
             "description": "you gain more health points.",
             "type": "regenerate-hp",
-            "amount": "5"
+            "amount": "20"
         }
     }
 ]
