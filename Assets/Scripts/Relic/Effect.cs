@@ -172,13 +172,6 @@ public class Effect
         }
     }
 
-    /*
-    public void AddHP(PlayerController player, Relic source){
-        player.hp.hp += source.Effect.evaluatedAmount;
-        Debug.Log($"The evaluatedAmount::::: {source.Effect.evaluatedAmount} ;; The player HP:::::: {player.hp.hp}.");
-    }
-    */
-
     private void SetSpeed(PlayerController player, int amount){
         PlayerController control = player.GetComponent<PlayerController>();
         control.StartCoroutine(ChangeSpeed(control, amount));
