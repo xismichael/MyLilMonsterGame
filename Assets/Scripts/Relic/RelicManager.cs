@@ -170,7 +170,7 @@ public class RelicManager : MonoBehaviour
         {
             if (relic.Trigger.Type == triggerType)
             {
-                Debug.Log($"dkfjslkfjslkjdlfjsdflksjdflksjflfdl The TriggerType::::::: {triggerType}.");
+                //Debug.Log($"dkfjslkfjslkjdlfjsdflksjdflksjflfdl The TriggerType::::::: {triggerType}.");
                 relic.TryActivate(player, parameters);
             }
         }
