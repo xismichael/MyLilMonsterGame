@@ -12,6 +12,9 @@ public class RewardScreenManager : MonoBehaviour
 
     public Button nextStageButton;
 
+    public Button creditsButton;
+    public GameObject creditsPanel;
+
     private bool ScreenActivate;
 
     public SpellRewardManager spellRewardManager;
@@ -20,6 +23,9 @@ public class RewardScreenManager : MonoBehaviour
 
     public static RewardScreenManager Instance { get; private set; }
 
+    
+
+    
 
     void Awake()
     {
@@ -44,11 +50,13 @@ public class RewardScreenManager : MonoBehaviour
             nextStageButton.onClick.RemoveAllListeners();
             ScreenActivate = false;
             rewardUI.SetActive(false);
+            creditsButton.gameObject.SetActive(false);
         }
     }
 
     public void WaveEndScreen()
     {
+        creditsPanel.SetActive(false);
         if (!ScreenActivate)
         {
             rewardUI.SetActive(true);
@@ -71,12 +79,14 @@ public class RewardScreenManager : MonoBehaviour
             {
                 nextStageButton.onClick.AddListener(RelicRewardAction);
                 texts[2].text = "RELIC CLAIM";
+                creditsButton.gameObject.SetActive(false);
                 ScreenActivate = true;
             }
             else
             {
                 nextStageButton.onClick.AddListener(WaveEndButtonAction);
                 texts[2].text = "NEXT WAVE";
+                creditsButton.gameObject.SetActive(false);
                 ScreenActivate = true;
             }
         }
@@ -86,11 +96,13 @@ public class RewardScreenManager : MonoBehaviour
 
     public void RelicRewardAction()
     {
+        creditsPanel.SetActive(false);
         GameManager.Instance.player.GetComponent<PlayerController>().spellUIContainer.GameplayShift();
         relicRewardManager.RewardScreenAction();
     }
     public void WaveEndButtonAction()
     {
+        creditsPanel.SetActive(false);
         GameManager.Instance.player.GetComponent<PlayerController>().spellUIContainer.GameplayShift();
         EnemySpawner.Instance.SpawnNextWave();
     }
@@ -115,7 +127,13 @@ public class RewardScreenManager : MonoBehaviour
                                 $"Total Damage Taken: {EnemySpawner.Instance.TotalDamageTaken}";
             nextStageButton.onClick.AddListener(GameOverButtonAction);
             texts[2].text = "RESTART";
+
+            creditsButton.gameObject.SetActive(true);
+            creditsButton.onClick.RemoveAllListeners();
+            creditsButton.onClick.AddListener(StartCredits);
             ScreenActivate = true;
+
+            
         }
 
     }
@@ -125,6 +143,13 @@ public class RewardScreenManager : MonoBehaviour
 
         rewardUI.SetActive(false);
         RoleClassManager.Instance.gameObject.SetActive(true);
+    }
+
+    public void StartCredits()
+    {
+
+        creditsPanel.SetActive(true);
+
     }
 
 
