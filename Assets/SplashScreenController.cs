@@ -12,6 +12,6 @@ public class SplashScreenController : MonoBehaviour
 
     void LoadMain()
     {
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("MainMenu");
     }
 }
