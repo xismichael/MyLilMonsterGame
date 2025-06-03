@@ -130,7 +130,11 @@ public class SpellCraftingManager : MonoBehaviour
 
     public void MakeCurrentHeldSpells()
     {
-
+        if (player.spellcaster == null) return;
+        for (int i = 0; i < player.spellcaster.spells.Count(); i++)
+        {
+            craftingSpellCurrentItems[i].SetSpell(player.spellcaster.spells[i]);
+        }
     }
 
     public void SpellInventoryOnClick()

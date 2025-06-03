@@ -39,7 +39,9 @@ public class SpellCaster
 
         AddSpell(CreateStartSpell());
 
-        //spell = SpellBuilder.Instance.CreateRandomSpell(this);
+
+        // Spell spell = SpellBuilder.Instance.CreateRandomSpell(this);
+        // AddSpell(spell);
         //spell = SpellBuilder.Instance.Build("turret_spell", this);
         //spell = SpellBuilder.Instance.ApplyModifiersToSpell(spell, new List<string> { "burning", "damage_amp", "doubler" });
 

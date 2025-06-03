@@ -36,6 +36,12 @@ public class CraftingSpellCurrentItem : MonoBehaviour
 
     }
 
+    public void SetSpell(Spell spell)
+    {
+        this.spell = spell;
+        GameManager.Instance.spellIconManager.PlaceSprite(spell.GetIcon(), icon.GetComponent<Image>());
+    }
+
     public void OnClick()
     {
 
