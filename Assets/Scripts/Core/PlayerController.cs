@@ -75,10 +75,10 @@ public class PlayerController : MonoBehaviour
         //relicManager.AddRelic("Predator's Grace");
         //relicManager.AddRelic("Jade Elephant");
 
-        // for (int i = 0; i < 10; i++)
-        // {
-        //     spellCraftingManager.AddSpellToInventory(spellcaster.CreateStartSpell());
-        // }
+        for (int i = 0; i < 10; i++)
+        {
+            spellCraftingManager.AddSpellToInventory(spellcaster.CreateStartSpell());
+        }
 
         //for inventory
         inventoryOpenAllowed = true;

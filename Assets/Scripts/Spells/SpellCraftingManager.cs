@@ -17,11 +17,12 @@ public class SpellCraftingManager : MonoBehaviour
     private int itemsPerColumn = 3;
     private int maxItems = 12;
     private List<Spell> spellsInventory = new List<Spell> { };
-    private List<string> modifiersInventory = new List<string> { };
+    private List<string> modifiersInventory = new List<string> { "lala", "lala", "lala" };
     public string currentInventory = "spell";
 
     //name displaying
     public TMP_Text DisplaySpellText;
+    public TMP_Text InventoryButtonText;
 
 
     //for what is currently selected
@@ -77,6 +78,7 @@ public class SpellCraftingManager : MonoBehaviour
     {
         DeleteInventory();
         currentInventory = "spell";
+        InventoryButtonText.text = currentInventory;
         int currentItemCount = 0;
         foreach (Spell spell in spellsInventory)
         {
@@ -97,6 +99,7 @@ public class SpellCraftingManager : MonoBehaviour
     {
         DeleteInventory();
         currentInventory = "modifier";
+        InventoryButtonText.text = currentInventory;
         int currentItemCount = 0;
         foreach (string modifier in modifiersInventory)
         {
