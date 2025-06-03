@@ -1893,7 +1893,11 @@ MonoBehaviour:
   FieldSelected: 
   craftingSpellTableItem: {fileID: 446599446}
   craftingModifierTableItem: {fileID: 1706488824}
-  craftingSpellCurrentItems: []
+  craftingSpellCurrentItems:
+  - {fileID: 141438486}
+  - {fileID: 590591229}
+  - {fileID: 916140278}
+  - {fileID: 1502930953}
   CraftingSpellInventoryItemPrefab: {fileID: 195726675170110591, guid: bfa93ed43e76943d993817c264cf086d, type: 3}
   CraftingModifierInventoryItemPrefab: {fileID: 4864579859683966107, guid: 1692089d19fea435d92363bc05f1a5d6, type: 3}
 --- !u!114 &267587718
