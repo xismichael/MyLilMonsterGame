@@ -1847,7 +1847,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &267587716
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1884,7 +1884,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aef346328abb4437ae6f249ea9cdeec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1718273952}
+  currentInventory: spell
   DisplaySpellText: {fileID: 186779917}
+  InventoryButtonText: {fileID: 504026545}
   TypeSelected: 
   IdSelected: 0
   FieldSelected: 
@@ -3189,6 +3192,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 496283509}
   m_CullTransparentMesh: 1
+--- !u!114 &504026545 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 567442795481248135, guid: 346b948a3ad7b4a1abe50957b40a9354, type: 3}
+  m_PrefabInstance: {fileID: 1235705017}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -10847,6 +10861,7 @@ MonoBehaviour:
   role: 
   characterSpriteRenderer: {fileID: 232596022}
   lastMoveTime: 0
+  spellCraftingManager: {fileID: 267587717}
 --- !u!4 &1718273953
 Transform:
   m_ObjectHideFlags: 0

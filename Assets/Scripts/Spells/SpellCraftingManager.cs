@@ -9,6 +9,8 @@ using TMPro;
 public class SpellCraftingManager : MonoBehaviour
 {
 
+    //player
+    public PlayerController player;
     //inventory
     private int startingXPosition = 350;
     private int startingYPosition = 690;
