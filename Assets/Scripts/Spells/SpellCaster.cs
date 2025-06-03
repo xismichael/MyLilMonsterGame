@@ -60,6 +60,7 @@ public class SpellCaster
         // }
     }
 
+    //add a spell to the inventor
     public void AddSpell(Spell spell)
     {
         if (this.spells.Count < this.maxSpellCount)
@@ -68,6 +69,16 @@ public class SpellCaster
         }
 
         GameManager.Instance.player.GetComponent<PlayerController>().spellUIContainer.LoadUI(spells);
+    }
+
+    //reload the spell inventory
+    public void ReloadSpell(List<Spell> NewSpells)
+    {
+        if (NewSpells.Count < this.maxSpellCount)
+        {
+            spells = NewSpells;
+        }
+
     }
 
     public void DropSpell(int index)
@@ -80,7 +91,13 @@ public class SpellCaster
     public Spell CreateStartSpell()
     {
         Spell spell = SpellBuilder.Instance.Build("arcane_bolt", this);
-        spell = SpellBuilder.Instance.ApplyModifiersToSpell(spell, new List<string> {"piercing", "mana_amp", "doubler", "burning" });
+        spell = SpellBuilder.Instance.ApplyModifiersToSpell(spell, new List<string> { "piercing", "mana_amp", "doubler", "burning" });
+        return spell;
+    }
+
+    public Spell CreateSpell(string spellName)
+    {
+        Spell spell = SpellBuilder.Instance.Build(spellName, this);
         return spell;
     }
 

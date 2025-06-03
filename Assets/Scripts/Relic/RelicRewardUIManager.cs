@@ -39,10 +39,10 @@ public class RelicRewardUIManager : MonoBehaviour
         SetAllNotActive();
         relicClaimed = false;
         unownedRelics = player.relicManager.GetUnownedRelics(relicRewardAmount);
-        Debug.Log("relicRewardAmount: " + relicRewardAmount);
+        //Debug.Log("relicRewardAmount: " + relicRewardAmount);
         //Debug.Log(unownedRelics.Count);
         int actualCount = Mathf.Min(unownedRelics.Count, relicRewardAmount);
-        Debug.Log($"The actualCount::::::: {unownedRelics.Count} ======= The relicRewardAmount:::::: {relicRewardAmount}");
+        //Debug.Log($"The actualCount::::::: {unownedRelics.Count} ======= The relicRewardAmount:::::: {relicRewardAmount}");
         for (int i = 0; i < actualCount; i++)
         {
             relicRewardUIs[i].gameObject.SetActive(true);

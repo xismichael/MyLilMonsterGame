@@ -31,6 +31,15 @@ public class PlayerController : MonoBehaviour
     public event Action<Vector2> OnMoveEvent;
     public event Action<Hittable> OnHealthChange;
 
+
+    //inventory related
+    public SpellCraftingManager spellCraftingManager;
+    private bool inventoryActive = false;
+    private bool inventoryOpenAllowed = false;
+
+    //cast related
+    private bool castAllowed = true;
+
     void Start()
     {
         unit = GetComponent<Unit>();
@@ -65,6 +74,14 @@ public class PlayerController : MonoBehaviour
         //spellcaster.power = 100;
         //relicManager.AddRelic("Predator's Grace");
         //relicManager.AddRelic("Jade Elephant");
+
+        // for (int i = 0; i < 10; i++)
+        // {
+        //     spellCraftingManager.AddSpellToInventory(spellcaster.CreateStartSpell());
+        // }
+
+        //for inventory
+        inventoryOpenAllowed = true;
     }
 
     void Update()
@@ -96,7 +113,8 @@ public class PlayerController : MonoBehaviour
     {
         if (GameManager.Instance.state == GameManager.GameState.PREGAME ||
             GameManager.Instance.state == GameManager.GameState.WAVEEND ||
-            GameManager.Instance.state == GameManager.GameState.GAMEOVER) return;
+            GameManager.Instance.state == GameManager.GameState.GAMEOVER ||
+            !castAllowed) return;
 
         Vector2 mouseScreen = Mouse.current.position.value;
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen);
@@ -128,6 +146,23 @@ public class PlayerController : MonoBehaviour
         spellcaster.spellCastIndex = (spellcaster.spellCastIndex + 1) % spellcaster.GetCurrentSpellAmount();
     }
 
+    void OnInventory(InputValue value)
+    {
+        if (!inventoryOpenAllowed) return;
+        if (!inventoryActive)
+        {
+            spellCraftingManager.initialize();
+            inventoryActive = true;
+            castAllowed = false;
+        }
+        else
+        {
+            spellCraftingManager.gameObject.SetActive(false);
+            inventoryActive = false;
+            castAllowed = true;
+        }
+    }
+
     void Die()
     {
         GameManager.Instance.state = GameManager.GameState.GAMEOVER;
@@ -140,5 +175,7 @@ public class PlayerController : MonoBehaviour
             GameManager.Instance.RemoveEnemy(ec.gameObject);
             Destroy(ec.gameObject);
         }
+
+        inventoryOpenAllowed = false;
     }
 }

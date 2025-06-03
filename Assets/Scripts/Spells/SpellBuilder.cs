@@ -141,7 +141,7 @@ public class SpellBuilder : MonoBehaviour
         string pick = keys[Random.Range(0, keys.Count)];
         var def = spellDefinitions[pick];
 
-        string type = def["type"] != null? def["type"].ToString() : "";
+        string type = def["type"] != null ? def["type"].ToString() : "";
 
         if (type == "modifier")
         {
