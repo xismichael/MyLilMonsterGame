@@ -14,7 +14,7 @@ public class CraftingSpellCurrentItem : MonoBehaviour
     float last_text_update;
     const float UPDATE_DELAY = 1;
     public int id;
-    public string selectedField = "current";
+    public string field = "current";
     public string type = "spell";
 
 
@@ -26,6 +26,8 @@ public class CraftingSpellCurrentItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (spellCraftingManager.selected && id == spellCraftingManager.IdSelected && type == spellCraftingManager.TypeSelected && field == spellCraftingManager.FieldSelected) highlight.SetActive(true);
+        else highlight.SetActive(false);
         if (spell == null) return;
         if (Time.time > last_text_update + UPDATE_DELAY)
         {
@@ -34,16 +36,37 @@ public class CraftingSpellCurrentItem : MonoBehaviour
             last_text_update = Time.time;
         }
 
+
     }
 
     public void SetSpell(Spell spell)
     {
+        if (spell == null)
+        {
+            SetEmpty();
+            return;
+        }
         this.spell = spell;
         GameManager.Instance.spellIconManager.PlaceSprite(spell.GetIcon(), icon.GetComponent<Image>());
     }
 
     public void OnClick()
     {
+        if (!spellCraftingManager.selected)
+        {
+            spellCraftingManager.IdSelected = id;
+            spellCraftingManager.TypeSelected = type;
+            spellCraftingManager.FieldSelected = field;
+            spellCraftingManager.selected = true;
+            return;
+        }
+    }
 
+    public void SetEmpty()
+    {
+        this.spell = null;
+        icon.GetComponent<Image>().sprite = null;
+        manacost.text = "n/a";
+        damage.text = "n/a";
     }
 }

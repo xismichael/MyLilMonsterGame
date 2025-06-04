@@ -80,6 +80,7 @@ public class SpellCaster
         {
             spells = NewSpells;
         }
+        GameManager.Instance.player.GetComponent<PlayerController>().spellUIContainer.LoadUI(spells);
 
     }
 

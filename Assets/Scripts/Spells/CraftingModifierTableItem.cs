@@ -9,8 +9,9 @@ public class CraftingModifierTableItem : MonoBehaviour
     public GameObject icon;
     public GameObject highlight;
     public string modifier;
+    public int id = 0;
     public string type = "modifier";
-    public string selectedField = "table";
+    public string field = "table";
 
 
     void Start()
@@ -21,11 +22,20 @@ public class CraftingModifierTableItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (spellCraftingManager.selected && id == spellCraftingManager.IdSelected && type == spellCraftingManager.TypeSelected && field == spellCraftingManager.FieldSelected) highlight.SetActive(true);
+        else highlight.SetActive(false);
 
     }
 
     public void OnClick()
     {
-
+        if (!spellCraftingManager.selected)
+        {
+            spellCraftingManager.IdSelected = id;
+            spellCraftingManager.TypeSelected = type;
+            spellCraftingManager.FieldSelected = field;
+            spellCraftingManager.selected = true;
+            return;
+        }
     }
 }

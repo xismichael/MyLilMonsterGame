@@ -15,7 +15,7 @@ public class CraftingSpellInventoryItem : MonoBehaviour
     float last_text_update;
     const float UPDATE_DELAY = 1;
     public int id;
-    public string selectedField = "inventory";
+    public string field = "inventory";
     public string type = "spell";
 
 
@@ -27,6 +27,8 @@ public class CraftingSpellInventoryItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (spellCraftingManager.selected && id == spellCraftingManager.IdSelected && type == spellCraftingManager.TypeSelected && field == spellCraftingManager.FieldSelected) highlight.SetActive(true);
+        else highlight.SetActive(false);
         if (spell == null) return;
         if (Time.time > last_text_update + UPDATE_DELAY)
         {
@@ -35,16 +37,62 @@ public class CraftingSpellInventoryItem : MonoBehaviour
             last_text_update = Time.time;
         }
 
+
     }
 
     public void OnClick()
     {
+        if (!spellCraftingManager.selected || type != spellCraftingManager.TypeSelected)
+        {
+            spellCraftingManager.IdSelected = id;
+            spellCraftingManager.TypeSelected = type;
+            spellCraftingManager.FieldSelected = field;
+            spellCraftingManager.selected = true;
+            return;
+        }
+
+        if (field == spellCraftingManager.FieldSelected)
+        {
+            //if you click the same icon
+            if (id == spellCraftingManager.IdSelected)
+            {
+                spellCraftingManager.selected = false;
+                return;
+            }
+
+            //if you click within the table
+            spellCraftingManager.SpellInventorySwap(id);
+            return;
+        }
+
+        //inventory crafting table sqap
+        if (spellCraftingManager.FieldSelected == "table")
+        {
+            spellCraftingManager.SpellInventoryTableAction(id);
+            return;
+        }
+
+        //inventory action swap
+        spellCraftingManager.SpellInventoryCurrentAction(id);
 
     }
 
     public void SetSpell(Spell spell)
     {
+        if (spell == null)
+        {
+            SetEmpty();
+            return;
+        }
         this.spell = spell;
         GameManager.Instance.spellIconManager.PlaceSprite(spell.GetIcon(), icon.GetComponent<Image>());
+    }
+
+    public void SetEmpty()
+    {
+        this.spell = null;
+        icon.GetComponent<Image>().sprite = null;
+        manacost.text = "n/a";
+        damage.text = "n/a";
     }
 }

@@ -74,11 +74,10 @@ public class PlayerController : MonoBehaviour
         //spellcaster.power = 100;
         //relicManager.AddRelic("Predator's Grace");
         //relicManager.AddRelic("Jade Elephant");
+        spellCraftingManager.AddSpellToInventory(spellcaster.CreateStartSpell());
+        spellCraftingManager.AddSpellToInventory(spellcaster.CreateSpell("arcane_spray"));
+        spellCraftingManager.AddSpellToInventory(spellcaster.CreateSpell("arcane_blast"));
 
-        for (int i = 0; i < 10; i++)
-        {
-            spellCraftingManager.AddSpellToInventory(spellcaster.CreateStartSpell());
-        }
 
         //for inventory
         inventoryOpenAllowed = true;
@@ -157,7 +156,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            spellCraftingManager.gameObject.SetActive(false);
+            spellCraftingManager.close();
             inventoryActive = false;
             castAllowed = true;
         }
@@ -176,6 +175,8 @@ public class PlayerController : MonoBehaviour
             Destroy(ec.gameObject);
         }
 
-        inventoryOpenAllowed = false;
+        spellCraftingManager.gameObject.SetActive(false);
+        inventoryActive = false;
+        castAllowed = true;
     }
 }
