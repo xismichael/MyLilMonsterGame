@@ -19,7 +19,7 @@ public class SpellCraftingManager : MonoBehaviour
     private int itemsPerColumn = 3;
     private int maxItems = 12;
     private List<Spell> spellsInventory = new List<Spell> { };
-    private List<string> modifiersInventory = new List<string> { "lala", "lala", "lala" };
+    private List<string> modifiersInventory = new List<string> { "doubler", "splitter", "chaos" };
     public string currentInventory = "spell";
 
     //name displaying
@@ -157,6 +157,8 @@ public class SpellCraftingManager : MonoBehaviour
             MakeSpellInventory();
         }
 
+        if (FieldSelected == "inventory") selected = false;
+
     }
 
     public void CraftOnClick()
@@ -164,6 +166,7 @@ public class SpellCraftingManager : MonoBehaviour
 
     }
 
+    //swap within spell inventory
     public void SpellInventorySwap(int newId)
     {
         //get the spells at each position
@@ -183,6 +186,7 @@ public class SpellCraftingManager : MonoBehaviour
 
     }
 
+    //swap within modifier inventory
     public void ModifierInventorySwap(int newId)
     {
         //get the modifier at each position
@@ -202,6 +206,19 @@ public class SpellCraftingManager : MonoBehaviour
 
     }
 
+    public void SpellCurrentSwap(int newId)
+    {
+        Spell currentIdSpell = craftingSpellCurrentItems[IdSelected].spell;
+        Spell newIdSpell = craftingSpellCurrentItems[newId].spell;
+
+        craftingSpellCurrentItems[newId].SetSpell(currentIdSpell);
+        craftingSpellCurrentItems[IdSelected].SetSpell(newIdSpell);
+
+        selected = false;
+
+    }
+
+    //spell inventory button actions 
     public void SpellInventoryTableAction(int InventoryId)
     {
         //get the spells at each position
@@ -220,20 +237,56 @@ public class SpellCraftingManager : MonoBehaviour
         selected = false;
     }
 
-    public void SpellInventoryCurrentAction(int InventoryId)
+    public void SpellInventoryCurrentAction(int InventoryId, int CurrentId)
     {
         //get spell at each position
         Spell InventorySpell = spellsInventory[InventoryId];
-        Spell CurrentSpell = craftingSpellCurrentItems[IdSelected].spell;
+        Spell CurrentSpell = craftingSpellCurrentItems[CurrentId].spell;
 
         // InventorySpell swap
         spellsInventory[InventoryId] = CurrentSpell;
 
         //UI visual swap
         gameObjectInventoryItems[InventoryId].GetComponent<CraftingSpellInventoryItem>().SetSpell(CurrentSpell);
-        craftingSpellCurrentItems[IdSelected].SetSpell(InventorySpell);
+        craftingSpellCurrentItems[CurrentId].SetSpell(InventorySpell);
+
+        selected = false;
     }
 
+    //spell table actions
+
+    public void SpellTableCurrentAction(int CurrentId)
+    {
+        Spell TableSpell = craftingSpellTableItem.spell;
+        Spell CurrentSpell = craftingSpellCurrentItems[CurrentId].spell;
+
+        craftingSpellCurrentItems[CurrentId].SetSpell(TableSpell);
+        craftingSpellTableItem.SetSpell(CurrentSpell);
+
+        selected = false;
+    }
+
+
+    //modifier inventory table actions
+
+    public void ModifierInventoryTableAction(int InventoryId)
+    {
+        string InventoryModifier = modifiersInventory[InventoryId];
+        string TableModifier = craftingModifierTableItem.modifier;
+
+        modifiersInventory[InventoryId] = TableModifier;
+
+        craftingModifierTableItem.SetModifier(InventoryModifier);
+        gameObjectInventoryItems[InventoryId].GetComponent<CraftingModifierInventoryItem>().SetModifier(TableModifier);
+
+        selected = false;
+
+    }
+
+
+
+
+    //closing table actions
     public void CurrentSpellChangeOnClose()
     {
         List<Spell> newSpells = new List<Spell> { };
@@ -249,11 +302,37 @@ public class SpellCraftingManager : MonoBehaviour
     public void RemoveNullFromInventory()
     {
 
+        //remove null from spells and modifiers when the inventory close
+        List<Spell> newSpellInventory = new List<Spell> { };
+        foreach (Spell spell in spellsInventory)
+        {
+            if (spell == null) continue;
+            newSpellInventory.Add(spell);
+        }
+
+        spellsInventory = newSpellInventory;
+
+        List<string> newModifierInventory = new List<string> { };
+        foreach (string modifier in modifiersInventory)
+        {
+            if (modifier == null || modifier == "") continue;
+            newModifierInventory.Add(modifier);
+        }
+
+        modifiersInventory = newModifierInventory;
+
     }
 
     public void TableCloseAction()
     {
-
+        if (craftingSpellTableItem.spell != null) spellsInventory.Add(craftingSpellTableItem.spell);
+        if (craftingModifierTableItem.modifier != null && craftingModifierTableItem.modifier != "") modifiersInventory.Add(craftingModifierTableItem.modifier);
+        foreach (CraftingSpellCurrentItem craftingSpellCurrentItem in craftingSpellCurrentItems)
+        {
+            craftingSpellCurrentItem.SetSpell(null);
+        }
+        craftingSpellTableItem.SetSpell(null);
+        craftingModifierTableItem.SetModifier(null);
     }
 
 

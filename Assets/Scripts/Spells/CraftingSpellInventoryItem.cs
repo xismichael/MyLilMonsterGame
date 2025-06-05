@@ -11,7 +11,7 @@ public class CraftingSpellInventoryItem : MonoBehaviour
     public TextMeshProUGUI manacost;
     public TextMeshProUGUI damage;
     public GameObject highlight;
-    public Spell spell;
+    public Spell spell = null;
     float last_text_update;
     const float UPDATE_DELAY = 1;
     public int id;
@@ -48,6 +48,7 @@ public class CraftingSpellInventoryItem : MonoBehaviour
             spellCraftingManager.TypeSelected = type;
             spellCraftingManager.FieldSelected = field;
             spellCraftingManager.selected = true;
+            spellCraftingManager.DisplaySpellText.text = GetName();
             return;
         }
 
@@ -72,11 +73,16 @@ public class CraftingSpellInventoryItem : MonoBehaviour
             return;
         }
 
-        //inventory action swap
-        spellCraftingManager.SpellInventoryCurrentAction(id);
+        //inventory current swap
+        spellCraftingManager.SpellInventoryCurrentAction(id, spellCraftingManager.IdSelected);
 
     }
 
+    public string GetName()
+    {
+        if (spell == null) return "empty spell";
+        return spell.GetFullName();
+    }
     public void SetSpell(Spell spell)
     {
         if (spell == null)

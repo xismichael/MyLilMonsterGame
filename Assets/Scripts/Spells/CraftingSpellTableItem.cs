@@ -10,7 +10,7 @@ public class CraftingSpellTableItem : MonoBehaviour
     public TextMeshProUGUI manacost;
     public TextMeshProUGUI damage;
     public GameObject highlight;
-    public Spell spell;
+    public Spell spell = null;
     float last_text_update;
     const float UPDATE_DELAY = 1;
     public int id = 0;
@@ -41,14 +41,33 @@ public class CraftingSpellTableItem : MonoBehaviour
 
     public void OnClick()
     {
-        if (!spellCraftingManager.selected)
+        if (!spellCraftingManager.selected || type != spellCraftingManager.TypeSelected)
         {
             spellCraftingManager.IdSelected = id;
             spellCraftingManager.TypeSelected = type;
             spellCraftingManager.FieldSelected = field;
             spellCraftingManager.selected = true;
+            spellCraftingManager.DisplaySpellText.text = GetName();
             return;
         }
+
+        if (field == spellCraftingManager.FieldSelected)
+        {
+            spellCraftingManager.selected = false;
+            return;
+        }
+
+        if (spellCraftingManager.FieldSelected == "inventory")
+        {
+            spellCraftingManager.SpellInventoryTableAction(spellCraftingManager.IdSelected);
+            return;
+        }
+        spellCraftingManager.SpellTableCurrentAction(spellCraftingManager.IdSelected);
+    }
+    public string GetName()
+    {
+        if (spell == null) return "empty spell";
+        return spell.GetFullName();
     }
 
     public void SetEmpty()

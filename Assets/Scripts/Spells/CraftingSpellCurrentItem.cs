@@ -10,7 +10,7 @@ public class CraftingSpellCurrentItem : MonoBehaviour
     public TextMeshProUGUI manacost;
     public TextMeshProUGUI damage;
     public GameObject highlight;
-    public Spell spell;
+    public Spell spell = null;
     float last_text_update;
     const float UPDATE_DELAY = 1;
     public int id;
@@ -38,6 +38,11 @@ public class CraftingSpellCurrentItem : MonoBehaviour
 
 
     }
+    public string GetName()
+    {
+        if (spell == null) return "empty spell";
+        return spell.GetFullName();
+    }
 
     public void SetSpell(Spell spell)
     {
@@ -52,14 +57,36 @@ public class CraftingSpellCurrentItem : MonoBehaviour
 
     public void OnClick()
     {
-        if (!spellCraftingManager.selected)
+        if (!spellCraftingManager.selected || type != spellCraftingManager.TypeSelected)
         {
             spellCraftingManager.IdSelected = id;
             spellCraftingManager.TypeSelected = type;
             spellCraftingManager.FieldSelected = field;
             spellCraftingManager.selected = true;
+            spellCraftingManager.DisplaySpellText.text = GetName();
             return;
         }
+
+        if (field == spellCraftingManager.FieldSelected)
+        {
+
+            if (spellCraftingManager.IdSelected == id)
+            {
+                spellCraftingManager.selected = false;
+                return;
+            }
+            spellCraftingManager.SpellCurrentSwap(id);
+            return;
+        }
+
+
+        if (spellCraftingManager.FieldSelected == "inventory")
+        {
+            spellCraftingManager.SpellInventoryCurrentAction(spellCraftingManager.IdSelected, id);
+            return;
+        }
+        spellCraftingManager.SpellTableCurrentAction(id);
+
     }
 
     public void SetEmpty()

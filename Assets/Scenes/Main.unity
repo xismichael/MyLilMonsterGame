@@ -1190,7 +1190,7 @@ MonoBehaviour:
   damage: {fileID: 1413323678}
   highlight: {fileID: 1942657004}
   id: 0
-  selectedField: current
+  field: current
   type: spell
 --- !u!1 &146238315
 GameObject:
@@ -1440,7 +1440,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 300}
-  m_SizeDelta: {x: 500, y: 50}
+  m_SizeDelta: {x: 2000, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &186779917
 MonoBehaviour:
@@ -1888,6 +1888,7 @@ MonoBehaviour:
   currentInventory: spell
   DisplaySpellText: {fileID: 186779917}
   InventoryButtonText: {fileID: 504026545}
+  selected: 0
   TypeSelected: 
   IdSelected: 0
   FieldSelected: 
@@ -3013,7 +3014,8 @@ MonoBehaviour:
   manacost: {fileID: 702448109}
   damage: {fileID: 126764379}
   highlight: {fileID: 836913087}
-  selectedField: table
+  id: 0
+  field: table
   type: spell
 --- !u!1 &447376980
 GameObject:
@@ -3771,7 +3773,7 @@ MonoBehaviour:
   damage: {fileID: 1144528730}
   highlight: {fileID: 1611553801}
   id: 1
-  selectedField: current
+  field: current
   type: spell
 --- !u!1 &604938792
 GameObject:
@@ -6089,7 +6091,7 @@ MonoBehaviour:
   damage: {fileID: 32940010}
   highlight: {fileID: 395014395}
   id: 2
-  selectedField: current
+  field: current
   type: spell
 --- !u!1 &932068598
 GameObject:
@@ -9150,7 +9152,7 @@ MonoBehaviour:
   damage: {fileID: 375877853}
   highlight: {fileID: 1312509583}
   id: 3
-  selectedField: current
+  field: current
   type: spell
 --- !u!1001 &1512456745
 PrefabInstance:
@@ -10573,8 +10575,9 @@ MonoBehaviour:
   icon: {fileID: 1630330602}
   highlight: {fileID: 1525974359}
   modifier: 
+  id: 0
   type: modifier
-  selectedField: table
+  field: table
 --- !u!1 &1709288111
 GameObject:
   m_ObjectHideFlags: 0

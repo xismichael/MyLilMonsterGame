@@ -24,6 +24,11 @@ public class SpellBuilder : MonoBehaviour
         }
     }
 
+    public JObject GetSpellObject(string spellName)
+    {
+        return spellDefinitions[spellName];
+    }
+
     private void LoadSpells()
     {
         spellDefinitions = new Dictionary<string, JObject>();
