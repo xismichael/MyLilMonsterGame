@@ -74,8 +74,8 @@ public class PlayerController : MonoBehaviour
         //spellcaster.power = 100;
         //relicManager.AddRelic("Predator's Grace");
         //relicManager.AddRelic("Jade Elephant");
-        spellCraftingManager.AddSpellToInventory(spellcaster.CreateStartSpell());
-        spellCraftingManager.AddSpellToInventory(spellcaster.CreateSpell("arcane_spray"));
+        //spellCraftingManager.AddSpellToInventory(spellcaster.CreateStartSpell());
+        //spellCraftingManager.AddSpellToInventory(spellcaster.CreateSpell("arcane_spray"));
         spellCraftingManager.AddSpellToInventory(spellcaster.CreateSpell("arcane_blast"));
 
 

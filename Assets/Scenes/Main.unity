@@ -5671,7 +5671,7 @@ PrefabInstance:
       objectReference: {fileID: 267587717}
     - target: {fileID: 8103004131074974930, guid: 346b948a3ad7b4a1abe50957b40a9354, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: CraftOnLick
+      value: CraftOnClick
       objectReference: {fileID: 0}
     - target: {fileID: 8103004131074974930, guid: 346b948a3ad7b4a1abe50957b40a9354, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -63867,7 +63867,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3127186393118423181, guid: b531ed09aa5f5a847918ddac98e4bf16, type: 3}
       propertyPath: sprites.Array.size
-      value: 19
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3127186393118423181, guid: b531ed09aa5f5a847918ddac98e4bf16, type: 3}
       propertyPath: 'sprites.Array.data[6]'
@@ -63875,6 +63875,10 @@ PrefabInstance:
       objectReference: {fileID: 6750894140006794391, guid: e621137f9197f0842a52168123ca0298, type: 3}
     - target: {fileID: 3127186393118423181, guid: b531ed09aa5f5a847918ddac98e4bf16, type: 3}
       propertyPath: 'sprites.Array.data[18]'
+      value: 
+      objectReference: {fileID: 335670889, guid: e621137f9197f0842a52168123ca0298, type: 3}
+    - target: {fileID: 3127186393118423181, guid: b531ed09aa5f5a847918ddac98e4bf16, type: 3}
+      propertyPath: 'sprites.Array.data[19]'
       value: 
       objectReference: {fileID: 335670889, guid: e621137f9197f0842a52168123ca0298, type: 3}
     - target: {fileID: 5489274343212671176, guid: b531ed09aa5f5a847918ddac98e4bf16, type: 3}

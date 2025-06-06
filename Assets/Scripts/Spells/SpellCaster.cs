@@ -93,8 +93,8 @@ public class SpellCaster
 
     public Spell CreateStartSpell()
     {
-        Spell spell = SpellBuilder.Instance.Build("arcane_bolt", this);
-        spell = SpellBuilder.Instance.ApplyModifiersToSpell(spell, new List<string> { "piercing", "mana_amp", "doubler", "burning" });
+        Spell spell = SpellBuilder.Instance.Build("turret_spell", this);
+        //spell = SpellBuilder.Instance.ApplyModifiersToSpell(spell, new List<string> { "piercing", "mana_amp", "doubler", "burning" });
         return spell;
     }
 
