@@ -71,6 +71,8 @@ public class CraftingModifierInventoryItem : MonoBehaviour
             return;
         }
         modifier = newModifier;
+        int iconNumber = (int)SpellBuilder.Instance.GetSpellObject(modifier)["icon"];
+        GameManager.Instance.spellIconManager.PlaceSprite(iconNumber, icon.GetComponent<Image>());
         //missing icon
     }
 

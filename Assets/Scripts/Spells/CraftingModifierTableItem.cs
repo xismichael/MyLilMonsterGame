@@ -60,7 +60,8 @@ public class CraftingModifierTableItem : MonoBehaviour
             return;
         }
         modifier = newModifier;
-        //missing icon
+        int iconNumber = (int)SpellBuilder.Instance.GetSpellObject(modifier)["icon"];
+        GameManager.Instance.spellIconManager.PlaceSprite(iconNumber, icon.GetComponent<Image>());
     }
 
     public void SetEmpty()

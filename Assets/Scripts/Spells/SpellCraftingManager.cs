@@ -163,6 +163,12 @@ public class SpellCraftingManager : MonoBehaviour
 
     public void CraftOnClick()
     {
+        if (craftingSpellTableItem.spell == null || craftingModifierTableItem.modifier == null || craftingModifierTableItem.modifier == "") return;
+        Spell newSpell = SpellBuilder.Instance.ApplyModifiersToSpell(craftingSpellTableItem.spell, new List<string> { craftingModifierTableItem.modifier });
+        craftingSpellTableItem.SetEmpty();
+        craftingModifierTableItem.SetEmpty();
+        AddSpellToInventory(newSpell);
+        if (currentInventory == "spell") MakeSpellInventory();
 
     }
 
