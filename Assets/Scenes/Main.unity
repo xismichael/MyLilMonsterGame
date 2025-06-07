@@ -3379,6 +3379,9 @@ MonoBehaviour:
   TotalEnemiesKilled: 0
   currentWaveDamageTaken: 0
   TotalDamageTaken: 0
+  audioSource: {fileID: 0}
+  beforeGameAudio: {fileID: 8300000, guid: afd5114fadc304284a25a724a5734cf9, type: 3}
+  inGameAudio: {fileID: 8300000, guid: 5eb163aca14344b72ad5890df55ffa7d, type: 3}
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0

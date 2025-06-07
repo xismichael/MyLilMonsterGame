@@ -22,17 +22,35 @@ public class EnemySpawner : MonoBehaviour
     public static int CurrentWaveNumber = 1;
     private string currentLevelName;
 
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip beforeGameAudio;
+    [SerializeField] private AudioClip inGameAudio;  
+
     public static EnemySpawner Instance { get; private set; }
 
     void Start()
     {
         Instance = this;
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.loop = true;
+        PlayPregameMusic();
         makeRestartScreen();
+    }
+
+    public void PlayPregameMusic(){
+        audioSource.clip = beforeGameAudio;
+        audioSource.Play();
+    }
+
+    public void PlayInWaveMusic(){
+        audioSource.clip = inGameAudio;
+        audioSource.Play();
     }
 
     public void restartScreen()
     {
         level_selector.gameObject.SetActive(true);
+        PlayPregameMusic();
     }
 
     public void makeRestartScreen()
@@ -80,6 +98,8 @@ public class EnemySpawner : MonoBehaviour
     {
         GameManager.Instance.state = GameManager.GameState.COUNTDOWN;
         GameManager.Instance.countdown = 3;
+
+        PlayInWaveMusic();
 
         for (int i = 3; i > 0; i--)
         {
