@@ -10871,6 +10871,10 @@ MonoBehaviour:
   role: 
   characterSpriteRenderer: {fileID: 232596022}
   lastMoveTime: 0
+  audioSource: {fileID: 0}
+  shootingAudio: {fileID: 8300000, guid: c43c43ab7d3ea45ef98352e9d3e46302, type: 3}
+  travellingAudio: {fileID: 8300000, guid: e0b7b1c2a455a4e47ab318aae5d44eb0, type: 3}
+  attackAudio: {fileID: 8300000, guid: 2a735dc0d1f2d43b38acb786fb8ad29b, type: 3}
   spellCraftingManager: {fileID: 267587717}
 --- !u!4 &1718273953
 Transform:

@@ -31,6 +31,10 @@ public class PlayerController : MonoBehaviour
     public event Action<Vector2> OnMoveEvent;
     public event Action<Hittable> OnHealthChange;
 
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip shootingAudio;
+    [SerializeField] private AudioClip travellingAudio;
+    [SerializeField] private AudioClip attackAudio;
 
     //inventory related
     public SpellCraftingManager spellCraftingManager;
@@ -43,8 +47,24 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         unit = GetComponent<Unit>();
+        audioSource = gameObject.AddComponent<AudioSource>();
         GameManager.Instance.player = gameObject;
         role = "mage";
+    }
+
+    public void PlayShootingNoise(){
+        audioSource.clip = shootingAudio;
+        audioSource.PlayOneShot(shootingAudio);
+    }
+
+    public void PlayTravellingNoise(){
+        audioSource.clip = travellingAudio;
+        audioSource.PlayOneShot(travellingAudio);
+    }
+
+    public void PlayAttackAudio(){
+        audioSource.clip = attackAudio;
+        audioSource.PlayOneShot(attackAudio);
     }
 
     public void StartLevel()
@@ -124,6 +144,7 @@ public class PlayerController : MonoBehaviour
         //hp.Heal(10);
         //Debug.Log("hp after heal: " + hp.hp);
 
+        PlayShootingNoise();
         StartCoroutine(spellcaster.Cast(transform.position, mouseWorld));
     }
 
@@ -134,6 +155,7 @@ public class PlayerController : MonoBehaviour
             GameManager.Instance.state == GameManager.GameState.GAMEOVER) return;
 
         lastMoveTime = Time.time;
+        PlayTravellingNoise();
         unit.movement = value.Get<Vector2>() * speed;
         OnMoveEvent?.Invoke(value.Get<Vector2>());
     }
@@ -171,6 +193,7 @@ public class PlayerController : MonoBehaviour
         var allEnemies = FindObjectsOfType<EnemyController>();
         foreach (var ec in allEnemies)
         {
+            PlayAttackAudio();
             GameManager.Instance.RemoveEnemy(ec.gameObject);
             Destroy(ec.gameObject);
         }
