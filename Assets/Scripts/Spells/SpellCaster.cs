@@ -65,7 +65,7 @@ public class SpellCaster
     //add a spell to the inventor
     public void AddSpell(Spell spell)
     {
-        if (this.spells.Count < this.maxSpellCount)
+        if (this.spells.Count <= this.maxSpellCount)
         {
             this.spells.Add(spell);
         }
@@ -76,7 +76,7 @@ public class SpellCaster
     //reload the spell inventory
     public void ReloadSpell(List<Spell> NewSpells)
     {
-        if (NewSpells.Count < this.maxSpellCount)
+        if (NewSpells.Count <= this.maxSpellCount)
         {
             spells = NewSpells;
         }
