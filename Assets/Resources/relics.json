@@ -1,0 +1,164 @@
+[
+    {
+        "name": "Green Gem",
+        "sprite": 0,
+        "trigger": {
+            "description": "Whenever you take damage",
+            "type": "take-damage"
+        },
+        "effect": {
+            "description": "you gain 5 mana",
+            "type": "gain-mana",
+            "amount": "5"
+        }
+    },
+    {
+        "name": "Jade Elephant",
+        "sprite": 1,
+        "trigger": {
+            "description": "When you don't move for 3 seconds",
+            "type": "stand-still",
+            "amount": "3",
+            "mode": "once"
+        },
+        "effect": {
+            "description": "you gain 10 spellpower (+5/wave)",
+            "type": "gain-spellpower",
+            "amount": "10 wave 5 * +",
+            "until": "move"
+        }
+    },
+    {
+        "name": "Golden Mask",
+        "sprite": 2,
+        "trigger": {
+            "description": "When you take damage",
+            "type": "take-damage"
+        },
+        "effect": {
+            "description": "your next spell gains 100 additional spellpower",
+            "type": "gain-spellpower",
+            "amount": "100",
+            "until": "cast-spell"
+        }
+    },
+    {
+        "name": "Cursed Scroll",
+        "sprite": 3,
+        "trigger": {
+            "description": "When you kill an enemy",
+            "type": "on-kill"
+        },
+        "effect": {
+            "description": "you gain 25 mana",
+            "type": "gain-mana",
+            "amount": "25"
+        }
+    },
+    {
+        "name": "Cracked Sigil",
+        "sprite": 4,
+        "trigger": {
+            "description": "When under 50% health",
+            "type": "health-percentage",
+            "percentage": 0.5,
+            "condition": "below",
+            "mode": "once"
+        },
+        "effect": {
+            "description": "gain 10 + 5/wave spell power",
+            "type": "gain-spellpower",
+            "amount": "10 wave 5 * +",
+            "until": "health-percentage",
+            "condition": "above",
+            "percentage": 0.5
+        }
+    },
+    {
+        "name": "Momentum Seal",
+        "sprite": 5,
+        "trigger": {
+            "description": "When at full health",
+            "type": "health-percentage",
+            "condition": "equal",
+            "percentage": 1,
+            "mode": "once"
+        },
+        "effect": {
+            "description": "gain bonus movement speed",
+            "type": "gain-speed",
+            "amount": "2 wave 4 / +",
+            "until": "health-percentage",
+            "condition": "below",
+            "percentage": 1
+        }
+    },
+    {
+        "name": "Stillwater Medallion",
+        "sprite": 6,
+        "trigger": {
+            "description": "When you don't move for 2 seconds",
+            "type": "stand-still",
+            "amount": "2",
+            "mode": "once"
+        },
+        "effect": {
+            "description": "increases mana regen exponentially",
+            "type": "gain-mana-regen",
+            "amount": "30",
+            "until": "move"
+        }
+    },
+    {
+        "name": "Predator's Grace",
+        "sprite": 7,
+        "trigger": {
+            "description": "When you kill an enemy",
+            "type": "on-kill"
+        },
+        "effect": {
+            "description": "Regenerate health",
+            "type": "regenerate-hp",
+            "amount": "3"
+        }
+    },
+    {
+        "name": "Damage Takes All",
+        "sprite": 8,
+        "trigger": {
+            "description": "When your health is less than 50%",
+            "type": "take-damage"
+        },
+        "effect": {
+            "description": "you teleport to another place based on the amount/length given.",
+            "type": "teleport",
+            "amount": "20"
+        }
+    },
+    {
+        "name": "Electrik Thunderbolt",
+        "sprite": 9,
+        "trigger": {
+            "description": "When you take damage",
+            "type": "take-damage"
+        },
+        "effect": {
+            "description": "your travel speed becomes 2 times faster for 10 seconds.",
+            "type": "damage-speed-up",
+            "amount": "2"
+        }
+    },
+    {
+        "name": "Super Sonic Healing",
+        "sprite": 10,
+        "trigger": {
+            "description": "When you finish a wave",
+            "type": "finish-wave"
+        },
+        "effect": {
+            "description": "you gain more health points.",
+            "type": "regenerate-hp",
+            "amount": "20"
+        }
+    }
+]
