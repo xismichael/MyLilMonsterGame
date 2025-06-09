@@ -10,7 +10,7 @@ public class SpellRewardOptionUI : MonoBehaviour
 
     private Spell spellData;
 
-    public void Setup(Spell spell, System.Action<Spell> onAccept)
+    public void Setup(Spell spell, System.Action onAccept)
     {
         spellData = spell;
         spellUI.SetSpell(spell, -1);
@@ -23,6 +23,6 @@ public class SpellRewardOptionUI : MonoBehaviour
         spellDescription.text = definitionText;
 
         acceptButton.onClick.RemoveAllListeners();
-        acceptButton.onClick.AddListener(() => onAccept?.Invoke(spellData));
+        acceptButton.onClick.AddListener(() => onAccept?.Invoke());
     }
 }

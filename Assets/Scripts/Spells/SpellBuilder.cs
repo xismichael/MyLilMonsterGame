@@ -1,7 +1,8 @@
-using UnityEngine;
-using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
+using UnityEngine;
 
 public class SpellBuilder : MonoBehaviour
 {
@@ -162,4 +163,37 @@ public class SpellBuilder : MonoBehaviour
         }
     }
 
+    public Spell CreateRandomReward(SpellCaster owner, out bool isModifier, out string modifierKey)
+    {
+        var keys = spellDefinitions.Keys.ToList();
+        string pick = keys[Random.Range(0, keys.Count)];
+        var def = spellDefinitions[pick];
+
+        isModifier = def["type"] != null && def["type"].ToString() == "modifier";
+        modifierKey = isModifier ? pick : null;
+
+        if (isModifier)
+        {
+            Spell dummy = new Spell(owner);
+
+            dummy.Icon = def["icon"] != null ? int.Parse(def["icon"].ToString()) : 0;
+            dummy.Description = def["description"]?.ToString() ?? "No description";
+            dummy.Name = def["name"]?.ToString() ?? "Modifier";
+
+            // Set safe default values to prevent RPN crashes
+            dummy.ManaCostExpr = "0";
+            dummy.DamageExpr = "0";
+            dummy.CooldownExpr = "0";
+
+            return dummy;
+        }
+        else
+        {
+            return Build(pick, owner);
+        }
+    }
+
+    
 }
+
+

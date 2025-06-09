@@ -123,14 +123,39 @@ public class Spell
 
     public virtual int GetManaCost()
     {
-        float result = RPNEvaluator.Evaluate(ManaCostExpr, GetRPNVariables());
+        float result = 0f;
 
+        try
+        {
+            // Safely evaluate base cost
+            if (!string.IsNullOrEmpty(ManaCostExpr))
+                result = RPNEvaluator.Evaluate(ManaCostExpr, GetRPNVariables());
 
-        foreach (var expr in manaAdderExprs)
-            result += RPNEvaluator.Evaluate(expr, GetRPNVariables());
+            // Safely evaluate adders
+            if (manaAdderExprs != null)
+            {
+                foreach (var expr in manaAdderExprs)
+                {
+                    if (!string.IsNullOrEmpty(expr))
+                        result += RPNEvaluator.Evaluate(expr, GetRPNVariables());
+                }
+            }
 
-        foreach (var expr in manaMultiplierExprs)
-            result *= RPNEvaluator.Evaluate(expr, GetRPNVariables());
+            // Safely evaluate multipliers
+            if (manaMultiplierExprs != null)
+            {
+                foreach (var expr in manaMultiplierExprs)
+                {
+                    if (!string.IsNullOrEmpty(expr))
+                        result *= RPNEvaluator.Evaluate(expr, GetRPNVariables());
+                }
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogWarning($"[Spell.GetManaCost] Failed to evaluate mana cost");
+            result = 0f;
+        }
 
         return Mathf.RoundToInt(result);
     }

@@ -65,11 +65,32 @@ public class RewardScreenManager : MonoBehaviour
                                     $"Kills: {EnemySpawner.Instance.currentWaveEnemiesKilled}\n" +
                                     $"Damage Taken: {EnemySpawner.Instance.currentWaveDamageTaken}";
 
+            var spellCaster = GameManager.Instance.player.GetComponent<PlayerController>().spellcaster;
 
-            Spell randomSpell = SpellBuilder.Instance.CreateRandomSpell(GameManager.Instance.player.GetComponent<PlayerController>().spellcaster);
+            List<Spell> rewards = new List<Spell>();
+            List<bool> isModifiers = new List<bool>();
+            List<string> modifierKeys = new List<string>();
+
+            for (int i = 0; i < 3; i++)
+            {
+                bool isMod;
+                string modKey;
+                var reward = SpellBuilder.Instance.CreateRandomReward(spellCaster, out isMod, out modKey);
+
+                rewards.Add(reward);
+                isModifiers.Add(isMod);
+                modifierKeys.Add(modKey);
+            }
+
+            spellRewardManager.ShowRewardOptions(rewards, isModifiers, modifierKeys);
+
+            // Show them on the reward screen
+            //spellRewardManager.ShowRewardOptions(rewards);
+            //Spell randomSpell = SpellBuilder.Instance.CreateRandomSpell(GameManager.Instance.player.GetComponent<PlayerController>().spellcaster);
+
             spellRewardManager.spellAccepted = false;
-            spellRewardManager.SetSpellDescription(randomSpell);
-            spellRewardManager.SetSpellUI(randomSpell);
+            //spellRewardManager.SetSpellDescription(randomSpell);
+            //spellRewardManager.SetSpellUI(randomSpell);
             GameManager.Instance.player.GetComponent<PlayerController>().spellUIContainer.OpenAllDropButton();
             GameManager.Instance.player.GetComponent<PlayerController>().spellUIContainer.RewardscreenShift();
             spellRewardManager.SetActive();
