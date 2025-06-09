@@ -85,12 +85,7 @@ public class RewardScreenManager : MonoBehaviour
             spellRewardManager.ShowRewardOptions(rewards, isModifiers, modifierKeys);
 
             // Show them on the reward screen
-            //spellRewardManager.ShowRewardOptions(rewards);
-            //Spell randomSpell = SpellBuilder.Instance.CreateRandomSpell(GameManager.Instance.player.GetComponent<PlayerController>().spellcaster);
-
             spellRewardManager.spellAccepted = false;
-            //spellRewardManager.SetSpellDescription(randomSpell);
-            //spellRewardManager.SetSpellUI(randomSpell);
             GameManager.Instance.player.GetComponent<PlayerController>().spellUIContainer.OpenAllDropButton();
             GameManager.Instance.player.GetComponent<PlayerController>().spellUIContainer.RewardscreenShift();
             spellRewardManager.SetActive();
