@@ -14,6 +14,10 @@ public class SpellRewardOptionUI : MonoBehaviour
 
     public void Setup(Spell spell, System.Action onAccept)
     {
+        alreadyAccepted = false;
+        acceptButton.interactable = true;
+        acceptButton.GetComponentInChildren<TMP_Text>().text = "Accept";
+
         spellData = spell;
         spellUI.SetSpell(spell, -1);
 

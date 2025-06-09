@@ -185,6 +185,8 @@ public class SpellBuilder : MonoBehaviour
             dummy.DamageExpr = "0";
             dummy.CooldownExpr = "0";
 
+            dummy.RegisterDefinition(dummy.Name, dummy.Description);
+
             return dummy;
         }
         else
