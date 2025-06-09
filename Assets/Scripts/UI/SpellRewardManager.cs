@@ -118,7 +118,7 @@ public class SpellRewardManager : MonoBehaviour
     //}
     public void AcceptSpell(Spell spell, bool isModifier, string modifierKey)
     {
-        if (spellAccepted) return;
+        //if (spellAccepted) return;
 
         var spellCaster = GameManager.Instance.player.GetComponent<PlayerController>().spellcaster;
         var manager = GameManager.Instance.player.GetComponent<PlayerController>().spellCraftingManager;
@@ -132,7 +132,7 @@ public class SpellRewardManager : MonoBehaviour
             manager.AddSpellToInventory(spell);
         }
 
-        spellAccepted = true;
+        //spellAccepted = true;
     }
 
     public void SetActive()

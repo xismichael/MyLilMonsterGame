@@ -1,12 +1,14 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Data;
 
 public class SpellRewardOptionUI : MonoBehaviour
 {
     public SpellUI spellUI;
     public TMP_Text spellDescription;
     public Button acceptButton;
+    private bool alreadyAccepted = false;
 
     private Spell spellData;
 
@@ -23,6 +25,13 @@ public class SpellRewardOptionUI : MonoBehaviour
         spellDescription.text = definitionText;
 
         acceptButton.onClick.RemoveAllListeners();
-        acceptButton.onClick.AddListener(() => onAccept?.Invoke());
+        acceptButton.onClick.AddListener(() =>
+        {
+            if (alreadyAccepted) return;
+            onAccept?.Invoke();
+            acceptButton.interactable = false;
+            acceptButton.GetComponentInChildren<TMP_Text>().text = "Accepted";
+            alreadyAccepted = true;
+        });
     }
 }

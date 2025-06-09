@@ -176,9 +176,9 @@ public class SpellBuilder : MonoBehaviour
         {
             Spell dummy = new Spell(owner);
 
+            dummy.Name = def["name"]?.ToString() ?? "Unnamed Modifier";
+            dummy.Description = def["description"]?.ToString() ?? "No description available";
             dummy.Icon = def["icon"] != null ? int.Parse(def["icon"].ToString()) : 0;
-            dummy.Description = def["description"]?.ToString() ?? "No description";
-            dummy.Name = def["name"]?.ToString() ?? "Modifier";
 
             // Set safe default values to prevent RPN crashes
             dummy.ManaCostExpr = "0";
