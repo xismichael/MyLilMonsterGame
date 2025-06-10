@@ -28,11 +28,12 @@ public class SoundToggle : MonoBehaviour
         if (sound)
         {
             buttonText.text = "SOUND: ON";
-            Debug.Log("sound enabled");
-        } else
+            //Debug.Log("sound enabled");
+        }
+        else
         {
             buttonText.text = "SOUND: OFF";
-            Debug.Log("sound disabled");
+            //Debug.Log("sound disabled");
         }
     }
 }

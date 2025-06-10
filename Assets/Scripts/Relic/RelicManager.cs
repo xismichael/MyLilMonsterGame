@@ -129,7 +129,7 @@ public class RelicManager : MonoBehaviour
         };
         EventBus.Instance.OnWaveEnd += () =>
         {
-            Debug.Log("OnWaveEnd has been invoked!!!!!!!!!!!!!!!!!!!!!!!!!");
+            //Debug.Log("OnWaveEnd has been invoked!!!!!!!!!!!!!!!!!!!!!!!!!");
             Trigger("finish-wave", player);
         };
     }
@@ -158,7 +158,7 @@ public class RelicManager : MonoBehaviour
         };
         EventBus.Instance.OnWaveEnd += () =>
         {
-            Debug.Log("OnWaveEnd has been unregistered~~~~~~~~~~~~~~~~~~~~~~~");
+            //Debug.Log("OnWaveEnd has been unregistered~~~~~~~~~~~~~~~~~~~~~~~");
             Trigger("finish-wave", player);
         };
     }

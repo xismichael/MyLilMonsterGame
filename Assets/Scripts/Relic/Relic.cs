@@ -15,7 +15,8 @@ public class Relic
 
     public void TryActivate(PlayerController player, Dictionary<string, object> parameters)
     {
-        if(prevGameState != GameManager.GameState.WAVEEND && GameManager.Instance.state == GameManager.GameState.WAVEEND){
+        if (prevGameState != GameManager.GameState.WAVEEND && GameManager.Instance.state == GameManager.GameState.WAVEEND)
+        {
             Effect.Apply(player, this);
         }
         prevGameState = GameManager.Instance.state;
